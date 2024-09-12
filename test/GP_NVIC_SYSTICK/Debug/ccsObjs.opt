@@ -1,0 +1,12 @@
+"./main.obj"
+"./tm4c123gh6pm_startup_ccs.obj"
+"./Critical_Files/Det.obj"
+"./Dio_Driver/Dio.obj"
+"./Dio_Driver/Dio_PBcfg.obj"
+"./NVIC_Driver/NVIC.obj"
+"./Port_Driver/Port.obj"
+"./Port_Driver/Port_PBcfg.obj"
+"./SYSTICK_Driver/SYSTICK.obj"
+"./SYSTICK_Driver/SYSTICK_PBcfg.obj"
+"../tm4c123gh6pm.cmd"
+-llibc.a

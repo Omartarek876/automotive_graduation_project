@@ -1,13 +1,12 @@
  /******************************************************************************
- *
- * Module: Port
- *
- * File Name: Port_cfg.h
- *
- * Description: Header file for TM4C123GH6PM Microcontroller - Port Driver.
- *
- * Author: omar tarek
+* File Name: <Port_cfg.h>
+* Author : Omar Tarek
+* Description: Header file for TM4C123GH6PM Microcontroller - Port Driver.
+* Date Created: 12/09/2024
+* Micro-Controller: TM4C123GH6PM (TIVA C)
+* Micro-Processor: ARM Cortex-M4
  ******************************************************************************/
+
 
 #ifndef PORT_CFG_H_
 #define PORT_CFG_H_

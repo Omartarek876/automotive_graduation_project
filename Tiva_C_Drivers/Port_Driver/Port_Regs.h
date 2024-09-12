@@ -1,18 +1,17 @@
- /************************************************************************************
- *
- * Module: Port
- *
- * File Name: Port_regs.h
- *
- * Description: Header file for TM4C123GH6PM Microcontroller - Port Driver registers.
- *
- * Author: omar tarek
- ************************************************************************************/
+ /******************************************************************************
+* File Name: <Port_regs.h>
+* Author : Omar Tarek
+* Description: Header file for TM4C123GH6PM Microcontroller - Port Driver registers.
+* Date Created: 12/09/2024
+* Micro-Controller: TM4C123GH6PM (TIVA C)
+* Micro-Processor: ARM Cortex-M4
+ ******************************************************************************/
+
 
 #ifndef PORT_REGS_H_
 #define PORT_REGS_H_
 
-#include "Std_Types.h"
+#include "../Critical_Files/Std_Types.h"
 
 /* GPIO Registers base addresses */
 #define GPIO_PORTA_BASE_ADDRESS           0x40004000

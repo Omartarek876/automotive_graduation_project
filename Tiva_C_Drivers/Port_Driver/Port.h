@@ -1,12 +1,10 @@
  /******************************************************************************
- *
- * Module: Port
- *
- * File Name: Port.h
- *
- * Description: Header file for TM4C123GH6PM Microcontroller - Port Driver.
- *
- * Author: omar tarek
+* File Name: <Port.h>
+* Author : Omar Tarek
+* Description: Header file for TM4C123GH6PM Microcontroller - Port Driver.
+* Date Created: 12/09/2024
+* Micro-Controller: TM4C123GH6PM (TIVA C)
+* Micro-Processor: ARM Cortex-M4
  ******************************************************************************/
 
 #ifndef PORT_H
@@ -44,7 +42,7 @@
 
 
 /* Standard AUTOSAR types */
-#include "Std_Types.h"
+#include "../Critical_Files/Std_Types.h"
 
 /* AUTOSAR checking between Std Types and PORT Modules */
 #if ((STD_TYPES_AR_RELEASE_MAJOR_VERSION != PORT_AR_RELEASE_MAJOR_VERSION)\
@@ -71,7 +69,7 @@
 #endif
 
 /* Non AUTOSAR files */
-#include "Common_Macros.h"
+#include "../Critical_Files/Common_Macros.h"
 
 
                              /* Module Data Types */
@@ -201,7 +199,6 @@ void Port_GetVersionInfo(Std_VersionInfoType* versioninfo);
 #if (PORT_SET_PIN_MODE_API == STD_ON)
 void Port_SetPinMode(Port_PinType Pin, Port_PinModeType Mode);
 #endif
-
 
                               /* API Service Id Macros */
 /* Service ID for port init */

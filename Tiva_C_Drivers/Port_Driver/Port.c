@@ -1,20 +1,20 @@
  /******************************************************************************
- *
- * Module: Port
- *
- * File Name: Port.c
- *
- * Description: Source file for TM4C123GH6PM Microcontroller - Port Driver.
- *
- * Author: omar tarek
+* File Name: <Port.c>
+* Author : Omar Tarek
+* Description: Header file for TM4C123GH6PM Microcontroller - Port Driver.
+* Date Created: 12/09/2024
+* Micro-Controller: TM4C123GH6PM (TIVA C)
+* Micro-Processor: ARM Cortex-M4
  ******************************************************************************/
 
 
 #include "Port.h"
 #include "Port_Regs.h"
+#include "../Critical_Files/private_registers.h"
+
 
 #if (PORT_DEV_ERROR_DETECT  == STD_ON)
-#include "Det.h"
+#include "../Critical_Files/Det.h"
 
 /* AUTOSAR checking between DET and PORT.h */
 #if (DET_AR_MAJOR_VERSION != PORT_AR_RELEASE_MAJOR_VERSION)\
@@ -43,6 +43,10 @@ STATIC uint8 Port_Status = PORT_NOT_INITIALIZED;
  * */
 void Port_Init(const Port_ConfigType* Port_Configuration)
 {
+    /* Enable clock for All PORTs and wait for clock to start */
+    SYSCTL_RCGCGPIO_REG |= 0x3F;
+    while(!(SYSCTL_PRGPIO_REG & 0x3F));
+
     /* point to the required Port Registers base address */
     volatile uint32 * PortGpio_Ptr = NULL_PTR;
     volatile uint32 delay = 0;

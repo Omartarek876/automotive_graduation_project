@@ -66,6 +66,23 @@
 #ifndef TRUE
 #define TRUE        (1u)
 #endif
+#ifndef ERROR
+#define ERROR   (-1)
+#endif
+
+#ifndef LOGIC_LOW
+#define LOGIC_LOW   (0u)
+#endif
+
+#ifndef LOGIC_HIGH
+#define LOGIC_HIGH    (1u)
+#endif
+
+
+/*NULL POINTER*/
+#define NULL_PTR  ((void*)0)
+
+
 
 typedef unsigned char         boolean;
 

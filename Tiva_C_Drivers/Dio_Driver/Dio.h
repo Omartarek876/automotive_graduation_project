@@ -1,13 +1,13 @@
  /******************************************************************************
- *
- * Module: Dio
- *
- * File Name: Dio.h
- *
- * Description: Header file for TM4C123GH6PM Microcontroller - Dio Driver
- *
- * Author: Omar Tarek
+* File Name: <Dio.h>
+* Author : Omar Tarek
+* Description: Header file for TM4C123GH6PM Microcontroller - Dio Driver
+* Date Created: 12/09/2024
+* Micro-Controller: TM4C123GH6PM (TIVA C)
+* Micro-Processor: ARM Cortex-M4
  ******************************************************************************/
+
+
 
 #ifndef DIO_H
 #define DIO_H
@@ -43,7 +43,7 @@
 #define DIO_NOT_INITIALIZED            (0U)
 
 /* Standard AUTOSAR types */
-#include "Std_Types.h"
+#include "../Critical_Files/Std_Types.h"
 
 /* AUTOSAR checking between Std Types and Dio Modules */
 #if ((STD_TYPES_AR_RELEASE_MAJOR_VERSION != DIO_AR_RELEASE_MAJOR_VERSION)\
@@ -70,7 +70,7 @@
 #endif
 
 /* Non AUTOSAR files */
-#include "Common_Macros.h"
+#include "../Critical_Files/Common_Macros.h"
 
                              /* API Service Id Macros */
 /* Service ID for DIO read Channel */

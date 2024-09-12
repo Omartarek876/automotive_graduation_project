@@ -1,13 +1,12 @@
  /******************************************************************************
- *
- * Module: Dio
- *
- * File Name: Dio_Cfg.h
- *
- * Description: Pre-Compile Configuration Header file for TM4C123GH6PM Microcontroller - Dio Driver
- *
- * Author: Omar Tarek
+* File Name: <Dio_Cfg.h>
+* Author : Omar Tarek
+* Description: Pre-Compile Configuration Header file for TM4C123GH6PM Microcontroller - Dio Driver
+* Date Created: 12/09/2024
+* Micro-Controller: TM4C123GH6PM (TIVA C)
+* Micro-Processor: ARM Cortex-M4
  ******************************************************************************/
+
 
 #ifndef DIO_CFG_H
 #define DIO_CFG_H

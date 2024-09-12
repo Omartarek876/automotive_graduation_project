@@ -1,20 +1,20 @@
+
  /******************************************************************************
- *
- * Module: Dio
- *
- * File Name: Dio.c
- *
- * Description: Source file for TM4C123GH6PM Microcontroller - Dio Driver
- *
- * Author: Omar Tarek
+* File Name: <Dio.c>
+* Author : Omar Tarek
+* Description: Source file for TM4C123GH6PM Microcontroller - Dio Driver
+* Date Created: 12/09/2024
+* Micro-Controller: TM4C123GH6PM (TIVA C)
+* Micro-Processor: ARM Cortex-M4
  ******************************************************************************/
+
 
 #include "Dio.h"
 #include "Dio_Regs.h"
 
 #if (DIO_DEV_ERROR_DETECT == STD_ON)
 
-#include "Det.h"
+#include "../Critical_Files/Det.h"
 /* AUTOSAR Version checking between Det and Dio Modules */
 #if ((DET_AR_MAJOR_VERSION != DIO_AR_RELEASE_MAJOR_VERSION)\
  || (DET_AR_MINOR_VERSION != DIO_AR_RELEASE_MINOR_VERSION)\

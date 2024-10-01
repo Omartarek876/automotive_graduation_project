@@ -41,22 +41,32 @@ void main (void)
 
 void main (void)
 {
-    uint8 data;
+
+    uint8 receivedString[100]; // Buffer to hold the received String
+    uint8 receivedData[10]; // Buffer to hold the received data
+    uint32 size = 7; // Number of bytes to receive
 
     Port_Init(&Port_Configuration);
     Dio_Init(&Dio_Configuration);
     uartInit(&uart0_cfg);
 
-    while(1)
-    {
-        /* Receive byte from PC Terminal */
-              data = uart_RecieveByte();
 
-              /* in case the input is from 0 --> 7 provide the corresponding decimal value on LEDs at PF1, PF2 and PF3 */
-              if((data >= '0') && (data <= '7'))
-              {
-                  //GPIO_PORTF_DATA_REG = (GPIO_PORTF_DATA_REG & 0xF1) | ((data - 48)<<1);
-                  Dio_WriteChannel(DioConf_LED1_CHANNEL_ID_INDEX,1);  /* LED ON */
-              }
+  while(1)
+    {
+        // Receive a string from UART (until a '#' is received)
+        UART_ReceiveString(receivedString);
+
+        // Send the received string back to the terminal
+        UART_SendString("Received: ")
+        UART_SendString(receivedString);
+        UART_SendString("\r\n");
+
+        // Receive a specific number of bytes
+        UART_ReceiveData(receivedData, size);
+
+        // Send the received data back to the terminal
+        UART_SendString("Received: ");
+        UART_SendData(receivedData, size);
+        UART_SendString("\r\n");
     }
 }

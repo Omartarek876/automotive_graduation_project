@@ -60,14 +60,6 @@
 
 #define FIRST_BIT 0
 
-#define PORTA_SYSCLK_MASK (0x00000001)
-#define PORTB_SYSCLK_MASK (0x00000002)
-#define PORTC_SYSCLK_MASK (0x00000004)
-#define PORTD_SYSCLK_MASK (0x00000008)
-#define PORTE_SYSCLK_MASK (0x00000010)
-#define PORTF_SYSCLK_MASK (0x00000020)
-
-
 
 /************************************************************************************
 * Name: DataSize
@@ -103,7 +95,6 @@ typedef struct
   uint32 baud_rate;
   uint32 clk ;
   uint8 uart_num ;
-  uint8 port_num;
   DataSize length;
 }uart_configuration ;
 

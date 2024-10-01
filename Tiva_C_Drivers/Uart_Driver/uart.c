@@ -18,16 +18,15 @@
 #include "Critical_Files/Platform_Types.h"
 #include "Critical_Files/Private_registers.h"
 
-// Pointers to access UART and PORT registers
+// Global pointer to hold the base address of the UART module
 volatile uint32* uart_ptr = NULL_PTR ;
-volatile uint32* port_ptr = NULL_PTR ;
 
 
+// Function to initialize the UART module based on user configuration
   void uartInit(uart_configuration* ptr2config)
 {
-  uint32 portCLK;
 
-// Select the base address for the specified UART module
+// Select the base address of the UART module based on the uart_num provided
   switch(ptr2config->uart_num)
   {
   case 0:
@@ -56,88 +55,94 @@ volatile uint32* port_ptr = NULL_PTR ;
     break;
  }
 
-// Select the port clock mask for the specified port number
-  switch(ptr2config->port_num)
-  {
-    case 0:
-    portCLK =PORTA_SYSCLK_MASK ;
-    break;
-  case 1:
-    portCLK = PORTB_SYSCLK_MASK ;
-    break;
-  case 2:
-    portCLK = PORTC_SYSCLK_MASK;
-    break;
-  case 3:
-    portCLK = PORTD_SYSCLK_MASK;
-    break;
-  case 4:
-    portCLK = PORTE_SYSCLK_MASK;
-    break;
-  case 5:
-    portCLK = PORTF_SYSCLK_MASK;
-    break;
-  }
-
-// Enable the clock for the specified UART module
+// Enable the clock for the selected UART module
   SET_BIT(SYSCTL_RCGCUART_REG,ptr2config->uart_num) ;
 
-// Wait until the UART module is ready
-  while((SYSCTL_PRUART_REG& portCLK) == LOGIC_LOW);
 
-// Disable UART before making any configuration changes
+  // Poll PRUART to check if the specific UART module clock is ready
+     switch (ptr2config->uart_num) {
+         case 0:
+             while ((SYSCTL_PRUART_REG & 0x01) == 0);  // Wait until UART0 is ready
+             break;
+         case 1:
+             while ((SYSCTL_PRUART_REG & 0x02) == 0);  // Wait until UART1 is ready
+             break;
+         case 2:
+             while ((SYSCTL_PRUART_REG & 0x04) == 0);  // Wait until UART2 is ready
+             break;
+         case 3:
+             while ((SYSCTL_PRUART_REG & 0x08) == 0);  // Wait until UART3 is ready
+             break;
+         case 4:
+             while ((SYSCTL_PRUART_REG & 0x10) == 0);  // Wait until UART4 is ready
+             break;
+         case 5:
+             while ((SYSCTL_PRUART_REG & 0x20) == 0);  // Wait until UART5 is ready
+             break;
+         case 6:
+             while ((SYSCTL_PRUART_REG & 0x40) == 0);  // Wait until UART6 is ready
+             break;
+         case 7:
+             while ((SYSCTL_PRUART_REG & 0x80) == 0);  // Wait until UART7 is ready
+             break;
+         default:
+             // Handle invalid UART number if necessary
+             break;
+     }
+
+    // Disable UART module before configuring it
   CLEAR_BIT(*(volatile uint32*)((volatile uint8 *)uart_ptr + UART_CTRL_REG_OFFSET),FIRST_BIT);
 
-// Calculate the baud rate integer and fractional parts
+    // Calculate and configure integer and fractional baud rate
   float32 val = (float32)(ptr2config->clk)/(float32)(16*ptr2config->baud_rate) ;
-  uint32 int_val = (uint32) val ;
-  float32 float_val = (float32)val - (float32)int_val  ;
+  uint32 int_val = (uint32) val ; // Integer part of baud rate
+  float32 float_val = (float32)val - (float32)int_val  ; // Fractional part
 
-  uint32 float_reg = (uint32)(float_val*64.0 + 0.5) ; // Calculate the fractional part
+   // Convert fractional part to a register value (scaled by 64)
+  uint32 float_reg = (uint32)(float_val*64.0 + 0.5) ;
 
-// Set the integer part of the baud rate
+  // Set the integer baud rate
   *(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_INTEGER_BAUD_RATE_REG_OFFSET) = ((*(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_INTEGER_BAUD_RATE_REG_OFFSET)) & \
     (UART_INTEGER_BAUD_RATE_MASK)) | (int_val << INTDIV_IBRD_REG_START_BIT);
 
 
-// Set the fractional part of the baud rate
+  // Set the fractional baud rate
   *(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_FRACTIONAL_BAUD_RATE_REG_OFFSET) = ((*(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_FRACTIONAL_BAUD_RATE_REG_OFFSET)) & \
     (UART_FRACTIONAL_BAUD_RATE_MASK)) | (float_reg << FLOAT_DIV_FBRD_REG_START_BIT);
 
-// Set the clock source for UART
+  // Configure the clock source for the UART
   *(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_CLOCK_SOURCE_REG_OFFSET) = ((*(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_CLOCK_SOURCE_REG_OFFSET)) & \
     (UART_CLOCK_SOURCE_MASK)) | (UART_CLK_FREQUENCY_MASK);
 
-
-// Enable UART, TX, and RX
+  // Enable UART module after configuration
   SET_BIT(*(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_CTRL_REG_OFFSET),UART_CTL_ENABLE_BIT);
 
-// Set data length (e.g., 8-bit, 7-bit) in the Line Control Register
+  // Set the data length (e.g., 8-bit, 9-bit) in the Line Control Register
   *(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_LINE_CTRL_REG_OFFSET) = ((*(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_LINE_CTRL_REG_OFFSET)) & \
     (UART_LINE_CTRL_SOURCE_MASK)) | (ptr2config->length << LENGTH_LINE_CTRL_REG_START_BIT);
 
 
 }
 
-
+// Function to send a byte via UART
 void UART_sendByte(const uint8 data)
 {
-
-// Wait until the transmit FIFO is not full
+    // Wait until UART is ready to transmit (check the Transmit Flag)
    while(((*(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_FLAG_RATE_REG_OFFSET)) & (1 << TRANSMIT_FLAG_BIT)) != 0);
 
-// Write the byte to the data register to send
+    // Write the data to the UART Data Register for transmission
   *(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_DATA_REG_OFFSET) = data;
 }
 
+// Function to receive a byte via UART
 uint8 uart_RecieveByte(void)
 {
   uint8 recieved_byte;
 
-// Wait until the receive FIFO is not empty
+// Wait until UART has received data (check the Receive Flag)
   while(((*(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_FLAG_RATE_REG_OFFSET)) & (1 << RECIEVE_FLAG_BIT)) != 0);
 
-// Read the received byte from the data register
+// Read the received byte from the UART Data Register
   recieved_byte =  *(volatile uint32 *)((volatile uint8 *)uart_ptr + UART_DATA_REG_OFFSET);
   return recieved_byte;
 }

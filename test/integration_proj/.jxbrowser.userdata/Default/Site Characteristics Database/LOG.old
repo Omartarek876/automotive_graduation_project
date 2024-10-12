@@ -1,2 +1,5 @@
-2024/09/15-17:28:57.789 5e0c Creating DB D:\MY-GRADUATIONPROJECT\automotive_graduation_project\test\integration_proj\.jxbrowser.userdata\Default\Site Characteristics Database since it was missing.
-2024/09/15-17:28:58.093 5e0c Reusing MANIFEST D:\MY-GRADUATIONPROJECT\automotive_graduation_project\test\integration_proj\.jxbrowser.userdata\Default\Site Characteristics Database/MANIFEST-000001
+2024/10/12-23:11:09.567 3d5c Log #3: 3 ops saved to Table #4 OK
+2024/10/12-23:11:09.576 3d5c Archiving D:\4th_year\3_Graduation_project\main_project\2-software\automotive_graduation_project\test\integration_proj\.jxbrowser.userdata\Default\Site Characteristics Database/000003.log: OK
+2024/10/12-23:11:09.576 3d5c Table #4: 3 entries OK
+2024/10/12-23:11:09.577 3d5c Archiving D:\4th_year\3_Graduation_project\main_project\2-software\automotive_graduation_project\test\integration_proj\.jxbrowser.userdata\Default\Site Characteristics Database/MANIFEST-000001: OK
+2024/10/12-23:11:09.694 3d5c **** Repaired leveldb D:\4th_year\3_Graduation_project\main_project\2-software\automotive_graduation_project\test\integration_proj\.jxbrowser.userdata\Default\Site Characteristics Database; recovered 1 files; 203 bytes. Some data may have been lost. ****

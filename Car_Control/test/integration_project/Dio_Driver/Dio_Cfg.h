@@ -39,8 +39,8 @@
 
 /* Channel Index in the array of structures in Dio_PBcfg.c */
 #define DioConf_LED1_CHANNEL_ID_INDEX        (uint8)0x00
-#define DioConf_LED1_CHANNEL_ID_INDEX        (uint8)0x01
-#define DioConf_LED1_CHANNEL_ID_INDEX        (uint8)0x02
+//#define DioConf_LED1_CHANNEL_ID_INDEX        (uint8)0x01
+//#define DioConf_LED1_CHANNEL_ID_INDEX        (uint8)0x02
 #define DioConf_SW1_CHANNEL_ID_INDEX         (uint8)0x01
 
 /* DIO Configured Port ID's  */
@@ -52,7 +52,7 @@
 /* DIO Configured Channel ID's */
 #define DioConf_LED1_CHANNEL_NUM             (Dio_ChannelType)1 /* Pin 1 in PORTF */
 #define DioConf_LED2_CHANNEL_NUM             (Dio_ChannelType)2 /* Pin 2 in PORTF */
-#define DioConf_LED3_CHANNEL_NUM             (Dio_ChannelType)3 /* Pin 3 in PORTF */
+//#define DioConf_LED3_CHANNEL_NUM             (Dio_ChannelType)3 /* Pin 3 in PORTF */
 #define DioConf_SW1_CHANNEL_NUM              (Dio_ChannelType)4 /* Pin 4 in PORTF */
 
 #endif /* DIO_CFG_H */

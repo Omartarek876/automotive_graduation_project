@@ -14,7 +14,7 @@
    Used pins
    ===========
    Pin GND as Ground
-   Pin B7 as PWM output
+   Pin F1 as PWM output
 
    History
    =======

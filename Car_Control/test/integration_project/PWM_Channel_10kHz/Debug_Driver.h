@@ -15,7 +15,7 @@
 #ifndef __Debug_Driver_H__
 #define __Debug_Driver_H__
 
-extern void Debug_Led(uint8 color[10],boolean state);										//To Control the led depend on the color
-extern void Debug_Intialization(void);													//To Intialize Led Pins
+extern void Debug_Led(char color[10],boolean state);										//To Control the led depend on the color
+extern void Debug_Intialization(void);												      	//To Intialize Led Pins
 
 #endif

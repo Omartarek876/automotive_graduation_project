@@ -1,14 +1,15 @@
 #include "Debug_Driver.h"
                 
-void Debug_Led(uint8 color[10],boolean state)
+void Debug_Led(char color[10],boolean state)
 {
 	if(strcmp(color ,"Red")==0)
 	{
 		if(state == 1)
-		    Dio_WriteChannel(DioConf_LED1_CHANNEL_NUM, STD_HIGH);
+		    Dio_WriteChannel(DioConf_LED2_CHANNEL_NUM, STD_HIGH);
 		else
-		    Dio_WriteChannel(DioConf_LED1_CHANNEL_NUM, STD_LOW);
+		    Dio_WriteChannel(DioConf_LED2_CHANNEL_NUM, STD_LOW);
 	}
+	/*
 	
 		else if(strcmp(color ,"Blue")==0)
 	{
@@ -25,6 +26,7 @@ void Debug_Led(uint8 color[10],boolean state)
 		else
 		    Dio_WriteChannel(DioConf_LED3_CHANNEL_NUM, STD_LOW);
 	}
+	*/
 
 }
 void Debug_Intialization(void)
@@ -47,7 +49,7 @@ void Debug_Intialization(void)
   
   */
 
-  Debug_Led("Red",1);														//Turn off Red Led
-  Debug_Led("Blue",1);														//Turn off Blue Led
-  Debug_Led("Green",1);														//Turn off Green Led
+  Debug_Led("Red",1);														//Turn on Red Led
+  //Debug_Led("Blue",1);														//Turn off Blue Led
+  //Debug_Led("Green",1);														//Turn off Green Led
 }

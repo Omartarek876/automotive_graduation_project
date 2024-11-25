@@ -9,18 +9,14 @@
 #define CONTROL_DRIVER_CONTROL_APP_C_
 
 
-  // #include <NVIC_Driver/NVIC.h>
-#include "Port_Driver/Port.h"
-#include "Dio_Driver/Dio.h"
-// #include "SYSTICK_Driver/SYSTICK.h"
-// #include "Uart_Driver/uart.h"
-#include "Critical_Files/private_registers.h"
+
 #include "control_app.h"
+
 
 void car_init (void){
     Port_Init(&Port_Configuration);
     Dio_Init(&Dio_Configuration);
-    Delay_MS(500);
+
 
     /* init the four pins of control motion forword and backword*/
     Dio_WriteChannel(DIoconf_ctrl1_CHANNEL_ID_INDEX , STD_LOW);

@@ -5,5 +5,8 @@
 "./Dio_Driver/Dio_PBcfg.obj"
 "./Port_Driver/Port.obj"
 "./Port_Driver/Port_PBcfg.obj"
+"./Uart_Driver/uart.obj"
+"./Uart_Driver/uart_PBcfg.obj"
+"./control_driver/control_app.obj"
 "../tm4c123gh6pm.cmd"
 -llibc.a

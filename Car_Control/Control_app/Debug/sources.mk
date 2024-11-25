@@ -115,4 +115,6 @@ SUBDIRS := \
 Critical_Files \
 Dio_Driver \
 Port_Driver \
+Uart_Driver \
+control_driver \
 

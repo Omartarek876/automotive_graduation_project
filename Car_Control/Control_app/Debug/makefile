@@ -17,6 +17,9 @@ ORDERED_OBJS += \
 "./Dio_Driver/Dio_PBcfg.obj" \
 "./Port_Driver/Port.obj" \
 "./Port_Driver/Port_PBcfg.obj" \
+"./Uart_Driver/uart.obj" \
+"./Uart_Driver/uart_PBcfg.obj" \
+"./control_driver/control_app.obj" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -32,10 +35,14 @@ RMDIR := RMDIR /S/Q
 -include Critical_Files/subdir_vars.mk
 -include Dio_Driver/subdir_vars.mk
 -include Port_Driver/subdir_vars.mk
+-include Uart_Driver/subdir_vars.mk
+-include control_driver/subdir_vars.mk
 -include subdir_rules.mk
 -include Critical_Files/subdir_rules.mk
 -include Dio_Driver/subdir_rules.mk
 -include Port_Driver/subdir_rules.mk
+-include Uart_Driver/subdir_rules.mk
+-include control_driver/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -132,29 +139,29 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-control_app.out 
+Control_App.out 
 
 EXE_OUTPUTS__QUOTED += \
-"control_app.out" 
+"Control_App.out" 
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "control_app.out"
+	@$(MAKE) --no-print-directory -Onone "Control_App.out"
 
 # Tool invocations
-control_app.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+Control_App.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"C:/ti/codecomposer1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"control_app.map" --heap_size=0 --stack_size=512 -i"C:/ti/codecomposer1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/codecomposer1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="control_app_linkInfo.xml" --rom_model -o "control_app.out" $(ORDERED_OBJS)
+	"C:/ti/codecomposer1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Control_App.map" --heap_size=0 --stack_size=512 -i"C:/ti/codecomposer1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/codecomposer1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Control_App_linkInfo.xml" --rom_model -o "Control_App.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "Critical_Files\Det.obj" "Dio_Driver\Dio.obj" "Dio_Driver\Dio_PBcfg.obj" "Port_Driver\Port.obj" "Port_Driver\Port_PBcfg.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "Critical_Files\Det.d" "Dio_Driver\Dio.d" "Dio_Driver\Dio_PBcfg.d" "Port_Driver\Port.d" "Port_Driver\Port_PBcfg.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "Critical_Files\Det.obj" "Dio_Driver\Dio.obj" "Dio_Driver\Dio_PBcfg.obj" "Port_Driver\Port.obj" "Port_Driver\Port_PBcfg.obj" "Uart_Driver\uart.obj" "Uart_Driver\uart_PBcfg.obj" "control_driver\control_app.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "Critical_Files\Det.d" "Dio_Driver\Dio.d" "Dio_Driver\Dio_PBcfg.d" "Port_Driver\Port.d" "Port_Driver\Port_PBcfg.d" "Uart_Driver\uart.d" "Uart_Driver\uart_PBcfg.d" "control_driver\control_app.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

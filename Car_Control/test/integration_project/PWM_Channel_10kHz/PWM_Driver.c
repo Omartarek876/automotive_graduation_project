@@ -107,7 +107,7 @@ void PWM_Set_Frequency(uint32 PWM_module,uint32 Generator,uint32 Frequency,uint3
     uint32 bits = (uint32)(log(period)/log(2));
  if (bits >16)
  {
-    Debug_Led("Red",1);                                                                                 //To turn on the red led if you exceeded the register bits
+    //Debug_Led("Red",1);                                                                                 //To turn on the red led if you exceeded the register bits
     printf("Load Bits is Greater than 16");
  }
  PWM_Load_Value = period;
@@ -121,7 +121,7 @@ void PWM_Set_Duty_Cycle(uint32 PWM_module,uint32 Generator,char Comparator,uint3
     uint32 bits = (uint32)(log(duty)/log(2));
  if (bits >16)
  {
-    Debug_Led("RED",1);                                                                                 //To turn on the red led if you exceeded the register bits
+    //Debug_Led("RED",1);                                                                                 //To turn on the red led if you exceeded the register bits
     printf("Load Bits is Greater than 16");
  }
  uint32 index = Generator +4*PWM_module;                                                                  //To calculate the Index

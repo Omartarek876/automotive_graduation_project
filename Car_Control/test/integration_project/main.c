@@ -23,9 +23,9 @@
 */
 int i;
 int j;
+int duty;
 void main()
 {
- Debug_Intialization();                                                     // To intialize Pins for Debugging Leds
  Set_Clock_MHz(16,80);                                                      // To set System clk
  CLK_PWM_Enable(0);                                                         // To Enable PWM module 0
  //CLK_Enable('B');                                                     // To Enable clk for port B
@@ -37,19 +37,29 @@ void main()
   PWM_Action_For_Load(0,0,'B',"LOW");                                       //Drive PWM low when reach load value
   PWM_Action_Comparator_Down(0,0,'B',"HIGH");                               //Drive PWm high when reach comparator
   PWM_Set_Frequency(0,0,10000,40);                                          //Set frequency for 10Khz
-  PWM_Set_Duty_Cycle(0,0,'B',0);                                            //Set duty cycle for 0%
+ // PWM_Set_Duty_Cycle(0,0,'B',0);                                            //Set duty cycle for 0%
   PWM_Generator_Enable(0,0,"Enable");                                       //Enable  Generator 0
   PWM_Module_Start(0);                                                      //Start PWM Module 0
 
-  for(i=0;i<3600;i++)                                                   //dummy delay
-  {
-    for(j=0;j<3600;j++)
-    {
+  while(1)
+      {
+          for (duty = 0; duty <= 100; duty += 1) {
+              PWM_Set_Duty_Cycle(0,0,'B',duty);
+              for (i = 0; i < 3600; i++) {
+                  for (j = 0; j < 3600; j++) {}
+              }
+          }
 
-    }
 
-  }
+          for (duty = 100; duty >= 0; duty -= 1) {
+              PWM_Set_Duty_Cycle(0,0,'B',duty);
+              for (i = 0; i < 3600; i++) {
+                  for (j = 0; j < 3600; j++) {}
+              }
+          }
+      }
 
-    PWM_Set_Duty_Cycle(0,0,'B',60);                                         //Set Duty cycle for 60%
+
+    //PWM_Set_Duty_Cycle(0,0,'B',60);                                         //Set Duty cycle for 60%
 
 }

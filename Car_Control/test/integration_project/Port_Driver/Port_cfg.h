@@ -70,8 +70,8 @@
 #define PORT_PIN_MODE_UART       (uint8)3     /* UART Mode */
 #define PORT_PIN_MODE_SSI        (uint8)4     /* SPI Mode */
 #define PORT_PIN_MODE_I2C        (uint8)5     /* I2C Mode */
-#define PORT_PIN_MODE_M0PWM      (uint8)6     /*M0PWM Mode hhhhhhhhhhhh */
-#define PORT_PIN_MODE_M0FAULT    (uint8)7     /*Motion Control Module hhhhhhhhh Mode 0*/
+#define PORT_PIN_MODE_M0PWM      (uint8)6     /*M0PWM Mode */
+#define PORT_PIN_MODE_M0FAULT    (uint8)7     /*Motion Control Module Mode 0*/
 #define PORT_PIN_MODE_M1PWM      (uint8)8     /*M1PWM Mode */
 #define PORT_PIN_MODE_M1FAULT    (uint8)9     /*Motion Control Module  Mode 1*/
 #define PORT_PIN_MODE_IDX_PHASE  (uint8)10     /* IDX AND PHASE Mode */
@@ -110,7 +110,7 @@
 #define PORTB_PIN4_DIRECTION     (PORT_INPUT_PIN)
 #define PORTB_PIN5_DIRECTION     (PORT_INPUT_PIN)
 #define PORTB_PIN6_DIRECTION     (PORT_INPUT_PIN)
-#define PORTB_PIN7_DIRECTION     (PORT_INPUT_PIN)
+#define PORTB_PIN7_DIRECTION     (PORT_OUTPUT_PIN)
                      /* PORTC PINS */
 #define PORTC_PIN0_DIRECTION     (PORT_INPUT_PIN)
 #define PORTC_PIN1_DIRECTION     (PORT_INPUT_PIN)
@@ -213,7 +213,7 @@
 #define PORTB_PIN4_MODE_TYPE      (PORT_PIN_MODE_DIO)
 #define PORTB_PIN5_MODE_TYPE      (PORT_PIN_MODE_DIO)
 #define PORTB_PIN6_MODE_TYPE      (PORT_PIN_MODE_DIO)
-#define PORTB_PIN7_MODE_TYPE      (PORT_PIN_MODE_DIO)
+#define PORTB_PIN7_MODE_TYPE      (PORT_PIN_MODE_M0PWM)
                      /* PORTC */
 #define PORTC_PIN0_MODE_TYPE      (PORT_PIN_MODE_DIO)
 #define PORTC_PIN1_MODE_TYPE      (PORT_PIN_MODE_DIO)
@@ -241,7 +241,7 @@
 #define PORTE_PIN5_MODE_TYPE      (PORT_PIN_MODE_DIO)
                      /* PORTF */
 #define PORTF_PIN0_MODE_TYPE      (PORT_PIN_MODE_DIO)
-#define PORTF_PIN1_MODE_TYPE      (PORT_PIN_MODE_M0PWM) /* LED */
+#define PORTF_PIN1_MODE_TYPE      (PORT_PIN_MODE_DIO) /* LED */
 #define PORTF_PIN2_MODE_TYPE      (PORT_PIN_MODE_DIO)
 #define PORTF_PIN3_MODE_TYPE      (PORT_PIN_MODE_DIO)
 #define PORTF_PIN4_MODE_TYPE      (PORT_PIN_MODE_DIO) /* SWITCH */

@@ -11,16 +11,26 @@
 #include "Uart_Driver/uart.h"
 
 void main (void)
+
 {
     car_init();
-    uartInit(&uart0_cfg);
-
+    uartInit(&uart5_cfg);
+    uint8 ch = 55;
     //uint8 receivedString[100]; // Buffer to hold the received String
-    //uint8 receivedData[10]; // Buffer to hold the received data
+    uint8 receivedData; // Buffer to hold the received data
     //uint32 size = 7; // Number of bytes to receive
 
     while(1)
     {
+
+       receivedData = uart_RecieveByte();
+       if (receivedData)
+       {
+           UART_sendByte(receivedData);
+       }
+
+        //UART_SendString(receivedString);
+        /*
         // Receive a char from UART to control the motion of the car
         uint8 Motion_Control_Char = uart_RecieveByte();
         UART_sendByte(Motion_Control_Char);
@@ -51,6 +61,7 @@ void main (void)
             UART_SendString("not an option\r\n");
             break;
         }
+        */
 /*
         // Send the received string back to the terminal
         UART_SendString("Received: ");

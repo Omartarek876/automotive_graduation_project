@@ -124,7 +124,7 @@ void uartInit(uart_configuration* ptr2config);
 * Return value: None
 * Description: API to Send data
 ************************************************************************************/
-void UART_sendByte(const uint8 data);
+void UART_sendByte(uint8 uart_num, const uint8 data);
 
 
 /************************************************************************************
@@ -138,35 +138,34 @@ void UART_sendByte(const uint8 data);
 ************************************************************************************/
 
 
-uint8 uart_RecieveByte(void);
-
+uint8 uart_RecieveByte(uint8 uart_num);
 
 /*
  * Description :
  * Send the required string through UART to the other UART device.
  */
-void UART_SendString(const uint8 *pData);
+void UART_SendString(uint8 uart_num, const uint8 *pData);
 
 
 /*
  * Description :
  * Receive the required string until the '#' symbol through UART from the other UART device.
  */
-void UART_ReceiveString(uint8 *pData);
+void UART_ReceiveString(uint8 uart_num, uint8 *pData);
 
 
 /*
  * Description :
  * Send the required number of bytes through UART to the other UART device.
  */
-void UART_SendData(const uint8 *pData, uint32 uSize);
+void UART_SendData(uint8 uart_num, const uint8 *pData, uint32 uSize);
 
 
 /*
  * Description :
  * receive the required number of bytes through UART from the other UART device.
  */
-void UART_ReceiveData(uint8 *pData, uint32 uSize);
+void UART_ReceiveData(uint8 uart_num, uint8 *pData, uint32 uSize);
 
 
 /*******************************************************************************

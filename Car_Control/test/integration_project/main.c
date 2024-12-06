@@ -1,65 +1,69 @@
-#include "PWM_Channel_10kHz/Clock_Driver.h"
-//#include "GPIO_Driver.h"
-//#include "../Dio_Driver/Dio.h"
-#include "PWM_Channel_10kHz/PWM_Driver.h"
+/*
+ * main.c
+ *
+ *  Created on: Aug 13, 2024
+ *      Author: Omar Tarek
+ */
 
-//Example of using GPIO_Driver
+#include <NVIC_Driver/NVIC.h>
+#include "Port_Driver/Port.h"
+#include "Dio_Driver/Dio.h"
+#include "SYSTICK_Driver/SYSTICK.h"
+#include "Uart_Driver/uart.h"
+#include "Critical_Files/private_registers.h"
 
-/* This driver uses the GPIO_Driver and PWM_Driver libraries which provide definitions for
-   different functions that help to intialize Tiva c  peripherals.
-   To use this driver you will also need to use tm4c123gh6pm to map
-   registers correctly.
-   This example provides you with a PWM signal with variable frequency and duty cycle.
-   The initial frequency and duty cycle are 10Khz and 20% respectively.
-   Used pins
-   ===========
-   Pin GND as Ground
-   Pin F1 as PWM output
 
-   History
-   =======
-   2021/August/08  - First release (Mosad)
-   mo.eldibani@gmail.com
-*/
-int i;
-int j;
-int duty;
-void main()
+/* SysTick Timer ISR ... No need to clear the trigger flag (COUNT) bit ... it cleared automatically by the HW */
+/*
+void SysTick_Handler(void)
 {
- Set_Clock_MHz(16,80);                                                      // To set System clk
- CLK_PWM_Enable(0);                                                         // To Enable PWM module 0
- //CLK_Enable('B');                                                     // To Enable clk for port B
- // PIN_FUNCTION_SELECT('B',7,"Alternative");                               // Set pin B7 as Alternative
- // PIN_CONFIGURE('B',7,"PWM");                                             // Configure Pin B7 as PWM
- // PIN_ANALOG_DIGITAL('B',7,"Digital");                                    // Set pin B7 as digital
-  Use_PWM_Divisor(80,40);                                                   //Set PWM clk
-  PWM_Generator_Enable(0,0,"Disable");                                      //Disable Generator 0
-  PWM_Action_For_Load(0,0,'B',"LOW");                                       //Drive PWM low when reach load value
-  PWM_Action_Comparator_Down(0,0,'B',"HIGH");                               //Drive PWm high when reach comparator
-  PWM_Set_Frequency(0,0,10000,40);                                          //Set frequency for 10Khz
- // PWM_Set_Duty_Cycle(0,0,'B',0);                                            //Set duty cycle for 0%
-  PWM_Generator_Enable(0,0,"Enable");                                       //Enable  Generator 0
-  PWM_Module_Start(0);                                                      //Start PWM Module 0
+    Dio_FlipChannel(DioConf_LED1_CHANNEL_ID_INDEX);
+}
+*/
+/*
+void main (void)
+{
+        Port_Init(&Port_Configuration);
 
-  while(1)
-      {
-          for (duty = 0; duty <= 100; duty += 1) {
-              PWM_Set_Duty_Cycle(0,0,'B',duty);
-              for (i = 0; i < 3600; i++) {
-                  for (j = 0; j < 3600; j++) {}
-              }
-          }
+        Dio_Init(&Dio_Configuration);
+
+        SysTick_Init(&systickConfiguration);
+
+        NVIC_EnableInterrupt(30);
+    while(1)
+    {
+
+    }
+
+}
+*/
 
 
-          for (duty = 100; duty >= 0; duty -= 1) {
-              PWM_Set_Duty_Cycle(0,0,'B',duty);
-              for (i = 0; i < 3600; i++) {
-                  for (j = 0; j < 3600; j++) {}
-              }
-          }
-      }
 
+int main(void) {
+    uint8 byteReceived;
+    uint8 data[5];
+    uint8 receivedstr[20];
+    Port_Init(&Port_Configuration);
 
-    //PWM_Set_Duty_Cycle(0,0,'B',60);                                         //Set Duty cycle for 60%
+    uartInit(&uart0_cfg);
+    uartInit(&uart2_cfg);
+
+    while (1) {
+        // Receive and Send Byte by Byte
+/*
+        byteReceived = uart_RecieveByte(1);  // Receive from UART1
+        UART_sendByte(0, byteReceived);      // Send to UART0
+*/
+/*
+        UART_ReceiveString(2, receivedstr); // Receive string from UART2
+        UART_SendString(0, receivedstr);   // Send string to UART0
+        UART_SendString(0, "\r\n");
+*/
+
+        UART_ReceiveData(2,data,5);
+        UART_SendData(0, data, 5);
+
+    }
 
 }

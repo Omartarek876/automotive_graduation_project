@@ -1,32 +1,32 @@
 ******************************************************************************
                   TI ARM Linker PC v20.2.7                     
 ******************************************************************************
->> Linked Wed Dec  4 21:19:16 2024
+>> Linked Fri Dec 20 19:25:53 2024
 
 OUTPUT FILE NAME:   <Control_App.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00002195
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00002249
 
 
 MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00040000  000023d4  0003dc2c  R  X
-  SRAM                  20000000   00008000  00000220  00007de0  RW X
+  FLASH                 00000000   00040000  0000247c  0003db84  R  X
+  SRAM                  20000000   00008000  0000024c  00007db4  RW X
 
 
 SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    000023d4   000023d4    r-x
+00000000    00000000    00002480   00002480    r-x
   00000000    00000000    0000026c   0000026c    r-- .intvecs
-  0000026c    0000026c    00001fdc   00001fdc    r-x .text
-  00002248    00002248    00000168   00000168    r-- .const
-  000023b0    000023b0    00000024   00000024    r-- .cinit
-20000000    20000000    00000220   00000000    rw-
+  0000026c    0000026c    00002060   00002060    r-x .text
+  000022cc    000022cc    00000168   00000168    r-- .const
+  00002438    00002438    00000048   00000048    r-- .cinit
+20000000    20000000    0000024c   00000000    rw-
   20000000    20000000    00000200   00000000    rw- .stack
-  20000200    20000200    00000020   00000000    rw- .data
+  20000200    20000200    0000004c   00000000    rw- .data
 
 
 SECTION ALLOCATION MAP
@@ -37,47 +37,50 @@ section   page    origin      length       input sections
 .intvecs   0    00000000    0000026c     
                   00000000    0000026c     tm4c123gh6pm_startup_ccs.obj (.intvecs)
 
-.text      0    0000026c    00001fdc     
+.text      0    0000026c    00002060     
                   0000026c    00001318     Port.obj (.text)
-                  00001584    0000034c     Dio.obj (.text)
-                  000018d0    00000310     uart.obj (.text)
-                  00001be0    000001b6     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_add_t2.asm.obj (.text)
-                  00001d96    00000002     --HOLE-- [fill = 0]
-                  00001d98    0000013c     control_app.obj (.text)
-                  00001ed4    000000fc     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_mul_t2.asm.obj (.text)
-                  00001fd0    0000009c                                   : memcpy_t2.asm.obj (.text)
-                  0000206c    00000068                                   : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
-                  000020d4    00000044                                   : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
-                  00002118    00000044                                   : fd_tou_t2.asm.obj (.text)
-                  0000215c    00000038                                   : fs_tod_t2.asm.obj (.text)
-                  00002194    00000034                                   : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
-                  000021c8    00000030     main.obj (.text)
-                  000021f8    00000018     rtsv7M4_T_le_v4SPD16_eabi.lib : ll_mul_t2.asm.obj (.text)
-                  00002210    00000016     Det.obj (.text)
-                  00002226    0000000e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  00002234    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
-                  00002240    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
-                  00002244    00000004                                   : exit.c.obj (.text:abort:abort)
+                  00001584    00000350     uart.obj (.text)
+                  000018d4    0000034c     Dio.obj (.text)
+                  00001c20    000001b6     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_add_t2.asm.obj (.text)
+                  00001dd6    00000002     --HOLE-- [fill = 0]
+                  00001dd8    0000013c     control_app.obj (.text)
+                  00001f14    000000fc     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_mul_t2.asm.obj (.text)
+                  00002010    0000009c                                   : memcpy_t2.asm.obj (.text)
+                  000020ac    00000074     main.obj (.text)
+                  00002120    00000068     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  00002188    00000044                                   : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
+                  000021cc    00000044                                   : fd_tou_t2.asm.obj (.text)
+                  00002210    00000038                                   : fs_tod_t2.asm.obj (.text)
+                  00002248    00000034                                   : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
+                  0000227c    00000018                                   : ll_mul_t2.asm.obj (.text)
+                  00002294    00000016     Det.obj (.text)
+                  000022aa    0000000e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  000022b8    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
+                  000022c4    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+                  000022c8    00000004                                   : exit.c.obj (.text:abort:abort)
 
-.const     0    00002248    00000168     
-                  00002248    00000158     Port_PBcfg.obj (.const:Port_Configuration)
-                  000023a0    00000010     Dio_PBcfg.obj (.const:Dio_Configuration)
+.const     0    000022cc    00000168     
+                  000022cc    00000158     Port_PBcfg.obj (.const:Port_Configuration)
+                  00002424    00000010     Dio_PBcfg.obj (.const:Dio_Configuration)
 
-.cinit     0    000023b0    00000024     
-                  000023b0    00000014     (.cinit..data.load) [load image, compression = lzss]
-                  000023c4    00000008     (__TI_handler_table)
-                  000023cc    00000008     (__TI_cinit_table)
+.cinit     0    00002438    00000048     
+                  00002438    00000037     (.cinit..data.load) [load image, compression = lzss]
+                  0000246f    00000001     --HOLE-- [fill = 0]
+                  00002470    00000008     (__TI_handler_table)
+                  00002478    00000008     (__TI_cinit_table)
 
 .init_array 
 *          0    00000000    00000000     UNINITIALIZED
 
-.data      0    20000200    00000020     UNINITIALIZED
-                  20000200    0000000c     uart_PBcfg.obj (.data:uart5_cfg)
-                  2000020c    00000005     Dio.obj (.data)
-                  20000211    00000003     --HOLE--
-                  20000214    00000005     Port.obj (.data)
-                  20000219    00000003     --HOLE--
-                  2000021c    00000004     uart.obj (.data)
+.data      0    20000200    0000004c     UNINITIALIZED
+                  20000200    00000020     uart.obj (.data:uart_bases)
+                  20000220    0000000c     uart_PBcfg.obj (.data:uart0_cfg)
+                  2000022c    0000000c     uart_PBcfg.obj (.data:uart2_cfg)
+                  20000238    00000005     Dio.obj (.data)
+                  2000023d    00000003     --HOLE--
+                  20000240    00000005     Port.obj (.data)
+                  20000245    00000003     --HOLE--
+                  20000248    00000004     uart.obj (.data)
 
 .stack     0    20000000    00000200     UNINITIALIZED
                   20000000    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.stack)
@@ -92,9 +95,9 @@ MODULE SUMMARY
        ------                         ----   -------   -------
     .\
        tm4c123gh6pm_startup_ccs.obj   12     620       0      
-       main.obj                       48     0         0      
+       main.obj                       116    0         0      
     +--+------------------------------+------+---------+---------+
-       Total:                         60     620       0      
+       Total:                         128    620       0      
                                                               
     .\Critical_Files\
        Det.obj                        22     0         0      
@@ -114,10 +117,10 @@ MODULE SUMMARY
        Total:                         4888   344       5      
                                                               
     .\Uart_Driver\
-       uart.obj                       784    0         4      
-       uart_PBcfg.obj                 0      0         12     
+       uart.obj                       848    0         36     
+       uart_PBcfg.obj                 0      0         24     
     +--+------------------------------+------+---------+---------+
-       Total:                         784    0         16     
+       Total:                         848    0         60     
                                                               
     .\control_driver\
        control_app.obj                316    0         0      
@@ -141,20 +144,20 @@ MODULE SUMMARY
        Total:                         1240   0         0      
                                                               
        Stack:                         0      0         512    
-       Linker Generated:              0      36        0      
+       Linker Generated:              0      71        0      
     +--+------------------------------+------+---------+---------+
-       Grand Total:                   8154   1016      538    
+       Grand Total:                   8286   1051      582    
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 000023cc records: 1, size/record: 8, table size: 8
-	.data: load addr=000023b0, load size=00000014 bytes, run addr=20000200, run size=00000020 bytes, compression=lzss
+__TI_cinit_table @ 00002478 records: 1, size/record: 8, table size: 8
+	.data: load addr=00002438, load size=00000037 bytes, run addr=20000200, run size=0000004c bytes, compression=lzss
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 000023c4 records: 2, size/record: 4, table size: 8
+__TI_handler_table @ 00002470 records: 2, size/record: 4, table size: 8
 	index: 0, handler: __TI_decompress_lzss
 	index: 1, handler: __TI_decompress_none
 
@@ -163,74 +166,76 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 
 address   name                          
 -------   ----                          
-00002245  C$$EXIT                       
-00001e8d  Delay_MS                      
-00002211  Det_ReportError               
-000023a0  Dio_Configuration             
-0000179b  Dio_FlipChannel               
-00001763  Dio_GetVersionInfo            
-00001585  Dio_Init                      
-00001689  Dio_ReadChannel               
-000015a9  Dio_WriteChannel              
-00002248  Port_Configuration            
+000022c9  C$$EXIT                       
+00001ecd  Delay_MS                      
+00002295  Det_ReportError               
+00002424  Dio_Configuration             
+00001aeb  Dio_FlipChannel               
+00001ab3  Dio_GetVersionInfo            
+000018d5  Dio_Init                      
+000019d9  Dio_ReadChannel               
+000018f9  Dio_WriteChannel              
+000022cc  Port_Configuration            
 00000d9b  Port_GetVersionInfo           
 0000026d  Port_Init                     
 00000ce3  Port_RefreshPortDirection     
 00000bf7  Port_SetPinDirection          
 00000de3  Port_SetPinMode               
-00002235  ResetISR                      
-00001b79  UART_ReceiveData              
-00001b19  UART_ReceiveString            
-00001b51  UART_SendData                 
-00001af3  UART_SendString               
-00001ab3  UART_sendByte                 
+000022b9  ResetISR                      
+00001881  UART_ReceiveData              
+000017ed  UART_ReceiveString            
+00001831  UART_SendData                 
+000017bf  UART_SendString               
+00001767  UART_sendByte                 
 20000200  __STACK_END                   
 00000200  __STACK_SIZE                  
 20000200  __STACK_TOP                   
-000023cc  __TI_CINIT_Base               
-000023d4  __TI_CINIT_Limit              
-000023c4  __TI_Handler_Table_Base       
-000023cc  __TI_Handler_Table_Limit      
-000020d5  __TI_auto_init_nobinit_nopinit
-0000206d  __TI_decompress_lzss          
-00002227  __TI_decompress_none          
+00002478  __TI_CINIT_Base               
+00002480  __TI_CINIT_Limit              
+00002470  __TI_Handler_Table_Base       
+00002478  __TI_Handler_Table_Limit      
+00002189  __TI_auto_init_nobinit_nopinit
+00002121  __TI_decompress_lzss          
+000022ab  __TI_decompress_none          
 ffffffff  __TI_pprof_out_hndl           
 ffffffff  __TI_prof_data_size           
 ffffffff  __TI_prof_data_start          
 00000000  __TI_static_base__            
-00002119  __aeabi_d2uiz                 
-00001beb  __aeabi_dadd                  
-00001ed5  __aeabi_dmul                  
-00001be1  __aeabi_dsub                  
-0000215d  __aeabi_f2d                   
-000021f9  __aeabi_lmul                  
-00001fd1  __aeabi_memcpy                
-00001fd1  __aeabi_memcpy4               
-00001fd1  __aeabi_memcpy8               
+000021cd  __aeabi_d2uiz                 
+00001c2b  __aeabi_dadd                  
+00001f15  __aeabi_dmul                  
+00001c21  __aeabi_dsub                  
+00002211  __aeabi_f2d                   
+0000227d  __aeabi_lmul                  
+00002011  __aeabi_memcpy                
+00002011  __aeabi_memcpy4               
+00002011  __aeabi_memcpy8               
 ffffffff  __binit__                     
 ffffffff  __c_args__                    
 UNDEFED   __mpu_init                    
 20000000  __stack                       
 20000000  __start___llvm_prf_cnts       
 20000000  __stop___llvm_prf_cnts        
-00002195  _c_int00_noargs               
+00002249  _c_int00_noargs               
 UNDEFED   _system_post_cinit            
-00002241  _system_pre_init              
-00002245  abort                         
+000022c5  _system_pre_init              
+000022c9  abort                         
 ffffffff  binit                         
-00001dfd  car_backword                  
-00001dd9  car_forword                   
-00001d99  car_init                      
-00001e45  car_left                      
-00001e31  car_right                     
-00001e59  car_stop                      
+00001e3d  car_backword                  
+00001e19  car_forword                   
+00001dd9  car_init                      
+00001e85  car_left                      
+00001e71  car_right                     
+00001e99  car_stop                      
 00000000  g_pfnVectors                  
-000021c9  main                          
-00001fd1  memcpy                        
-20000200  uart5_cfg                     
-000018d1  uartInit                      
-00001ad3  uart_RecieveByte              
-2000021c  uart_ptr                      
+000020ad  main                          
+00002011  memcpy                        
+20000220  uart0_cfg                     
+2000022c  uart2_cfg                     
+00001585  uartInit                      
+00001793  uart_RecieveByte              
+20000200  uart_bases                    
+20000248  uart_ptr                      
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -245,58 +250,60 @@ address   name
 00000ce3  Port_RefreshPortDirection     
 00000d9b  Port_GetVersionInfo           
 00000de3  Port_SetPinMode               
-00001585  Dio_Init                      
-000015a9  Dio_WriteChannel              
-00001689  Dio_ReadChannel               
-00001763  Dio_GetVersionInfo            
-0000179b  Dio_FlipChannel               
-000018d1  uartInit                      
-00001ab3  UART_sendByte                 
-00001ad3  uart_RecieveByte              
-00001af3  UART_SendString               
-00001b19  UART_ReceiveString            
-00001b51  UART_SendData                 
-00001b79  UART_ReceiveData              
-00001be1  __aeabi_dsub                  
-00001beb  __aeabi_dadd                  
-00001d99  car_init                      
-00001dd9  car_forword                   
-00001dfd  car_backword                  
-00001e31  car_right                     
-00001e45  car_left                      
-00001e59  car_stop                      
-00001e8d  Delay_MS                      
-00001ed5  __aeabi_dmul                  
-00001fd1  __aeabi_memcpy                
-00001fd1  __aeabi_memcpy4               
-00001fd1  __aeabi_memcpy8               
-00001fd1  memcpy                        
-0000206d  __TI_decompress_lzss          
-000020d5  __TI_auto_init_nobinit_nopinit
-00002119  __aeabi_d2uiz                 
-0000215d  __aeabi_f2d                   
-00002195  _c_int00_noargs               
-000021c9  main                          
-000021f9  __aeabi_lmul                  
-00002211  Det_ReportError               
-00002227  __TI_decompress_none          
-00002235  ResetISR                      
-00002241  _system_pre_init              
-00002245  C$$EXIT                       
-00002245  abort                         
-00002248  Port_Configuration            
-000023a0  Dio_Configuration             
-000023c4  __TI_Handler_Table_Base       
-000023cc  __TI_CINIT_Base               
-000023cc  __TI_Handler_Table_Limit      
-000023d4  __TI_CINIT_Limit              
+00001585  uartInit                      
+00001767  UART_sendByte                 
+00001793  uart_RecieveByte              
+000017bf  UART_SendString               
+000017ed  UART_ReceiveString            
+00001831  UART_SendData                 
+00001881  UART_ReceiveData              
+000018d5  Dio_Init                      
+000018f9  Dio_WriteChannel              
+000019d9  Dio_ReadChannel               
+00001ab3  Dio_GetVersionInfo            
+00001aeb  Dio_FlipChannel               
+00001c21  __aeabi_dsub                  
+00001c2b  __aeabi_dadd                  
+00001dd9  car_init                      
+00001e19  car_forword                   
+00001e3d  car_backword                  
+00001e71  car_right                     
+00001e85  car_left                      
+00001e99  car_stop                      
+00001ecd  Delay_MS                      
+00001f15  __aeabi_dmul                  
+00002011  __aeabi_memcpy                
+00002011  __aeabi_memcpy4               
+00002011  __aeabi_memcpy8               
+00002011  memcpy                        
+000020ad  main                          
+00002121  __TI_decompress_lzss          
+00002189  __TI_auto_init_nobinit_nopinit
+000021cd  __aeabi_d2uiz                 
+00002211  __aeabi_f2d                   
+00002249  _c_int00_noargs               
+0000227d  __aeabi_lmul                  
+00002295  Det_ReportError               
+000022ab  __TI_decompress_none          
+000022b9  ResetISR                      
+000022c5  _system_pre_init              
+000022c9  C$$EXIT                       
+000022c9  abort                         
+000022cc  Port_Configuration            
+00002424  Dio_Configuration             
+00002470  __TI_Handler_Table_Base       
+00002478  __TI_CINIT_Base               
+00002478  __TI_Handler_Table_Limit      
+00002480  __TI_CINIT_Limit              
 20000000  __stack                       
 20000000  __start___llvm_prf_cnts       
 20000000  __stop___llvm_prf_cnts        
 20000200  __STACK_END                   
 20000200  __STACK_TOP                   
-20000200  uart5_cfg                     
-2000021c  uart_ptr                      
+20000200  uart_bases                    
+20000220  uart0_cfg                     
+2000022c  uart2_cfg                     
+20000248  uart_ptr                      
 ffffffff  __TI_pprof_out_hndl           
 ffffffff  __TI_prof_data_size           
 ffffffff  __TI_prof_data_start          
@@ -306,4 +313,4 @@ ffffffff  binit
 UNDEFED   __mpu_init                    
 UNDEFED   _system_post_cinit            
 
-[68 symbols]
+[70 symbols]

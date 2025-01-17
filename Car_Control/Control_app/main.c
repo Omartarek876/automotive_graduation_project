@@ -29,35 +29,27 @@ int main(void) {
         {
         case 1 :
              car_forword();
-             UART_sendByte(0 , dataReceived); // for test
-             UART_SendString(2 , "ack1");
+             UART_SendString(2 , "ACK1");
              break;
         case 2 :
              car_backword();
-             UART_sendByte(0 , dataReceived); // for test
-             UART_SendString(2 , "ack2");
+             UART_SendString(2 , "ACK2");
              break;
         case 3 :
              car_right ();
-             UART_sendByte(0 , dataReceived); // for test
-             UART_SendString(2 , "ack3");
+             UART_SendString(2 , "ACK3");
              break;
         case 4 :
              car_left ();
-             UART_sendByte(0 , dataReceived); // for test
-             UART_SendString(2 , "ack4");
+             UART_SendString(2 , "ACK4");
              break;
         case 5 :
              car_stop ();
-             UART_sendByte(0 , dataReceived); // for test
-             UART_SendString(2 , "ack5");
+             UART_SendString(2 , "ACK5");
              break;
         default :
-            UART_sendByte(0 , dataReceived); // for test
-            UART_SendString(0 , "none\n");
-            UART_SendString(2 , "ack0");
+            UART_SendString(2 , "N-ACK");
             break;
         }
     }
-
 }

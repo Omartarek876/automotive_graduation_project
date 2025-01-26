@@ -1,69 +1,60 @@
-/*
+
+
+/**
  * main.c
- *
- *  Created on: Aug 13, 2024
- *      Author: Omar Tarek
  */
 
-#include <NVIC_Driver/NVIC.h>
-#include "Port_Driver/Port.h"
-#include "Dio_Driver/Dio.h"
-#include "SYSTICK_Driver/SYSTICK.h"
-#include "Uart_Driver/uart.h"
-#include "Critical_Files/private_registers.h"
+#include "Port_Driver/PORT_Cfg.h"
+#include "Int_Ctrl/IntCtrl_Cfg.h"
+#include "Port_Driver/PORT.h"
+#include "Int_Ctrl/IntCtrl.h"
+#include "Gptt_Driver/Gpt.h"
+#include "Gptt_Driver/Gpt_cfg.h"
+#include "Pwwm_Driver/PWM.h"
+#include "Pwwm_Driver/PWM_Cfg.h"
 
+//Test_PWM_Generation_NOISR_Configs(void);
 
-/* SysTick Timer ISR ... No need to clear the trigger flag (COUNT) bit ... it cleared automatically by the HW */
-/*
-void SysTick_Handler(void)
+int main(void)
 {
-    Dio_FlipChannel(DioConf_LED1_CHANNEL_ID_INDEX);
-}
-*/
-/*
-void main (void)
-{
-        Port_Init(&Port_Configuration);
-
-        Dio_Init(&Dio_Configuration);
-
-        SysTick_Init(&systickConfiguration);
-
-        NVIC_EnableInterrupt(30);
+    int i =0;
+    Port_Init(&Port_Configuration);
+    Gpt_Init();
+    IntCtrl_Init();
+    pwm_init();
+    pwm_enable(PWM_NUM_0_1_A);
     while(1)
     {
+        Delay_ms(50);
+        pwm_AutomaticDutyCycle(PWM_NUM_0_1_A, i);
+        i++;
+        if (i > 100)
+        {
+            i = 0;
+        }
 
     }
-
 }
-*/
-
-
-
-int main(void) {
-    uint8 byteReceived;
-    uint8 data[5];
-    uint8 receivedstr[20];
+/*
+Test_PWM_Generation_NOISR_Configs(void)
+{
+    int i =0;
     Port_Init(&Port_Configuration);
-
-    uartInit(&uart0_cfg);
-    uartInit(&uart2_cfg);
-
-    while (1) {
-        // Receive and Send Byte by Byte
-/*
-        byteReceived = uart_RecieveByte(1);  // Receive from UART1
-        UART_sendByte(0, byteReceived);      // Send to UART0
-*/
-/*
-        UART_ReceiveString(2, receivedstr); // Receive string from UART2
-        UART_SendString(0, receivedstr);   // Send string to UART0
-        UART_SendString(0, "\r\n");
-*/
-
-        UART_ReceiveData(2,data,5);
-        UART_SendData(0, data, 5);
+    Gpt_Init();
+    IntCtrl_Init();
+    pwm_init();
+    pwm_enable(PWM_NUM_0_1_A);
+    while(1)
+    {
+        Delay_ms(50);
+        pwm_AutomaticDutyCycle(PWM_NUM_0_1_A, i);
+        i++;
+        if (i > 100)
+        {
+            i = 0;
+        }
 
     }
-
 }
+*/
+

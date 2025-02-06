@@ -1,4 +1,4 @@
- /******************************************************************************
+/******************************************************************************
 * File Name: <Det.c>
 * Author : Omar Tarek
 * Description: Det stores the development errors reported by other modules.
@@ -19,6 +19,5 @@ Std_ReturnType Det_ReportError( uint16 ModuleId,
     {
 
     }
-    return E_OK;
+    return E_OK;
 }
-

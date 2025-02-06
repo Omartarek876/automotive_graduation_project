@@ -192,15 +192,15 @@ NVIC Registers
 #define NVIC_DIS3_REG             (*((volatile uint32 *)0xE000E18C))
 #define NVIC_DIS4_REG             (*((volatile uint32 *)0xE000E190))
 
-/*Setting Priorities for System's [Processor] Priorities*/
-#define NVIC_SYSTEM_PRI1_REGISTER          (*(volatile unsigned long*)0xE000ED18)
-#define NVIC_SYSTEM_PRI2_REGISTER          (*(volatile unsigned long*)0xE000ED1C)
-#define NVIC_SYSTEM_PRI3_REGISTER          (*(volatile unsigned long*)0xE000ED20)
+//Setting Priorities for System's [Processor] Priorities
+#define NVIC_SYSTEM_PRI1_REGISTER          ((volatile unsigned long)0xE000ED18)
+#define NVIC_SYSTEM_PRI2_REGISTER          ((volatile unsigned long)0xE000ED1C)
+#define NVIC_SYSTEM_PRI3_REGISTER          ((volatile unsigned long)0xE000ED20)
 
-/*To Enable Bus Faults or Memory Faults or to force A SW interrupt*/
-#define NVIC_SYSTEM_HANDLER_CONTROL_REGISTER    (*(volatile unsigned long*)0xE000ED24)
-#define NVIC_SYSTEM_CFG_CTRL_REGISTER           (*(volatile unsigned long*)0xE000ED14)
-#define NVIC_SYSTEM_INT_CTRL_REGISTER           (*(volatile unsigned long*)0xE000ED04)
+//To Enable Bus Faults or Memory Faults or to force A SW interrupt
+#define NVIC_SYSTEM_HANDLER_CONTROL_REGISTER    ((volatile unsigned long)0xE000ED24)
+#define NVIC_SYSTEM_CFG_CTRL_REGISTER           ((volatile unsigned long)0xE000ED14)
+#define NVIC_SYSTEM_INT_CTRL_REGISTER           ((volatile unsigned long)0xE000ED04)
 
 
 
@@ -450,9 +450,189 @@ Flash Registers
 #define FLASH_FMPPE2_REG          (*((volatile uint32 *)0x400FE408))
 #define FLASH_FMPPE3_REG          (*((volatile uint32 *)0x400FE40C))
 
-// PWM registers (PWM0)
+//ex
+
+//*****************************************************************************
+//
+// PWM registers (PWM)
 //
 //*****************************************************************************
+
+#define PWM0_BASE_ADDERSS       0x40028000
+#define PWM1_BASE_ADDERSS       0x40029000
+
+#define PWM_CTL_OFFSET              0x000
+#define PWM_SYNC_OFFSET             0x004
+#define PWM_ENABLE_OFFSET           0x008
+#define PWM_INVERT_OFFSET           0x00C
+#define PWM_FAULT_OFFSET            0x010
+#define PWM_INTEN_OFFSET            0x014
+#define PWM_RIS_OFFSET              0x018
+#define PWM_ISC_OFFSET              0x01C
+#define PWM_STATUS_OFFSET           0x020
+#define PWM_FAULTVAL_OFFSET         0x024
+#define PWM_ENUPD_OFFSET            0x028
+
+#define PWM_N_CTL_OFFSET                 0x040
+#define PWM_N_INTEN_OFFSET               0x044
+#define PWM_N_OFFSETIS_OFFSET            0x048
+#define PWM_N_ISC_OFFSET                 0x04C
+#define PWM_N_LOAD_OFFSET                0x050
+#define PWM_N_COUNT_OFFSET               0x054
+#define PWM_N_CMPA_OFFSET                0x058
+#define PWM_N_CMPB_OFFSET                0x05C
+#define PWM_N_GENA_OFFSET                0x060
+#define PWM_N_GENB_OFFSET                0x064
+#define PWM_N_DBCTL_OFFSET               0x068
+#define PWM_N_DBRISE_OFFSET              0x06C
+#define PWM_N_DBFALL_OFFSET              0x070
+#define PWM_N_FLTSRC0_OFFSET             0x074
+#define PWM_N_FLTSRC1_OFFSET             0x078
+#define PWM_N_MINFLTPER_OFFSET           0x07C
+
+//*****************************************************************************
+//
+// System Control registers (SYSCTL)
+//
+//*****************************************************************************
+
+#define SYSCTL_RCGCPWM_R        0x400FE640
+#define SYSCTL_RCC_REG_PWM      0x400FE060
+#define SYSCTL_RCC2_REG_PWM     0x400FE070
+#define SYSCTL_RCGCADC_BASE     0x400FE638
+
+#define SYSCTL_RCGCI2C          (*((volatile uint32 *)0x400FE620))
+#define SYSCTL_RCGCUART         (*((volatile uint32 *)0x400FE618))
+#define SYSCTL_RCGCSSI          (*((volatile uint32 *)0x400FE61C))
+
+/*****************************************************************************
+WatchDog Timer Registers
+*****************************************************************************/
+#define WDT0_LOAD_REG             (*((volatile uint32 *)0x40000000))
+#define WDT0_VALUE_REG            (*((volatile uint32 *)0x40000004))
+#define WDT0_CTL_REG              (*((volatile uint32 *)0x40000008))
+#define WDT0_ICR_REG              (*((volatile uint32 *)0x4000000C))
+#define WDT0_RIS_REG              (*((volatile uint32 *)0x40000010))
+#define WDT0_MIS_REG              (*((volatile uint32 *)0x40000014))
+#define WDT0_TEST_REG             (*((volatile uint32 *)0x40000418))
+#define WDT0_LOCK_REG             (*((volatile uint32 *)0x40000C00))
+
+#define WDT1_LOAD_REG             (*((volatile uint32 *)0x40001000))
+#define WDT1_VALUE_REG            (*((volatile uint32 *)0x40001004))
+#define WDT1_CTL_REG              (*((volatile uint32 *)0x40001008))
+#define WDT1_ICR_REG              (*((volatile uint32 *)0x4000100C))
+#define WDT1_RIS_REG              (*((volatile uint32 *)0x40001010))
+#define WDT1_MIS_REG              (*((volatile uint32 *)0x40001014))
+#define WDT1_TEST_REG             (*((volatile uint32 *)0x40001418))
+#define WDT1_LOCK_REG             (*((volatile uint32 *)0x40001C00))
+
+#define GPTM_0_16_32_REG          (*((volatile uint32 *)0x40030000))
+#define GPTM_1_16_32_REG          (*((volatile uint32 *)0x40031000))
+#define GPTM_2_16_32_REG          (*((volatile uint32 *)0x40032000))
+#define GPTM_3_16_32_REG          (*((volatile uint32 *)0x40033000))
+#define GPTM_4_16_32_REG          (*((volatile uint32 *)0x40034000))
+#define GPTM_5_16_32_REG          (*((volatile uint32 *)0x40035000))
+
+#define GPTM_0_32_64_REG          (*((volatile uint32 *)0x40036000))
+#define GPTM_1_32_64_REG          (*((volatile uint32 *)0x40037000))
+#define GPTM_2_32_64_REG          (*((volatile uint32 *)0x4004C000))
+#define GPTM_3_32_64_REG          (*((volatile uint32 *)0x4004D000))
+#define GPTM_4_32_64_REG          (*((volatile uint32 *)0x4004E000))
+#define GPTM_5_32_64_REG          (*((volatile uint32 *)0x4004F000))
+
+
+#define GPTM_0_16_32_ADDRESS 0x40030000
+#define GPTM_1_16_32_ADDRESS 0x40031000
+#define GPTM_2_16_32_ADDRESS 0x40032000
+#define GPTM_3_16_32_ADDRESS 0x40033000
+#define GPTM_4_16_32_ADDRESS 0x40034000
+#define GPTM_5_16_32_ADDRESS 0x40035000
+
+#define GPTM_0_32_64_ADDRESS 0x40036000
+#define GPTM_1_32_64_ADDRESS 0x40037000
+#define GPTM_2_32_64_ADDRESS 0x4004C000
+#define GPTM_3_32_64_ADDRESS 0x4004D000
+#define GPTM_4_32_64_ADDRESS 0x4004E000
+#define GPTM_5_32_64_ADDRESS 0x4004F000
+
+#define GPTM_CFG_REG_OFFSET     0x000
+#define GPTM_TAMR_REG_OFFSET    0x004
+#define GPTM_TBMR_REG_OFFSET    0x008
+#define GPTM_CTL_REG_OFFSET     0x00C
+#define GPTM_SYNC_REG_OFFSET    0x010
+#define GPTM_IMR_REG_OFFSET     0x018
+#define GPTM_RIS_REG_OFFSET     0x01C
+#define GPTM_MIS_REG_OFFSET     0x020
+#define GPTM_ICR_REG_OFFSET     0x024
+#define GPTM_TAILR_REG_OFFSET   0x028
+#define GPTM_TBILR_REG_OFFSET   0x02C
+#define GPTM_TAMATCHR_REG_OFFSET 0x030
+#define GPTM_TBMATCHR_REG_OFFSET 0x034
+#define GPTM_TAPR_REG_OFFSET    0x038
+#define GPTM_TBPR_REG_OFFSET    0x03C
+#define GPTM_TAPMR_REG_OFFSET   0x040
+#define GPTM_TBPMR_REG_OFFSET   0x044
+#define GPTM_TAR_REG_OFFSET     0x048
+#define GPTM_TBR_REG_OFFSET     0x04C
+#define GPTM_TAV_REG_OFFSET     0x050
+#define GPTM_TBV_REG_OFFSET     0x054
+#define GPTM_RTCPD_REG_OFFSET   0x058
+#define GPTM_TAPS_REG_OFFSET    0x05C
+#define GPTM_TBPS_REG_OFFSET    0x060
+#define GPTM_TAPV_REG_OFFSET    0x064
+#define GPTM_TBPV_REG_OFFSET    0x068
+#define GPTM_PP_REG_OFFSET      0xFC0
+
+
+
+/*****************************************************************************
+Nasted Vector Interrupt Controller (NVIC)
+*****************************************************************************/
+#define       NVIC_STCTRL                             (*((volatile uint32 *)0xE000E010))
+#define       NVIC_BASE                               (*((volatile uint32 *)0xE000E000))
+#define       NVIC_EN0                                (*((volatile uint32 *)0xE000E100))
+#define       NVIC_EN1                                (*((volatile uint32 *)0xE000E104))
+#define       NVIC_EN2                                (*((volatile uint32 *)0xE000E108))
+#define       NVIC_EN3                                (*((volatile uint32 *)0xE000E10C))
+#define       NVIC_EN4                                (*((volatile uint32 *)0xE000E110))
+#define       NVIC_DIS0                               (*((volatile uint32 *)0xE000E180))
+#define       NVIC_DIS1                               (*((volatile uint32 *)0xE000E184))
+#define       NVIC_DIS2                               (*((volatile uint32 *)0xE000E188))
+#define       NVIC_DIS3                               (*((volatile uint32 *)0xE000E18C))
+#define       NVIC_DIS4                               (*((volatile uint32 *)0xE000E190))
+#define       NVIC_PEND0                              (*((volatile uint32 *)0xE000E200))
+#define       NVIC_PEND1                              (*((volatile uint32 *)0xE000E204))
+#define       NVIC_PEND2                              (*((volatile uint32 *)0xE000E208))
+#define       NVIC_PEND3                              (*((volatile uint32 *)0xE000E20C))
+#define       NVIC_PEND4                              (*((volatile uint32 *)0xE000E210))
+#define       NVIC_UNPEND0                            (*((volatile uint32 *)0xE000E280))
+#define       NVIC_UNPEND1                            (*((volatile uint32 *)0xE000E284))
+#define       NVIC_UNPEND2                            (*((volatile uint32 *)0xE000E288))
+#define       NVIC_UNPEND3                            (*((volatile uint32 *)0xE000E28C))
+#define       NVIC_UNPEND4                            (*((volatile uint32 *)0xE000E290))
+#define       NVIC_ACTIVE0                            (*((volatile uint32 *)0xE000E300))
+#define       NVIC_ACTIVE1                            (*((volatile uint32 *)0xE000E304))
+#define       NVIC_ACTIVE2                            (*((volatile uint32 *)0xE000E308))
+#define       NVIC_ACTIVE3                            (*((volatile uint32 *)0xE000E30C))
+#define       NVIC_ACTIVE4                            (*((volatile uint32 *)0xE000E310))
+#define       NVIC_PRI0                               (*((volatile uint32 *)0xE000E400))
+#define       NVIC_PRI0_ADDRESS                       0xE000E400
+#define       NVIC_SWTRIG                             (*((volatile uint32 *)0xE000EF00))
+#define       NVIC_INTCTRL                            (*((volatile uint32 *)0xE000ED04))
+#define       NVIC_VTABLE                             (*((volatile uint32 *)0xE000ED08))
+#define       NVIC_APINT                              (*((volatile uint32 *)0xE000ED0C))
+#define       NVIC_SYSPRI1                            (*((volatile uint32 *)0xE000ED18))
+#define       NVIC_SYSPRI2                            (*((volatile uint32 *)0xE000ED1C))
+#define       NVIC_SYSPRI3                            (*((volatile uint32 *)0xE000ED20))
+#define       NVIC_SYSHNDCTRL                         (*((volatile uint32 *)0xE000ED24))
+#define       NVIC_FAULTSTAT                          (*((volatile uint32 *)0xE000ED28))
+#define       NVIC_HFAULTSTAT                         (*((volatile uint32 *)0xE000ED2C))
+
+
+
+/*
+
+// PWM registers (PWM0)
 #define PWM0_CTL_R              (*((volatile uint32 *)0x40028000))
 #define PWM0_SYNC_R             (*((volatile uint32 *)0x40028004))
 #define PWM0_ENABLE_R           (*((volatile uint32 *)0x40028008))
@@ -540,14 +720,13 @@ Flash Registers
 #define PWM0_3_FLTSTAT1_R       (*((volatile uint32 *)0x40028988))
 #define PWM0_PP_R               (*((volatile uint32 *)0x40028FC0))
 
-//*****************************************************************************
+
 
 #define SYSCTL_RIS_PLLLRIS         0x00000040  // PLL Lock Raw Interrupt Status
 
 
 // PWM registers (PWM1)
-//
-//*****************************************************************************
+
 #define PWM1_CTL_R              (*((volatile uint32 *)0x40029000))
 #define PWM1_SYNC_R             (*((volatile uint32 *)0x40029004))
 #define PWM1_ENABLE_R           (*((volatile uint32 *)0x40029008))
@@ -635,6 +814,6 @@ Flash Registers
 #define PWM1_3_FLTSTAT1_R       (*((volatile uint32 *)0x40029988))
 #define PWM1_PP_R               (*((volatile uint32 *)0x40029FC0))
 
-//*****************************************************************************
+*/
 
 #endif

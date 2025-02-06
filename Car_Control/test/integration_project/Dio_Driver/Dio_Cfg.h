@@ -45,8 +45,8 @@
 
 /* DIO Configured Port ID's  */
 #define DioConf_LED1_PORT_NUM                (Dio_PortType)5 /* PORTF */
-#define DioConf_LED2_PORT_NUM                (Dio_PortType)5 /* PORTF */
-#define DioConf_LED3_PORT_NUM                (Dio_PortType)5 /* PORTF */
+//#define DioConf_LED2_PORT_NUM                (Dio_PortType)5 /* PORTF */
+//#define DioConf_LED3_PORT_NUM                (Dio_PortType)5 /* PORTF */
 #define DioConf_SW1_PORT_NUM                 (Dio_PortType)5 /* PORTF */
 
 /* DIO Configured Channel ID's */

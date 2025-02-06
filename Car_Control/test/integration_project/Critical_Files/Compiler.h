@@ -1,4 +1,4 @@
- /******************************************************************************
+/******************************************************************************
 * File Name: <Compiler.h>
 * Author : Omar Tarek
 * Description: This file contains the definitions and macros specified by
@@ -47,6 +47,6 @@
 #define LOCAL_INLINE      static inline
 
 /* This is used to define the abstraction of compiler keyword static */
-#define STATIC            static
+#define STATIC            static
 
 #endif

@@ -1,4 +1,4 @@
-/******************************************************************************
+ /******************************************************************************
 * File Name: <Common_Macros.h>
 * Author : Omar Tarek
 * Description: Header file for Common Macros
@@ -32,6 +32,6 @@
 /* Check if a specific bit is cleared in any register and return true if yes */
 #define BIT_IS_CLEAR(REG,BIT) ( !(REG & (1<<BIT)) )
 
-#define GET_BIT(REG,BIT) ( ( REG & (1<<BIT) ) >> BIT )
+#define GET_BIT(REG,BIT) ( ( REG & (1<<BIT) ) >> BIT )
 
 #endif

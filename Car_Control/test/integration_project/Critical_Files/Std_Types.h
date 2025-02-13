@@ -1,4 +1,4 @@
-/******************************************************************************
+ /******************************************************************************
 * File Name: <Std_Types.h>
 * Author : Omar Tarek
 * Description: General type definitions
@@ -50,15 +50,6 @@ typedef struct
   uint8 sw_patch_version;
 } Std_VersionInfoType;
 
-// ex
-typedef enum{
-    Disable_EnumType, Enable_EnumType
-}Enable_vs_DisableType;
-
-//ex
-#define Enable          1
-#define Disable         0
-
 #define STD_HIGH        0x01U       /* Standard HIGH */
 #define STD_LOW         0x00U       /* Standard LOW */
 
@@ -71,21 +62,4 @@ typedef enum{
 #define E_OK            ((Std_ReturnType)0x00U)      /* Function Return OK */
 #define E_NOT_OK        ((Std_ReturnType)0x01U)      /* Function Return NOT OK */
 
-#define RETURN_ERROR    0x00U       /* There is Error */
-#define RETURN_FINE     0x01U       /* There is No Error */
-#define RETURN_NORMAL     0x01U       /* There is No Error */
-
-
-/*
-void Delay_ms(unsigned long long const n){
-    volatile unsigned long long  count = 0;
-    uint8 i;
-    for(i = 0; i < CPU_CLOCK ; i++){
-        count = n  * 77 ;
-        while(count--);
-    }
-}
-*/
-
-
-#endif /* STD_TYPES_H */
+#endif /* STD_TYPES_H */

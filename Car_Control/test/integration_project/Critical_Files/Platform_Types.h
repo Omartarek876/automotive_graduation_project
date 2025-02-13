@@ -1,4 +1,4 @@
-/******************************************************************************
+ /******************************************************************************
 * File Name: <Platform_Types.h>
 * Author : Omar Tarek
 * Description: Platform types for ARM Cortex-M4F.
@@ -52,7 +52,7 @@
  * Platform type and endianess definitions, specific for ARM Cortex-M4F
  */
 #define CPU_TYPE            CPU_TYPE_32
-#define CPU_CLOCK           (uint16)20U
+
 #define CPU_BIT_ORDER       LSB_FIRST
 #define CPU_BYTE_ORDER      LOW_BYTE_FIRST
 
@@ -78,34 +78,8 @@
 #endif
 
 
-//NULL POINTER
+/*NULL POINTER*/
 #define NULL_PTR  ((void*)0)
-
-
-
-void Delay_ms(unsigned long long const n);
-
-//ex
-#define REG_ORING_WITH_VALUE(REG, VAL) (REG |= VAL)
-#define REG_ORING_VALUE_NO_CASTING(REG, VAL) (REG |= VAL)
-#define REG_ORING_ONE_BIT_NO_CASTING(REG, CNT) (REG |= 1<<CNT)
-#define REG_CLEAR_ONE_BIT_NO_CASTING(REG, CNT) (REG &= (~ (1<<CNT)))
-
-#define REG_ORING_POINTED_REG(REG, VAL)     ((*REG) |= VAL)
-
-#define REG_CLEAR_CASTING_POINTED(REG)       ( (*((volatile uint32 *)(REG))) &= 0x00000000)
-#define REG_CLEAR_THOSE_BITS_CASTING_POINTED(REG, VAL)  ( (*((volatile uint32 *)(REG))) &= ~(VAL))
-#define REG_ORING_CASTING_POINTED(REG, VAL)  ( (*((volatile uint32 *)(REG))) |= VAL)
-#define REG_WRITE_CASTING_POINTED(REG, VAL)  ( (*((volatile uint32 *)(REG))) = VAL)
-#define REG_ORING_ONE_BIT_CASTING_POINTED(REG, CNT)     ( (*((volatile uint32 *)(REG))) |= (1<<(CNT) ))
-#define REG_CLEAR_ONE_BIT_CASTING_POINTED(REG, CNT)     ( (*((volatile uint32 *)(REG))) &= ~(1<<(CNT)))
-
-#define REG_READ_CASTING_POINTED(x, REG)              (x = ( (*((volatile uint32 *)(REG))) ) )
-
-
-#define REG_SET_PEIPTH_BB_PTR(REG,BIT_NUM)      ( (volatile uint32)((uint8*)0x42000000 + ( (((uint8*)(REG)-(uint8*)0x40000000) * 32) + ((BIT_NUM) * 4))) = 1)
-#define REG_CLR_PERIPH_BB_PTR(REG,BIT_NUM)      ( (volatile uint32)((uint8*)0x42000000 + ( (((uint8*)(REG)-(uint8*)0x40000000) * 32) + ((BIT_NUM) * 4))) = 0)
-
 
 
 
@@ -122,11 +96,4 @@ typedef signed long long      sint64;         /* -9223372036854775808 .. 9223372
 typedef float                 float32;
 typedef double                float64;
 
-//char* int_to_string(uint32 var);
-
-//void selectionSort(sint32 arr[], uint8 n);
-
-void WriteUsingBB(uint32* Ptr, uint32 Value);
-
-
-#endif /* PLATFORM_TYPES_H */
+#endif /* PLATFORM_TYPES_H */

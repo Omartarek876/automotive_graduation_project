@@ -71,5 +71,15 @@ void Delay_MS(unsigned long long n)
     while(count++ < (NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND * n) );
 }
 
+/*
+void set_motor_speed(uint8 speed) {
+    // Convert speed percentage (0-100%) to duty cycle (0-16000 for 1 kHz PWM)
+    uint16 dutyCycle = (speed * PWM_DEFAULT_LOAD) / 100;
+
+    // Set the same speed for both motors
+    PWM_SetDutyCycle(ENA_PWM_MODULE, ENA_PWM_GEN, ENA_PWM_OUTPUT, dutyCycle);
+    PWM_SetDutyCycle(ENB_PWM_MODULE, ENB_PWM_GEN, ENB_PWM_OUTPUT, dutyCycle);
+}
+*/
 
 #endif /* CONTROL_DRIVER_CONTROL_APP_C_ */

@@ -10,7 +10,7 @@
 #include "Dio_Driver/Dio.h"
 #include "Uart_Driver/uart.h"
 #include "Critical_Files/private_registers.h"
-#include "control_driver/control_app.h"
+#include "Control_Driver/control_app.h"
 
 
 

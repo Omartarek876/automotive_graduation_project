@@ -21,6 +21,7 @@ void car_backword (void);
 void car_right (void);
 void car_left (void);
 void car_stop (void);
+void set_motor_speed(uint8 speed);
 
 
 #endif /* CONTROL_DRIVER_CONTROL_APP_H_ */

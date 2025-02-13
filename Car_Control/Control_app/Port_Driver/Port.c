@@ -233,43 +233,7 @@ void Port_Init(const Port_ConfigType* Port_Configuration)
                             {
                                 Det_ReportError(PORT_MODULE_ID, PORT_INSTANCE_ID, PORT_INIT_SID, PORT_E_PARAM_CONFIG);
                             }
-                            break;
-
-                         /* SSI MODE */
-                        case PORT_PIN_MODE_SSI :
-                            if ( (Pin_Id <= 24) && (Pin_Id >= 27) ) /* PD0--3 */
-                            {
-                                *(volatile uint32 *)((volatile uint8 *)PortGpio_Ptr+PORT_CTL_REG_OFFSET ) |= (0x00000001 <<(Port_PortPins[Pin_Id].Pin_Num * 4));
-                            }
-                            else if ( ( (Pin_Id >=2) && (Pin_Id <=5) ) ||  ( (Pin_Id >=12) && (Pin_Id <=15) )
-                                    ||  ( (Pin_Id >=38) && (Pin_Id <=41) ) ) /* PA2--5 ,PB4--7 ,PF0--3 */
-                            {
-                                *(volatile uint32 *)((volatile uint8 *)PortGpio_Ptr+PORT_CTL_REG_OFFSET ) |= (0x00000002 <<(Port_PortPins[Pin_Id].Pin_Num * 4));
-                            }
-                            else
-                            {
-                                Det_ReportError(PORT_MODULE_ID, PORT_INSTANCE_ID, PORT_INIT_SID, PORT_E_PARAM_CONFIG);
-                            }
-                            break;
-
-                         /* I2C MODE */
-                        case PORT_PIN_MODE_I2C :
-                            if ( (Pin_Id == 6) || (Pin_Id == 7) || (Pin_Id == 10) || (Pin_Id == 11)
-                                 || (Pin_Id == 24) || (Pin_Id == 25) || (Pin_Id == 36)
-                                 || (Pin_Id == 37) ) /* PA6,7 ,PB2,3 ,PD0,1 ,PE4,5 */
-                            {
-                                /* set the PMCx bit for this pin by 3 to use it as IIC pin*/
-                                *(volatile uint32 *)((volatile uint8 *)PortGpio_Ptr+PORT_CTL_REG_OFFSET ) |= (0x00000003 <<(Port_PortPins[Pin_Id].Pin_Num * 4));
-                            }
-                            else
-                            {
-                                Det_ReportError(PORT_MODULE_ID, PORT_INSTANCE_ID, PORT_INIT_SID, PORT_E_PARAM_CONFIG);
-                            }
-                            /* oPen drain select */
-                            SET_BIT(*(volatile uint32 *)((volatile uint8 *)PortGpio_Ptr+PORT_OPEN_DRAIN), Port_PortPins[Pin_Id].Pin_Num);
-                            break;
-
-                        /* M0PWM MODE */
+                            break;   /* M0PWM MODE */
                         case PORT_PIN_MODE_M0PWM :
                             if ( ( (Pin_Id >=12 ) && (Pin_Id <=15) ) || (Pin_Id==20 )|| (Pin_Id==21 ) || (Pin_Id==24 )
                                     || (Pin_Id==25) ||( Pin_Id==36) || (Pin_Id==37) ) /*PB4--PB7 ,PC4,5 ,PD0,1 ,PE4,5*/
@@ -376,6 +340,41 @@ void Port_Init(const Port_ConfigType* Port_Configuration)
                                 Det_ReportError(PORT_MODULE_ID, PORT_INSTANCE_ID, PORT_INIT_SID, PORT_E_PARAM_CONFIG);
                             }
                             break;
+
+                         /* SSI MODE */
+                        case PORT_PIN_MODE_SSI :
+                            if ( (Pin_Id <= 24) && (Pin_Id >= 27) ) /* PD0--3 */
+                            {
+                                *(volatile uint32 *)((volatile uint8 *)PortGpio_Ptr+PORT_CTL_REG_OFFSET ) |= (0x00000001 <<(Port_PortPins[Pin_Id].Pin_Num * 4));
+                            }
+                            else if ( ( (Pin_Id >=2) && (Pin_Id <=5) ) ||  ( (Pin_Id >=12) && (Pin_Id <=15) )
+                                    ||  ( (Pin_Id >=38) && (Pin_Id <=41) ) ) /* PA2--5 ,PB4--7 ,PF0--3 */
+                            {
+                                *(volatile uint32 *)((volatile uint8 *)PortGpio_Ptr+PORT_CTL_REG_OFFSET ) |= (0x00000002 <<(Port_PortPins[Pin_Id].Pin_Num * 4));
+                            }
+                            else
+                            {
+                                Det_ReportError(PORT_MODULE_ID, PORT_INSTANCE_ID, PORT_INIT_SID, PORT_E_PARAM_CONFIG);
+                            }
+                            break;
+
+                         /* I2C MODE */
+                        case PORT_PIN_MODE_I2C :
+                            if ( (Pin_Id == 6) || (Pin_Id == 7) || (Pin_Id == 10) || (Pin_Id == 11)
+                                 || (Pin_Id == 24) || (Pin_Id == 25) || (Pin_Id == 36)
+                                 || (Pin_Id == 37) ) /* PA6,7 ,PB2,3 ,PD0,1 ,PE4,5 */
+                            {
+                                /* set the PMCx bit for this pin by 3 to use it as IIC pin*/
+                                *(volatile uint32 *)((volatile uint8 *)PortGpio_Ptr+PORT_CTL_REG_OFFSET ) |= (0x00000003 <<(Port_PortPins[Pin_Id].Pin_Num * 4));
+                            }
+                            else
+                            {
+                                Det_ReportError(PORT_MODULE_ID, PORT_INSTANCE_ID, PORT_INIT_SID, PORT_E_PARAM_CONFIG);
+                            }
+                            /* oPen drain select */
+                            SET_BIT(*(volatile uint32 *)((volatile uint8 *)PortGpio_Ptr+PORT_OPEN_DRAIN), Port_PortPins[Pin_Id].Pin_Num);
+                            break;
+
 
                         /* NMI MODE */
                         case PORT_PIN_MODE_NMI :

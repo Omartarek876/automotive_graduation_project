@@ -1,60 +1,39 @@
-#include "PWM_Driver/PWM.h"
+#include "Critical_Files/Platform_Types.h"
 #include "Port_Driver/Port.h"
 #include "Dio_Driver/Dio.h"
-#include <stdint.h>
-#include "PWM_Driver/tm4c123gh6pm.h"
+#include "PWM_Driver/PWM.h"
 
 
-// A simple delay routine (adjust loop count for your system clock)
-void delay_ms(uint32_t ms)
+// Simple delay function in milliseconds
+void delay_ms(uint32 ms)
 {
-    volatile uint32_t i;
-    while (ms--)
+    volatile uint32 i;
+    while(ms--)
     {
-        for (i = 0; i < 16000; i++) {} // Roughly 1 ms delay at 16MHz
+        for(i = 0; i < 16000; i++) {}  // Roughly 1 ms delay at 16 MHz
     }
 }
 
-
-int main(void) {
-
-    // Initialize ports and DIO
+int main(void)
+{
     Port_Init(&Port_Configuration);
     Dio_Init(&Dio_Configuration);
-    // (Optional) Update system clock settings if needed.
-       SYSCTL_RCC_R |= (1 << 22);
 
-       // Initialize the PWM driver (configures three channels)
-       PWM_Init();
+    // Initialize the PWM driver (this configures four channels):
+    //   PWM_CHANNEL_0: PB6 (M0PWM0, PWM0 Generator 0 Output A)
+    //   PWM_CHANNEL_1: PB4 (M0PWM2, PWM0 Generator 1 Output A)
+    //   PWM_CHANNEL_2: PA6 (M1PWM2, PWM1 Generator 1 Output A)
+    //   PWM_CHANNEL_3: PA7 (M1PWM3, PWM1 Generator 1 Output B)
+    PWM_Init();
 
-       // Variables for the breathing effect:
-       // We want the full cycle (0 to 100 and back to 0) to take 2000ms.
-       // Using a step of 2 means there are 50 steps to go from 0 to 100.
-       // With a 20 ms delay per step, the increase takes 50 x 20 = 1000 ms,
-       // and the decrease takes another 1000 ms.
-       uint8_t duty = 0;
-       int8_t step = 2; // 2% change per update
+    // Reset brightness to off
+    PWM_SetDuty(PWM_CHANNEL_0, 10);
+    PWM_SetDuty(PWM_CHANNEL_1, 50);
+    PWM_SetDuty(PWM_CHANNEL_2, 30);
+    PWM_SetDuty(PWM_CHANNEL_3, 90);
+    while(1)
+    {
 
-       while (1)
-       {
-           duty += step;
-           if (duty >= 100)
-           {
-               duty = 100;
-               step = -2;
-           }
-           else if (duty == 0)
-           {
-               step = 2;
-           }
-
-           // Update the duty cycle for all three PWM channels
-           PWM_SetDuty(PWM_CHANNEL_0, duty);
-           PWM_SetDuty(PWM_CHANNEL_1, duty);
-           PWM_SetDuty(PWM_CHANNEL_2, duty);
-
-           delay_ms(2); // 20 ms delay per update gives a full cycle in 2000 ms
-       }
+    }
 
 }
-

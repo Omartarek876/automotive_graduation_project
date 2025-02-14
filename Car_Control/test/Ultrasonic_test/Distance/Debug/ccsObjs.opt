@@ -1,0 +1,13 @@
+"./Det.obj"
+"./Dio.obj"
+"./Dio_PBcfg.obj"
+"./NVIC.obj"
+"./Port.obj"
+"./Port_PBcfg.obj"
+"./SYSTICK.obj"
+"./SYSTICK_PBcfg.obj"
+"./Ultrasonic.obj"
+"./main.obj"
+"./tm4c123gh6pm_startup_ccs.obj"
+"../tm4c123gh6pm.cmd"
+-llibc.a

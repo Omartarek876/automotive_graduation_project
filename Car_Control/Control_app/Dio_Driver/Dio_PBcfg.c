@@ -40,8 +40,6 @@
 
 /* PB structure used with Dio_Init API */
 const Dio_ConfigType Dio_Configuration = {
-                                             DioConf_LED1_PORT_NUM,DioConf_LED1_CHANNEL_NUM,
-				                             DioConf_SW1_PORT_NUM,DioConf_SW1_CHANNEL_NUM,
                                              Dioconf_ctrl1_PORT_NUM,Dioconf_ctrl1_CHANNEL_NUM,
                                              Dioconf_ctrl2_PORT_NUM,Dioconf_ctrl2_CHANNEL_NUM,
                                              Dioconf_ctrl3_PORT_NUM,Dioconf_ctrl3_CHANNEL_NUM,

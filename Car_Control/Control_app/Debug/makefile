@@ -11,10 +11,11 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./main.obj" \
-"./tm4c123gh6pm_startup_ccs.obj" \
 "./Critical_Files/Det.obj" \
+"./Critical_Files/tm4c123gh6pm_startup_ccs.obj" \
 "./Dio_Driver/Dio.obj" \
 "./Dio_Driver/Dio_PBcfg.obj" \
+"./PWM_Driver/PWM.obj" \
 "./Port_Driver/Port.obj" \
 "./Port_Driver/Port_PBcfg.obj" \
 "./Uart_Driver/uart.obj" \
@@ -34,12 +35,14 @@ RMDIR := RMDIR /S/Q
 -include subdir_vars.mk
 -include Critical_Files/subdir_vars.mk
 -include Dio_Driver/subdir_vars.mk
+-include PWM_Driver/subdir_vars.mk
 -include Port_Driver/subdir_vars.mk
 -include Uart_Driver/subdir_vars.mk
 -include control_driver/subdir_vars.mk
 -include subdir_rules.mk
 -include Critical_Files/subdir_rules.mk
 -include Dio_Driver/subdir_rules.mk
+-include PWM_Driver/subdir_rules.mk
 -include Port_Driver/subdir_rules.mk
 -include Uart_Driver/subdir_rules.mk
 -include control_driver/subdir_rules.mk
@@ -160,8 +163,8 @@ Control_App.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "Critical_Files\Det.obj" "Dio_Driver\Dio.obj" "Dio_Driver\Dio_PBcfg.obj" "Port_Driver\Port.obj" "Port_Driver\Port_PBcfg.obj" "Uart_Driver\uart.obj" "Uart_Driver\uart_PBcfg.obj" "control_driver\control_app.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "Critical_Files\Det.d" "Dio_Driver\Dio.d" "Dio_Driver\Dio_PBcfg.d" "Port_Driver\Port.d" "Port_Driver\Port_PBcfg.d" "Uart_Driver\uart.d" "Uart_Driver\uart_PBcfg.d" "control_driver\control_app.d" 
+	-$(RM) "main.obj" "Critical_Files\Det.obj" "Critical_Files\tm4c123gh6pm_startup_ccs.obj" "Dio_Driver\Dio.obj" "Dio_Driver\Dio_PBcfg.obj" "PWM_Driver\PWM.obj" "Port_Driver\Port.obj" "Port_Driver\Port_PBcfg.obj" "Uart_Driver\uart.obj" "Uart_Driver\uart_PBcfg.obj" "control_driver\control_app.obj" 
+	-$(RM) "main.d" "Critical_Files\Det.d" "Critical_Files\tm4c123gh6pm_startup_ccs.d" "Dio_Driver\Dio.d" "Dio_Driver\Dio_PBcfg.d" "PWM_Driver\PWM.d" "Port_Driver\Port.d" "Port_Driver\Port_PBcfg.d" "Uart_Driver\uart.d" "Uart_Driver\uart_PBcfg.d" "control_driver\control_app.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

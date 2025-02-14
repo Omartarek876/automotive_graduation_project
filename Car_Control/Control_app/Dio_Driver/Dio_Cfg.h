@@ -35,40 +35,30 @@
 #define DIO_FLIP_CHANNEL_API                (STD_ON)
 
 /* Number of the configured Dio Channels */
-#define DIO_CONFIGURED_CHANNLES              (8U) /* led , switch */
+#define DIO_CONFIGURED_CHANNLES              (6U)
 
-/* Channel Index in the array of structures in Dio_PBcfg.c */
-#define DioConf_LED1_CHANNEL_ID_INDEX        (uint8)0x00
-#define DioConf_SW1_CHANNEL_ID_INDEX         (uint8)0x01
 
-#define DIoconf_ctrl1_CHANNEL_ID_INDEX       (uint8)0x02
-#define DIoconf_ctrl2_CHANNEL_ID_INDEX       (uint8)0x03
-#define DIoconf_ctrl3_CHANNEL_ID_INDEX       (uint8)0x04
-#define DIoconf_ctrl4_CHANNEL_ID_INDEX       (uint8)0x05
+#define DIoconf_ctrl1_CHANNEL_ID_INDEX       (uint8)0x00
+#define DIoconf_ctrl2_CHANNEL_ID_INDEX       (uint8)0x01
+#define DIoconf_ctrl3_CHANNEL_ID_INDEX       (uint8)0x02
+#define DIoconf_ctrl4_CHANNEL_ID_INDEX       (uint8)0x03
 
-#define DIoconf_ctrl5_CHANNEL_ID_INDEX       (uint8)0x06
-#define DIoconf_ctrl6_CHANNEL_ID_INDEX       (uint8)0x07
+#define DIoconf_ctrl5_CHANNEL_ID_INDEX       (uint8)0x04
+#define DIoconf_ctrl6_CHANNEL_ID_INDEX       (uint8)0x05
 
-/* DIO Configured Port ID's  */
-#define DioConf_LED1_PORT_NUM                (Dio_PortType)5 /* PORTF */
-#define DioConf_SW1_PORT_NUM                 (Dio_PortType)5 /* PORTF */
 
 #define Dioconf_ctrl1_PORT_NUM              (Dio_PortType)3 /* PORTD */
 #define Dioconf_ctrl2_PORT_NUM              (Dio_PortType)3 /* PORTD */
 #define Dioconf_ctrl3_PORT_NUM              (Dio_PortType)3 /* PORTD */
-#define Dioconf_ctrl4_PORT_NUM              (Dio_PortType)1 /* PORTB */
+#define Dioconf_ctrl4_PORT_NUM              (Dio_PortType)3 /* PORTD */
 
 #define Dioconf_ctrl5_PORT_NUM              (Dio_PortType)0 /* PORTA */
 #define Dioconf_ctrl6_PORT_NUM              (Dio_PortType)0 /* PORTA */
 
-/* DIO Configured Channel ID's */
-#define DioConf_LED1_CHANNEL_NUM             (Dio_ChannelType)1 /* Pin 1 in PORTF */
-#define DioConf_SW1_CHANNEL_NUM              (Dio_ChannelType)4 /* Pin 4 in PORTF */
-
-#define Dioconf_ctrl1_CHANNEL_NUM            (Dio_ChannelType)1 /* Pin 1 in PORTD */
-#define Dioconf_ctrl2_CHANNEL_NUM            (Dio_ChannelType)2 /* Pin 2 in PORTD */
-#define Dioconf_ctrl3_CHANNEL_NUM            (Dio_ChannelType)3 /* Pin 3 in PORTD */
-#define Dioconf_ctrl4_CHANNEL_NUM            (Dio_ChannelType)4 /* Pin 4 in PORTB */
+#define Dioconf_ctrl1_CHANNEL_NUM            (Dio_ChannelType)0 /* Pin 0 in PORTD */
+#define Dioconf_ctrl2_CHANNEL_NUM            (Dio_ChannelType)1 /* Pin 1 in PORTD */
+#define Dioconf_ctrl3_CHANNEL_NUM            (Dio_ChannelType)2 /* Pin 2 in PORTD */
+#define Dioconf_ctrl4_CHANNEL_NUM            (Dio_ChannelType)3 /* Pin 3 in PORTD */
 
 #define Dioconf_ctrl5_CHANNEL_NUM            (Dio_ChannelType)5 /* Pin 5 in PORTA */
 #define Dioconf_ctrl6_CHANNEL_NUM            (Dio_ChannelType)6 /* Pin 6 in PORTA */

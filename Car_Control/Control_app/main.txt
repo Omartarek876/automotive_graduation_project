@@ -41,107 +41,53 @@ int main(void)
 /*
  * main.c
  *
- *  Created on: Aug 13, 2024
- *  last modified : nov 25, 2024
- *      Author: Omar Tarek
+ *  Created on:     Aug 13, 2024
+ *  Last modified : Dec 20, 2024
+ *  Author:         Omar Tarek
  */
 
 
-#include "control_driver/control_app.h"
 #include "Uart_Driver/uart.h"
+#include "control_driver/control_app.h"
 
-void main (void)
 
-{
+
+int main(void) {
+    uint8 dataReceived;
+    uint8 Motion_Control_Char;
+
     car_init();
-    uartInit(&uart5_cfg);
-    uint8 ch = 55;
-    //uint8 receivedString[100]; // Buffer to hold the received String
-    uint8 receivedData; // Buffer to hold the received data
-    //uint32 size = 7; // Number of bytes to receive
+    uartInit(&uart0_cfg);
+    uartInit(&uart2_cfg);
 
-    while(1)
-    {
-
-       receivedData = uart_RecieveByte();
-       if (receivedData)
-       {
-           UART_sendByte(receivedData);
-       }
-
-        //UART_SendString(receivedString);
-        /*
-        // Receive a char from UART to control the motion of the car
-        uint8 receivedData = uart_RecieveByte();
-        UART_sendByte(receivedData );
-        Motion_Control_Char -= 44; 
-        UART_SendString(" \n");
+    while (1) {
+        dataReceived = uart_RecieveByte(2);
+        Motion_Control_Char = dataReceived - 48;
         switch (Motion_Control_Char)
         {
-        case 'f' :
-            UART_SendString("car Forward\r\n");
+        case 1 :
              car_forword();
+             UART_SendString(2 , "ACK1");
              break;
-        case 'b' :
-            UART_SendString("car Backward\r\n");
+        case 2 :
              car_backword();
+             UART_SendString(2 , "ACK2");
              break;
-        case 'r' :
-            UART_SendString("car right\r\n");
+        case 3 :
              car_right ();
+             UART_SendString(2 , "ACK3");
              break;
-        case 'l' :
-            UART_SendString("car left\r\n");
+        case 4 :
              car_left ();
+             UART_SendString(2 , "ACK4");
              break;
-        case 's' :
-            UART_SendString("car stop\r\n");
+        case 5 :
              car_stop ();
+             UART_SendString(2 , "ACK5");
              break;
         default :
-            UART_SendString("not an option\r\n");
+            UART_SendString(2 , "N-ACK");
             break;
         }
-        */
-/*
-        // Send the received string back to the terminal
-        UART_SendString("Received: ");
-        UART_SendString(receivedString);
-        UART_SendString("\r\n");
-*/
-/*
-        // Receive a specific number of bytes
-        UART_ReceiveData(receivedData, size);
-
-        // Send the received data back to the terminal
-        UART_SendString("Received: ");
-        UART_SendData(receivedData, size);
-        UART_SendString("\r\n");
-*/
-
-      /*
-        Delay_MS(5000);
-        Dio_WriteChannel(DIoconf_ctrl1_CHANNEL_ID_INDEX , STD_HIGH);
-        Dio_WriteChannel(DIoconf_ctrl2_CHANNEL_ID_INDEX , STD_LOW);
-        Dio_WriteChannel(DIoconf_ctrl3_CHANNEL_ID_INDEX , STD_HIGH);
-        Dio_WriteChannel(DIoconf_ctrl4_CHANNEL_ID_INDEX , STD_LOW);
-        Delay_MS(3000);
-        Dio_WriteChannel(DIoconf_ctrl1_CHANNEL_ID_INDEX , STD_LOW);
-        Dio_WriteChannel(DIoconf_ctrl2_CHANNEL_ID_INDEX , STD_LOW);
-        Dio_WriteChannel(DIoconf_ctrl3_CHANNEL_ID_INDEX , STD_LOW);
-        Dio_WriteChannel(DIoconf_ctrl4_CHANNEL_ID_INDEX , STD_LOW);
-        Delay_MS(500);
-        Dio_WriteChannel(DIoconf_ctrl5_CHANNEL_ID_INDEX , STD_HIGH);
-        Dio_WriteChannel(DIoconf_ctrl6_CHANNEL_ID_INDEX , STD_LOW);
-        Delay_MS(10000);
-        Dio_WriteChannel(DIoconf_ctrl6_CHANNEL_ID_INDEX , STD_HIGH);
-        Dio_WriteChannel(DIoconf_ctrl5_CHANNEL_ID_INDEX , STD_LOW);
-        Delay_MS(10000);
-        Dio_WriteChannel(DIoconf_ctrl6_CHANNEL_ID_INDEX , STD_LOW);
-        Dio_WriteChannel(DIoconf_ctrl5_CHANNEL_ID_INDEX , STD_LOW);
-*/
-
-
     }
-
 }

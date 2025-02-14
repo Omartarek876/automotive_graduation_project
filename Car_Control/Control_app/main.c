@@ -1,55 +1,21 @@
-/*
- * main.c
- *
- *  Created on:     Aug 13, 2024
- *  Last modified : Dec 20, 2024
- *  Author:         Omar Tarek
- */
+#include "Critical_Files/Platform_Types.h"
+#include "PWM_Driver/PWM.h"
+#include "control_driver/control_app.h"
 
-#include "Port_Driver/Port.h"
-#include "Dio_Driver/Dio.h"
-#include "Uart_Driver/uart.h"
-#include "Critical_Files/private_registers.h"
-#include "Control_Driver/control_app.h"
-
-
-
-int main(void) {
-    uint8 dataReceived;
-    uint8 Motion_Control_Char;
-
+int main(void)
+{
     car_init();
-    uartInit(&uart0_cfg);
-    uartInit(&uart2_cfg);
+    /* Initialize the PWM driver */
+    PWM_Init();
 
-    while (1) {
-        dataReceived = uart_RecieveByte(2);
-        Motion_Control_Char = dataReceived - 48;
-        switch (Motion_Control_Char)
-        {
-        case 1 :
-             car_forword();
-             UART_SendString(2 , "ACK1");
-             break;
-        case 2 :
-             car_backword();
-             UART_SendString(2 , "ACK2");
-             break;
-        case 3 :
-             car_right ();
-             UART_SendString(2 , "ACK3");
-             break;
-        case 4 :
-             car_left ();
-             UART_SendString(2 , "ACK4");
-             break;
-        case 5 :
-             car_stop ();
-             UART_SendString(2 , "ACK5");
-             break;
-        default :
-            UART_SendString(2 , "N-ACK");
-            break;
-        }
+    /* Set duty cycle to 96% for channels 0 and 1 to drive the car slowly.
+     * With an active-high H-bridge, a 96% duty cycle means the output is high most of the time.
+     * Adjust the duty cycle value as needed for a slower speed.
+     */
+    PWM_SetDuty(PWM_CHANNEL_0, 40);
+    PWM_SetDuty(PWM_CHANNEL_1, 10);
+    car_forword();
+    while(1)
+    {
     }
 }

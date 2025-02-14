@@ -1,3 +1,38 @@
+/*
+ * main.c
+ *
+ *  Created on:     Aug 13, 2024
+ *  Last modified : Dec 20, 2024
+ *  Author:         Omar Tarek
+ */
+
+
+//#include "Uart_Driver/uart.h"
+#include "PWM_Driver/PWM.h"
+#include "control_driver/control_app.h"
+
+
+
+int main(void) {
+   // car_init();
+
+    /* Initialize the PWM driver (configures three channels) */
+    PWM_Init();
+
+    /* Update the duty cycle for all three PWM channels
+     * PB6 , PB4
+     * */
+    PWM_SetDuty(PWM_CHANNEL_0, 5);
+    PWM_SetDuty(PWM_CHANNEL_1, 5);
+    // car_forword();
+    while(1)
+    {
+
+    }
+}
+
+
+/*
 #include "Critical_Files/Platform_Types.h"
 #include "Port_Driver/Port.h"
 #include "Dio_Driver/Dio.h"
@@ -37,3 +72,4 @@ int main(void)
     }
 
 }
+*/

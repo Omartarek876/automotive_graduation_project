@@ -1,0 +1,55 @@
+/*
+ * Ultrasonic.h
+ *
+ *  Created on: ??þ/??þ/????
+ *      Author: Mariam
+ */
+
+#ifndef ULTRASONIC_H_
+#define ULTRASONIC_H_
+
+/******************************************************************************
+* File Name: Ultrasonic.c
+* Author: ChatGPT
+* Description: Ultrasonic Sensor Driver for HC-SR04 using Interrupts
+* Date Created: 14/02/2025
+* Micro-Controller: TM4C123GH6PM (TIVA C)
+******************************************************************************/
+
+
+#include "private_registers.h"
+
+#define NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND 369
+
+extern void Delay_MS(unsigned long long n)
+{
+    volatile unsigned long long count = 0;
+    while(count++ < (NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND * n) );
+}
+
+
+
+// lsa hytghyro
+#define TRIGGER_PORT   PORTE_ID
+#define TRIGGER_PIN    PIN1_ID
+#define ECHO_PORT      PORTE_ID
+#define ECHO_PIN       PIN2_ID
+
+static volatile uint32 echo_start_time = 0;
+static volatile uint32 echo_end_time = 0;
+static volatile uint8 measurement_done = 0;
+
+void Ultrasonic_Init(void);
+
+
+void Ultrasonic_Trigger(void);
+
+//void GPIOPortE_Handler(void)
+
+float Ultrasonic_GetDistance(void);
+
+
+
+
+
+#endif /* ULTRASONIC_H_ */

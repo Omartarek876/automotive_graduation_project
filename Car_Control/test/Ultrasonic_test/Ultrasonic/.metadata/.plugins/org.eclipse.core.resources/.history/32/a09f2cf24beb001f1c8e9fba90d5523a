@@ -1,0 +1,60 @@
+
+
+/**
+ * main.c
+ */
+
+#include "Ultrasonic.h"
+#include "SYSTICK.h"
+#include "Dio.h"
+#include "Port.h"
+#include "NVIC.h"
+
+#define LED_RED   PIN1_ID  // Connected to PORTF_PIN1
+#define LED_BLUE  PIN2_ID  // Connected to PORTF_PIN2
+#define LED_GREEN PIN3_ID  // Connected to PORTF_PIN3
+
+void SystemInit(void) {
+    /* System initialization if needed */
+}
+
+int main(void) {
+    float distance;
+
+    /* Initialize the Ultrasonic Sensor */
+    Ultrasonic_Init();
+
+    /* Configure LEDs on PORTF as output */
+    Port_SetPinDirection(LED_RED, PORT_OUTPUT_PIN);
+    Port_SetPinDirection(LED_BLUE, PORT_OUTPUT_PIN);
+    Port_SetPinDirection(LED_GREEN, PORT_OUTPUT_PIN);
+
+    while (1) {
+        /* Send a Trigger Pulse */
+        Ultrasonic_Trigger();
+
+        /* Small delay to ensure echo reception */
+        Delay_MS(100);
+
+        /* Get the measured distance */
+        distance = Ultrasonic_GetDistance();
+
+        /* Turn off all LEDs before updating */
+        Dio_WriteChannel(LED_RED, STD_LOW);
+        Dio_WriteChannel(LED_BLUE, STD_LOW);
+        Dio_WriteChannel(LED_GREEN, STD_LOW);
+
+        if (distance >= 0) {  // Ensure the measurement is valid
+            if (distance < 10) {
+                Dio_WriteChannel(LED_RED, STD_HIGH);  // Turn on RED LED if distance < 10cm
+            } else if (distance < 20) {
+                Dio_WriteChannel(LED_BLUE, STD_HIGH);  // Turn on BLUE LED if distance is between 10cm and 20cm
+            } else {
+                Dio_WriteChannel(LED_GREEN, STD_HIGH);  // Turn on GREEN LED if distance > 20cm
+            }
+        }
+
+        /* Delay before the next measurement */
+        SYSTICK_Delay_ms(1000);
+    }
+}

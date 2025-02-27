@@ -10,6 +10,7 @@
 
 #include "Port_Driver/Port.h"
 #include "Dio_Driver/Dio.h"
+#include "PWM_Driver/PWM.h"
 #include "Critical_Files/private_registers.h"
 
 #define NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND 364

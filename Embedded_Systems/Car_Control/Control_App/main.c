@@ -1,5 +1,4 @@
-#include "Critical_Files/Platform_Types.h"
-#include "PWM_Driver/PWM.h"
+
 #include "control_driver/control_app.h"
 
 int main(void)

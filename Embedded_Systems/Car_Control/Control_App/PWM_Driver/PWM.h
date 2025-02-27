@@ -5,7 +5,7 @@
 #include "Critical_Files/tm4c123gh6pm.h"
 
 /* PWM frequency in Hz */
-#define PWM_FREQUENCY 1000
+#define PWM_FREQUENCY 5000
 
 /* PWM channel definitions */
 #define PWM_CHANNEL_0 0  /* PB6: M0PWM0 (Generator 0, Output A) */

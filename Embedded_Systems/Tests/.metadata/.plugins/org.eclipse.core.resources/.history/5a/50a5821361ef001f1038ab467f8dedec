@@ -1,0 +1,30 @@
+#include "Critical_Files/Platform_Types.h"
+#include "PWM_Driver/PWM.h"
+#include "control_driver/control_app.h"
+
+int main(void)
+{
+    car_init();
+    /* Initialize the PWM driver */
+    PWM_Init();
+
+
+    while(1)
+    {
+        car_forword();
+        PWM_SetDuty(PWM_CHANNEL_0, 1);
+        PWM_SetDuty(PWM_CHANNEL_1, 0);
+        Delay_MS(300);
+
+
+        car_backword();
+        PWM_SetDuty(PWM_CHANNEL_0, 0);
+        PWM_SetDuty(PWM_CHANNEL_1, 1);
+        Delay_MS(300);
+
+
+        car_stop();
+        Delay_MS(300);
+
+    }
+}

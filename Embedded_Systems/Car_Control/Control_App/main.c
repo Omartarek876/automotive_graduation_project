@@ -10,18 +10,24 @@
 //#include "Uart_Driver/uart.h"
 #include "control_driver/control_app.h"
 
-uint8 dataReceived;
+uint8 Motion_Flag;
+uint8 Start_Control_Flag;
 uint8 Motion_Control_Char;
 
 
 int main(void) {
     car_init();
-    car_forword();
+
+    while(Start_Control_Flag != 6)
+    {
+        Start_Control_Flag = uart_RecieveByte(2) - 48;
+    }
+
     while(1)
     {
-        dataReceived = uart_RecieveByte(2);
-        Motion_Control_Char = dataReceived - 48;
-        switch (Motion_Control_Char)
+        Motion_Flag = uart_RecieveByte(2);
+        Motion_Control_Char = Motion_Flag - 48;
+        switch (1) //Motion_Control_Char
         {
         case 1 :
              car_forword();

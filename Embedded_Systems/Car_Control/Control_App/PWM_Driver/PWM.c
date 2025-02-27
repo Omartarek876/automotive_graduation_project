@@ -32,13 +32,13 @@ void PWM_Init(void)
 
     {
         uint32 pwmClock = 16000000 / 64;              /* 16MHz/64 = 250 kHz */
-        g_pwmLoad = (pwmClock / PWM_FREQUENCY) - 1;     /* For 1kHz: load = 250 - 1 = 249 */
+        g_pwmLoad = (pwmClock / PWM_FREQUENCY) - 1;     /* For 5kHz: load = 50 - 1 = 49 */
     }
 
     /* --- Initialize PWM0, Generator 0 for PWM_CHANNEL_0 (PB6: M0PWM0) --- */
     PWM0_0_CTL_R = 0;              /* Disable Generator 0 */
     PWM0_0_LOAD_R = g_pwmLoad;
-    PWM0_0_CMPA_R = g_pwmLoad;     /* Start with motor off */
+    PWM0_0_CMPA_R = g_pwmLoad;     /* Start with LED/Motor off */
     PWM0_0_GENA_R = 0x0000008C;    /* Output HIGH until counter reaches CMPA then LOW */
     PWM0_0_CTL_R |= 0x01;          /* Enable Generator 0 */
     PWM0_ENABLE_R |= (1 << 0);     /* Enable PWM output on channel 0 */
@@ -68,30 +68,33 @@ void PWM_SetDuty(uint8 channel, uint8 duty_percent)
     {
         duty_percent = 100;
     }
-    /* In our non-inverted configuration for an active-high H-bridge:
-     * CMPA = g_pwmLoad -> output off,
-     * CMPA = 0         -> output fully on.
-     * We calculate:
-     * CMPA = g_pwmLoad - (((g_pwmLoad + 1) * duty_percent) / 100)
+    /* In our non-inverted configuration:
+     * CMPA = g_pwmLoad => output off,
+     * CMPA = 0         => full on.
+     * Calculate CMPA such that:
+     * duty_percent = 0   --> CMPA = g_pwmLoad
+     * duty_percent = 100 --> CMPA = 0
      */
-    uint32 cmp_value = g_pwmLoad - (((g_pwmLoad + 1) * duty_percent) / 100);
-    switch(channel)
     {
-        case PWM_CHANNEL_0:
-            PWM0_0_CMPA_R = cmp_value;
-            break;
-        case PWM_CHANNEL_1:
-            PWM0_1_CMPA_R = cmp_value;
-            break;
-        case PWM_CHANNEL_2:
-            PWM1_1_CMPA_R = cmp_value;
-            break;
-        case PWM_CHANNEL_3:
-            PWM1_1_CMPB_R = cmp_value;
-            break;
-        default:
-            /* Invalid channel: do nothing */
-            break;
+        uint32 cmp_value = g_pwmLoad - (((g_pwmLoad + 1) * duty_percent) / 100); // 49 - 5 = 44 // 49 - 45 = 4
+        switch(channel)
+        {
+            case PWM_CHANNEL_0:
+                PWM0_0_CMPA_R = cmp_value;
+                break;
+            case PWM_CHANNEL_1:
+                PWM0_1_CMPA_R = cmp_value;
+                break;
+            case PWM_CHANNEL_2:
+                PWM1_1_CMPA_R = cmp_value;
+                break;
+            case PWM_CHANNEL_3:
+                PWM1_1_CMPB_R = cmp_value;
+                break;
+            default:
+                /* Invalid channel: do nothing */
+                break;
+        }
     }
 }
 

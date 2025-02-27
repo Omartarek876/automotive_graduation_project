@@ -10,7 +10,10 @@
 
 #include "Port_Driver/Port.h"
 #include "Dio_Driver/Dio.h"
+#include "PWM_Driver/PWM.h"
+#include "Uart_Driver/uart.h"
 #include "Critical_Files/private_registers.h"
+
 
 #define NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND 364
 
@@ -21,7 +24,6 @@ void car_backword (void);
 void car_right (void);
 void car_left (void);
 void car_stop (void);
-void set_motor_speed(uint8 speed);
 
 
 #endif /* CONTROL_DRIVER_CONTROL_APP_H_ */

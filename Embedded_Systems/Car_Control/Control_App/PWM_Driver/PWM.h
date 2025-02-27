@@ -4,8 +4,9 @@
 #include "Critical_Files/Platform_Types.h"
 #include "Critical_Files/tm4c123gh6pm.h"
 
+
 /* PWM frequency in Hz */
-#define PWM_FREQUENCY 1000
+#define PWM_FREQUENCY 5000
 
 /* PWM channel definitions */
 #define PWM_CHANNEL_0 0  /* PB6: M0PWM0 (Generator 0, Output A) */
@@ -24,7 +25,7 @@ void PWM_Init(void);
 /**
  * @brief Set the duty cycle for a specific PWM channel.
  *
- * The duty cycle is specified as a percentage (0% = Motor off, 100% = fully on).
+ * The duty cycle is specified as a percentage (0% = LED/Motor off, 100% = fully on).
  *
  * @param channel       One of PWM_CHANNEL_0, PWM_CHANNEL_1, PWM_CHANNEL_2, or PWM_CHANNEL_3.
  * @param duty_percent  Duty cycle percentage (0 to 100).

@@ -1,0 +1,27 @@
+#include "Critical_Files/Platform_Types.h"
+#include "PWM_Driver/PWM.h"
+#include "control_driver/control_app.h"
+
+int main(void)
+{
+    car_init();
+    /* Initialize the PWM driver */
+    PWM_Init();
+
+    /* Set duty cycle to 96% for channels 0 and 1 to drive the car slowly.
+     * With an active-high H-bridge, a 96% duty cycle means the output is high most of the time.
+     * Adjust the duty cycle value as needed for a slower speed.
+     */
+
+    while(1)
+    {
+        Delay_MS(1000);
+        PWM_SetDuty(PWM_CHANNEL_0, 5);
+        PWM_SetDuty(PWM_CHANNEL_1, 1);
+        car_forword();
+        Delay_MS(1000);
+        PWM_SetDuty(PWM_CHANNEL_0, 1);
+        PWM_SetDuty(PWM_CHANNEL_1, 5);
+        car_forword();
+    }
+}

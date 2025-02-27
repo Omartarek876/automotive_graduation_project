@@ -1,0 +1,97 @@
+#include <stdint.h>
+#include "tm4c123gh6pm.h"
+
+#define PWM_FREQUENCY  1000  // Set default PWM frequency to 1kHz
+#define SERVO_PWM_FREQUENCY  50  // Standard servo PWM frequency (50Hz)
+
+// Function to initialize PWM on a given module and pin
+void PWM_Init(uint32_t pwm_module, uint32_t pwm_pin, uint32_t frequency) {
+    SYSCTL_RCGCPWM_R |= (1 << pwm_module);  // Enable PWM module
+    SYSCTL_RCGCGPIO_R |= (1 << pwm_pin);    // Enable GPIO module for PWM pin
+
+    // Configure GPIO pin for PWM function
+    GPIO_PORTB_AFSEL_R |= (1 << pwm_pin);  // Enable alternate function
+    GPIO_PORTB_PCTL_R &= ~(0xF << (pwm_pin * 4));
+    GPIO_PORTB_PCTL_R |= (0x4 << (pwm_pin * 4)); // Assign PWM function
+    GPIO_PORTB_DEN_R |= (1 << pwm_pin);  // Enable digital function
+
+    // Disable PWM Generator before configuring
+    PWM0_0_CTL_R &= ~(1 << 0);
+
+    // Set PWM frequency
+    uint32_t load_value = (16000000 / frequency) - 1;  // Assuming 16MHz system clock
+    PWM0_0_LOAD_R = load_value;
+
+    // Set PWM duty cycle (default 50%)
+    PWM0_0_CMPA_R = load_value / 2;
+
+    // Enable PWM generator and output
+    PWM0_0_CTL_R |= (1 << 0);
+    PWM0_ENABLE_R |= (1 << 0);
+}
+
+// Function to set PWM duty cycle
+void PWM_SetDutyCycle(uint32_t pwm_module, uint32_t pwm_pin, float duty_cycle) {
+    if (duty_cycle > 100.0) duty_cycle = 100.0;
+    if (duty_cycle < 0.0) duty_cycle = 0.0;
+
+    uint32_t load_value = PWM0_0_LOAD_R;
+    PWM0_0_CMPA_R = (uint32_t)((duty_cycle / 100.0) * load_value);
+}
+
+// Function to configure dead time for H-bridge
+void PWM_SetDeadTime(uint32_t pwm_module, uint32_t dead_time) {
+    PWM0_0_DBCTL_R |= 1;  // Enable Dead-band Generator
+    PWM0_0_DBRISE_R = dead_time;
+    PWM0_0_DBFALL_R = dead_time;
+}
+
+// Function to set motor direction using an H-bridge
+void Motor_SetDirection(uint8_t direction) {
+    if (direction == 1) {
+        GPIO_PORTA_DATA_R |= (1 << 2); // Forward
+        GPIO_PORTA_DATA_R &= ~(1 << 3);
+    } else {
+        GPIO_PORTA_DATA_R |= (1 << 3); // Reverse
+        GPIO_PORTA_DATA_R &= ~(1 << 2);
+    }
+}
+
+// Function to rotate a servo motor to a specific angle (0 to 180 degrees)
+void Servo_SetAngle(uint32_t pwm_module, uint32_t pwm_pin, float angle) {
+    if (angle > 180.0) angle = 180.0;
+    if (angle < 0.0) angle = 0.0;
+
+    // Convert angle to duty cycle (Assuming 1ms = 0° and 2ms = 180°)
+    float duty_cycle = ((angle / 180.0) * 5.0) + 5.0; // Map to 5% - 10% duty cycle
+    PWM_SetDutyCycle(pwm_module, pwm_pin, duty_cycle);
+}
+
+// Main function to test PWM with LEDs and Servo Motor
+int main() {
+    SYSCTL_RCGCGPIO_R |= (1 << 5); // Enable GPIOF for LEDs
+    GPIO_PORTF_DIR_R |= (1 << 1) | (1 << 2) | (1 << 3); // Set LED pins as outputs
+    GPIO_PORTF_DEN_R |= (1 << 1) | (1 << 2) | (1 << 3); // Enable digital function
+
+    PWM_Init(0, 6, PWM_FREQUENCY); // Initialize PWM on module 0, pin 6
+    PWM_Init(0, 7, SERVO_PWM_FREQUENCY); // Initialize PWM for servo motor on module 0, pin 7
+
+    while (1) {
+        PWM_SetDutyCycle(0, 6, 25.0); // 25% duty cycle
+        GPIO_PORTF_DATA_R = (1 << 1); // Turn on red LED
+        Servo_SetAngle(0, 7, 0); // Move servo to 0 degrees
+        for (volatile int i = 0; i < 1000000; i++);
+
+        PWM_SetDutyCycle(0, 6, 50.0); // 50% duty cycle
+        GPIO_PORTF_DATA_R = (1 << 2); // Turn on blue LED
+        Servo_SetAngle(0, 7, 90); // Move servo to 90 degrees
+        for (volatile int i = 0; i < 1000000; i++);
+
+        PWM_SetDutyCycle(0, 6, 75.0); // 75% duty cycle
+        GPIO_PORTF_DATA_R = (1 << 3); // Turn on green LED
+        Servo_SetAngle(0, 7, 180); // Move servo to 180 degrees
+        for (volatile int i = 0; i < 1000000; i++);
+    }
+
+    return 0;
+}

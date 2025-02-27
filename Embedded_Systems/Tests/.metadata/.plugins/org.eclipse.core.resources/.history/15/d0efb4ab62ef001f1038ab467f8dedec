@@ -1,0 +1,17 @@
+#include "Critical_Files/Platform_Types.h"
+#include "PWM_Driver/PWM.h"
+#include "control_driver/control_app.h"
+
+int main(void)
+{
+    car_init();
+    /* Initialize the PWM driver */
+    PWM_Init();
+
+
+    while(1)
+    {
+        car_forword();
+        car_stop();
+    }
+}

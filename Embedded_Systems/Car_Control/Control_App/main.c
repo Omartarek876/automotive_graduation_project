@@ -1,13 +1,4 @@
-/*
- * main.c
- *
- *  Created on:     Aug 13, 2024
- *  Last modified : Dec 20, 2024
- *  Author:         Omar Tarek
- */
 
-
-//#include "Uart_Driver/uart.h"
 #include "control_driver/control_app.h"
 
 uint8 Motion_Flag;

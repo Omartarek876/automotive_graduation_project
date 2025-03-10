@@ -184,15 +184,4 @@ extern  uart_configuration uart7_cfg;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 #endif

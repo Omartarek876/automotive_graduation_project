@@ -1,49 +1,16 @@
-
 #include "control_driver/control_app.h"
 
 uint8 Motion_Flag;
-uint8 Start_Control_Flag;
+uint8 Start_Control_Flag = 0;
 uint8 Motion_Control_Char;
 
 
 int main(void) {
     car_init();
 
-    while(Start_Control_Flag != 6)
+    while (1)
     {
-        Start_Control_Flag = uart_RecieveByte(2) - 48;
-    }
-
-    while(1)
-    {
-        Motion_Flag = uart_RecieveByte(2);
-        Motion_Control_Char = Motion_Flag - 48;
-        switch (1) //Motion_Control_Char
-        {
-        case 1 :
-             car_forword();
-             UART_SendString(2 , "ACK1");
-             break;
-        case 2 :
-             car_backword();
-             UART_SendString(2 , "ACK2");
-             break;
-        case 3 :
-             car_right ();
-             UART_SendString(2 , "ACK3");
-             break;
-        case 4 :
-             car_left ();
-             UART_SendString(2 , "ACK4");
-             break;
-        case 5 :
-             car_stop ();
-             UART_SendString(2 , "ACK5");
-             break;
-        default :
-            UART_SendString(2 , "N-ACK");
-            break;
-        }
+        UART_sendByte(4 , 0x03);
+    Delay_MS(50);
     }
 }
-

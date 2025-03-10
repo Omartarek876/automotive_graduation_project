@@ -16,7 +16,7 @@
 void car_init (void){
     Port_Init(&Port_Configuration);
     Dio_Init(&Dio_Configuration);
-    uartInit(&uart2_cfg);
+    uartInit(&uart4_cfg);
     PWM_Init();
 
     PWM_SetDuty(PWM_CHANNEL_2, 30);

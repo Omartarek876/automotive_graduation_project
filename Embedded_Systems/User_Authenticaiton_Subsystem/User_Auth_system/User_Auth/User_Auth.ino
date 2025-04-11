@@ -2,7 +2,7 @@
 #include <HardwareSerial.h>
 #include <EEPROM.h>
 
-#define EEPROM_SIZE 10  // Maximum number of fingerprints to store
+#define EEPROM_SIZE 100  // Maximum number of fingerprints to store
 #define fingerRX 16     // ESP32 RX
 #define fingerTX 17     // ESP32 TX
 

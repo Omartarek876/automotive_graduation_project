@@ -16,11 +16,14 @@
 void car_init (void){
     Port_Init(&Port_Configuration);
     Dio_Init(&Dio_Configuration);
-    uartInit(&uart4_cfg);
-    PWM_Init();
 
+  /* PWM_Init();
     PWM_SetDuty(PWM_CHANNEL_2, 30);
-    PWM_SetDuty(PWM_CHANNEL_1, 30);
+    PWM_SetDuty(PWM_CHANNEL_3, 30);
+*/
+
+    uartInit(&uart0_cfg);
+    uartInit(&uart1_cfg);
 
     /* init the four pins of control motion forword and backword*/
     Dio_WriteChannel(DIoconf_ctrl1_CHANNEL_ID_INDEX , STD_LOW);

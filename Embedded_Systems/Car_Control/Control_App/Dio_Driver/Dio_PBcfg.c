@@ -45,5 +45,6 @@ const Dio_ConfigType Dio_Configuration = {
                                              Dioconf_ctrl3_PORT_NUM,Dioconf_ctrl3_CHANNEL_NUM,
                                              Dioconf_ctrl4_PORT_NUM,Dioconf_ctrl4_CHANNEL_NUM,
                                              Dioconf_ctrl5_PORT_NUM,Dioconf_ctrl5_CHANNEL_NUM,
-                                             Dioconf_ctrl6_PORT_NUM,Dioconf_ctrl6_CHANNEL_NUM
+                                             Dioconf_ctrl6_PORT_NUM,Dioconf_ctrl6_CHANNEL_NUM,
+                                             ledport,ledchannel
 				                         };

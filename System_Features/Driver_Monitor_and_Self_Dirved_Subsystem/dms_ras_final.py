@@ -27,6 +27,7 @@ TIME_THRESHOLD_RIGHT = 2.0  # 2 seconds looking right
 TIME_THRESHOLD_DOWN = 2.0  # 2 seconds looking down
 TIME_THRESHOLD_UP = 2.0  # 2 seconds looking up
 TIME_THRESHOLD_CLOSED_EYES = 1.5  # 1.5 seconds with eyes closed
+TIME_THRESHOLD_No_Face = 2.0  # 2 seconds looking up
 
 # State tracking variables
 current_state = "Forward"
@@ -114,8 +115,8 @@ def track_time_based_actions(current_pose):
             start_time_closed_eyes = current_time
 
     elif current_pose == "No Face Detected":
-        if current_time - start_time_up >= TIME_THRESHOLD_UP:
-            print("WARNING!")
+        if current_time - start_time_up >= TIME_THRESHOLD_No_Face:
+            print("Warning !!!")
             if pygame.mixer.get_busy()==0:
              warning_sound.play()
             start_time_up = current_time
@@ -359,7 +360,26 @@ def Head_Eye_detect(image):
 
     return image
 
+def No_Face(image):
+    global current_state, previous_state
+    
+    
+    text = "Warning !!!"
+    current_state = "No Face Detected"
+           
 
+    # Track time-based actions
+    track_time_based_actions(current_state)
+
+            
+
+            
+    cv2.putText(image, text, (20, 50), 
+                cv2.FONT_HERSHEY_SIMPLEX, 2, RED, 2)
+            
+           
+
+    return image
 
 
 def main():
@@ -416,8 +436,7 @@ def main():
             elif case == "Face with mask and glasses detected":
                 frame = detect_head_pose(frame)
             elif case == "No face detected":
-                if pygame.mixer.get_busy()==0:
-                  warning_sound.play()
+                frame = No_Face(frame)
                
                 
            # Display FPS

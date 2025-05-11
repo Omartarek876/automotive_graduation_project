@@ -2,29 +2,32 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-#define RXD2 16 // GPIO16 for RX (UART2)
-#define TXD2 17 // GPIO17 for TX (UART2)
+#define UART1_TX 5        // UART1 TX pin (to Tiva RX)
+#define UART1_RX 4        // UART1 RX pin (from Tiva TX)
 
-#define FRONT_TRIGGER 18
-#define FRONT_ECHO    19
 
+#define FRONT_TRIGGER 23
+#define FRONT_ECHO    22
+
+/*
 #define REAR_TRIGGER  5
 #define REAR_ECHO     4
+*/
 
-
+/*
 // WiFi credentials
 const char* ssid = "OMARTAREK";            // WiFi SSID (network name)
 const char* password =  "10ramadan"; // WiFi password
 
 // Server details
 const char* serverUrl = "https://178.32.101.106:3000/api/car-control"; // Server URL or IP address and port
-
+*/
 
 volatile long frontStart = 0, frontEnd = 0;
-volatile long rearStart  = 0, rearEnd  = 0;
+//volatile long rearStart  = 0, rearEnd  = 0;
 
 volatile long frontDuration = 0;
-volatile long rearDuration = 0;
+//volatile long rearDuration = 0;
 
 // Interrupt Service Routine for the front ultrasonic sensor
 void IRAM_ATTR frontEchoISR() {
@@ -36,6 +39,7 @@ void IRAM_ATTR frontEchoISR() {
   }
 }
 
+/*
 // Interrupt Service Routine for the rear ultrasonic sensor
 void IRAM_ATTR rearEchoISR() {
   if (digitalRead(REAR_ECHO) == HIGH) {
@@ -45,6 +49,7 @@ void IRAM_ATTR rearEchoISR() {
     rearDuration = rearEnd - rearStart;  // Duration of echo
   }
 }
+*/
 
 // Function to trigger the ultrasonic sensor
 void triggerSensor(int triggerPin) {
@@ -60,9 +65,10 @@ void setup() {
   Serial.begin(115200);
 
   // Initialize UART2 for communication with Tiva C
-  Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
+    Serial1.begin(9600, SERIAL_8N1, UART1_RX, UART1_TX);        // UART1 to Tiva C
 
 
+/*
   // Connect to WiFi
   WiFi.begin(ssid, password);
   Serial.print("Connecting to WiFi");
@@ -76,21 +82,44 @@ void setup() {
 
   // Confirmation message to Serial Monitor
   Serial.println("ESP32 is ready to communicate with Tiva C.");
+*/
 
   pinMode(FRONT_TRIGGER, OUTPUT);
   pinMode(FRONT_ECHO, INPUT);
   attachInterrupt(digitalPinToInterrupt(FRONT_ECHO), frontEchoISR, CHANGE);  // Attach ISR
 
+/*
   pinMode(REAR_TRIGGER, OUTPUT);
   pinMode(REAR_ECHO, INPUT);
   attachInterrupt(digitalPinToInterrupt(REAR_ECHO), rearEchoISR, CHANGE);  // Attach ISR
+*/
 
 }
 
-int counter = 0;
+char msg[] = {'1' , '0'};
+int x = 0;// Define the character to send
 
 void loop() {
+  
+ // Trigger both sensors
+  triggerSensor(FRONT_TRIGGER);
+  delayMicroseconds(50);  // Short delay to avoid overlap
+//  triggerSensor(REAR_TRIGGER);
+  delay(100);  // Wait for ISRs to complete
 
+  Serial1.print(msg[x]); // Send the character
+  Serial.print("Sent to Tiva C: ");
+  Serial.println(msg[x]); // Confirm the sent character in Serial Monitor
+
+  // Check if data is available from Tiva C
+  if (Serial1.available()) {  
+    String receivedData = Serial1.readString(); // Read all available data as a String
+
+    Serial.print("Received: ");
+    Serial.println(receivedData); // Print the received data for debugging
+  }
+
+/*
 if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
     http.begin(serverUrl);
@@ -125,36 +154,37 @@ if (WiFi.status() == WL_CONNECTED) {
     Serial.print("Received: ");
     Serial.println(receivedData);
   }
-
-
- // Trigger both sensors
-  triggerSensor(FRONT_TRIGGER);
-  delayMicroseconds(50);  // Short delay to avoid overlap
-  triggerSensor(REAR_TRIGGER);
-  delay(100);  // Wait for ISRs to complete
-
+*/
 
   // Calculate distance in cm (speed of sound ≈ 0.034 cm/µs, divide by 2 for round trip)
   float frontDistance = frontDuration * 0.034 / 2;
-  float rearDistance  = rearDuration * 0.034 / 2;
+//  float rearDistance  = rearDuration * 0.034 / 2;
 
   // Print distances
   Serial.print("Front Distance: ");
   Serial.print(frontDistance);
-  Serial.print(" cm\t");
+  Serial.print(" cm\n");
 
+/*
   Serial.print("Rear Distance: ");
   Serial.print(rearDistance);
   Serial.println(" cm");
-
+*/
 
    // Control the car based on ultrasonic sensor readings
-  if (frontDistance < 30 ) 
-    {
+  if (frontDistance < 100 ) 
+    { 
+      x = 1;
       Serial.println("front Object detected, stopping car.");
-      Serial2.print('5');  // Send stop command to Tiva C 
+      Serial1.print(msg[x]);  // Send stop command to Tiva C 
     }
+  else 
+  {
+    x = 0;
+  }
+  
 
+/*
   if ( rearDistance < 30) 
     {
       Serial.println("back Object detected, stopping car.");
@@ -164,5 +194,7 @@ if (WiFi.status() == WL_CONNECTED) {
     else {
             Serial.println("the distances from front and back are fine");
     }
+*/
 
+  delay(500);
  } 

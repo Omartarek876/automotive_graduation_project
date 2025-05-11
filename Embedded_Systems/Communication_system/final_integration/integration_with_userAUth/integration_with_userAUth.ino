@@ -20,9 +20,10 @@
 #define SERVO_PIN 18      // moved to avoid UART1 TX (was GPIO 5)
 #define RED_LED_PIN 2     // can be changed as needed
 #define UART1_TX 5        // UART1 TX pin (to Tiva RX)
-#define UART1_RX 4        // UART1 RX pin (from Tiva TX)
+#define UART1_RX 4        // UART1 RX pin (from Tiva TX)[/]
 
-/* pre ultrasonics pins
+
+/* pre ultrasonics pins0
 #define FRONT_TRIGGER 18
 #define FRONT_ECHO    19
 
@@ -53,6 +54,11 @@ volatile long rearDuration = 0;
 
 char pre_command = 0; 
 char command;
+
+
+int counter = 0;
+char auth = 0;
+int fingerprintID;
 
 HardwareSerial sensorSerial(2);  // UART2 for fingerprint
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&sensorSerial);
@@ -164,15 +170,8 @@ void setup() {
 
   doorServo.attach(SERVO_PIN);  // Use a non-conflicting pin
   doorServo.write(90);  // Initial position
-
-}
-
-int counter = 0;
-char auth = 0;
-int fingerprintID;
-
-void loop() {
-  while (!auth)
+  
+    while (!auth)
   {
    fingerprintID = searchFingerprint();
    if (fingerprintID >= 0) {
@@ -186,7 +185,15 @@ void loop() {
    }
    delay(3000);
   } // end of user auth process
+  
+  //  pinMode(SERVO_PIN, OUTPUT);
+    //                                  fffff
+    i8udigitalWrite(SERVO_PIN, LOW);
 
+}
+
+
+void loop() {
 
 if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;

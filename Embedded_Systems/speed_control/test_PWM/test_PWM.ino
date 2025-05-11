@@ -1,6 +1,6 @@
 // the number of the LED pins
-const int ledPin1 = 16;  // LED1 on GPIO16
-const int ledPin2 = 17;  // LED2 on GPIO17
+const int ledPin1 = 26;  // LED1 on GPIO16
+const int ledPin2 = 27;  // LED2 on GPIO17
 
 // setting PWM properties
 const int freq = 5000;
@@ -19,7 +19,7 @@ void loop() {
     ledcWrite(ledPin2, dutyCycle); // SAME duty cycle
     delay(15);
   }
-
+s
   // decrease the LED brightness
   for (int dutyCycle = 255; dutyCycle >= 0; dutyCycle--) {   
     ledcWrite(ledPin1, dutyCycle);

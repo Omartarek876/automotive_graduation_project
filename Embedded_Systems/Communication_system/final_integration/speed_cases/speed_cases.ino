@@ -105,6 +105,15 @@ void loop() {
   Serial.print(rearDistance);
   Serial.println(" cm");
 
+// Emergency stop logic
+  if ((command == '1' && frontDistance < 100) || (command == '2' && rearDistance < 100)) {
+    itoa(speeds[0], speedStr, 10);    // Lowest speed
+    Serial1.print(speedStr);          // Send speed
+    Serial1.print('5');               // Send stop
+    Serial.println("Obstacle detected! Sent: STOP");
+    pre_command = '5';
+  } 
+  
 
   if (frontDistance < prevDistance -15 ) {
     // Object is getting closer → decrease speed gradually

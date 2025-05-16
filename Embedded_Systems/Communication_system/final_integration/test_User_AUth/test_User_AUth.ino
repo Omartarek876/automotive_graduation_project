@@ -14,11 +14,6 @@
 #define UART1_RX 4        // UART1 RX pin (from Tiva TX)[/]
  
 
- int n = 0;
- int x = 0;
-
- char msg[3] = {'1' , '2' , '5'};
-
 int counter = 0;
 char auth = 0;
 int fingerprintID;
@@ -75,7 +70,7 @@ void setup() {
   }
   */
 
-/*
+
   EEPROM.begin(EEPROM_SIZE);
   doorServo.attach(SERVO_PIN);  // Use a non-conflicting pin
   doorServo.write(90);  // Initial position
@@ -94,7 +89,6 @@ void setup() {
    delay(3000);
   } // end of user auth process
 
-  */
 
 }
 
@@ -113,6 +107,5 @@ void loop() {
     Serial.print("Received: ");
     Serial.println(receivedData); // Print the received data for debugging
   }
-  delay(500);
-       n++;
+  delay(2000);
 }

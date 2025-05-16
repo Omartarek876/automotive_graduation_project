@@ -35,14 +35,10 @@ int searchFingerprint() {
 // Function to open and close the door using the servo motor
 void openDoor() {
   Serial.println("Opening door...");  // Inform that the door is opening
-  doorServo.write(120);  // Move servo to open position
-  delay(1000);  // Wait for 1 second
-  doorServo.write(90);   // Move servo back to neutral position
+  doorServo.write(270);  // Move servo to open position
   delay(3000);  // Wait for 3 seconds
   Serial.println("Closing door...");  // Inform that the door is closing
-  doorServo.write(60);   // Move servo to close position
-  delay(1000);  // Wait for 1 second
-  doorServo.write(90);   // Move servo back to neutral position
+  doorServo.write(90);   // Move servo to close position
 }
 
 
@@ -76,6 +72,7 @@ char auth = 0;  // Variable to track authentication status
 int fingerprintID;  // Variable to store the fingerprint ID
 // Main loop function, runs repeatedly
 void loop() {
+
   while (!auth) {  // Keep checking for authentication until successful
     fingerprintID = searchFingerprint();  // Call the function to search for a matching fingerprint
     if (fingerprintID >= 0) {  // If a match is found
@@ -89,6 +86,23 @@ void loop() {
     }
     delay(3000);  // Wait for 3 seconds before trying again
   }
+
+    
+  char message1 = '1'; // Define the character to send
+
+  Serial1.print(message1); // Send the character
+  Serial.print("Sent to Tiva C: ");
+  Serial.println(message1); // Confirm the sent character in Serial Monitor
+
+  // Check if data is available from Tiva C
+  if (Serial1.available()) {  
+    String receivedData = Serial1.readString(); // Read all available data as a String
+
+    Serial.print("Received: ");
+    Serial.println(receivedData); // Print the received data for debugging
+  }
+  delay(2000);
+  
 }
 
 

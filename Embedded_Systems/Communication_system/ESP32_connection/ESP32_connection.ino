@@ -23,9 +23,7 @@ void setup() {
 
 void loop() {
 
-    delay(3000); // Delay 1 second between transmissions
-
-  char message1 = '6'; // Define the character to send
+    char message1 = '1'; // Define the character to send
 
   // Send the character to Tiva C via UART1
   Serial1.print(message1); // Send the character
@@ -49,4 +47,7 @@ void loop() {
   Serial.print("Sent to Tiva C: ");
   Serial.println(message); // Confirm the sent character in Serial Monitor
 */
+
+    delay(2000); // Delay 1 second between transmissions
+
 }

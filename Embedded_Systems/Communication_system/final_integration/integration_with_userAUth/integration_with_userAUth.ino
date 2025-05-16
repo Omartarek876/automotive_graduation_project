@@ -31,32 +31,32 @@
 #define REAR_ECHO     4
 */
 
-#define FRONT_TRIGGER 23
-#define FRONT_ECHO    22
+//#define FRONT_TRIGGER 23
+//#define FRONT_ECHO    22
 
-#define REAR_TRIGGER  21
-#define REAR_ECHO     15
+//#define REAR_TRIGGER  21
+//#define REAR_ECHO     15
 
 
 // WiFi credentials
-const char* ssid = "OMARTAREK";            // WiFi SSID (network name)
-const char* password =  "10ramadan"; // WiFi password
+//const char* ssid = "OMARTAREK";            // WiFi SSID (network name)
+//const char* password =  "10ramadan"; // WiFi password
 
 // Server details
-const char* serverUrl = "https://178.32.101.106:3000/api/car-control"; // Server URL or IP address and port
+//const char* serverUrl = "https://178.32.101.106:3000/api/car-control"; // Server URL or IP address and port
 
 
-volatile long frontStart = 0, frontEnd = 0;
-volatile long rearStart  = 0, rearEnd  = 0;
+//volatile long frontStart = 0, frontEnd = 0;
+//volatile long rearStart  = 0, rearEnd  = 0;
 
-volatile long frontDuration = 0;
-volatile long rearDuration = 0;
+//volatile long frontDuration = 0;
+//volatile long rearDuration = 0;
 
-char pre_command = 0; 
-char command;
+//char pre_command = 0; 
+//char command;
 
 
-int counter = 0;
+//int counter = 0;
 char auth = 0;
 int fingerprintID;
 
@@ -101,7 +101,7 @@ void indicateFailure() {
   digitalWrite(RED_LED_PIN, LOW);
 }
 
-
+/*
  // Interrupt Service Routine for the front ultrasonic sensor
 void IRAM_ATTR frontEchoISR() {
   if (digitalRead(FRONT_ECHO) == HIGH) {
@@ -130,7 +130,7 @@ void triggerSensor(int triggerPin) {
   delayMicroseconds(10);
   digitalWrite(triggerPin, LOW);
 }
-
+*/
 
 
 

@@ -12,10 +12,10 @@ TinyGPSPlus gps;
 #define TXD2 17
 
 // Thresholds and delays
-#define FLIP_THRESHOLD 90 // Roll angle threshold to detect a flip
+#define FLIP_THRESHOLD 60 // Roll angle threshold to detect a flip
 #define CHECK_DELAY 3000  // Time to confirm flip in milliseconds
 #define TIME_DELAY 500    // Delay between each loop iteration
-
+#define flag_delay 10000
 // Hardware serial for GPS communication
 HardwareSerial gpsSerial(2); // UART2 for GPS
 
@@ -24,6 +24,7 @@ float ax, ay, az;                // Accelerometer values
 float RateRoll, RatePitch, RateYaw; // Gyroscope rates
 float rollangle;                // Calculated roll angle
 unsigned long startTime = 0;    // Timer for flip detection
+unsigned long flag_time=0;
 bool flipDetected = false;      // Flip detection flag
 bool alertSent = false; 
 
@@ -32,7 +33,9 @@ const char* ssid = "Msamir";         // Wi-Fi SSID
 const char* password = "samir3111"; // Wi-Fi password
 
 // Server URL for sending GPS data
-const char* serverUrl = "http://192.168.77.197:3000/gps"; // Replace with your server URL
+const char* serverUrl = "https://178.32.101.106:3000/api/location"; // Replace with your server URL
+
+int counter_for_reset = 0;
 
 void setup() {
   Serial.begin(115200); // Initialize serial communication for debugging
@@ -70,7 +73,7 @@ void loop() {
   Serial.print(" |az=");
   Serial.println(az);
 
-  Serial.print("roll=");
+  Serial.print("roll angle=");
   Serial.println(rollangle);
 
   // Check for car flip based on roll angle
@@ -85,17 +88,24 @@ void loop() {
       Serial.println("Car flipped!");
       SendAccidentAlert(); // Send GPS location to the server
       alertSent = true;  // Prevent further alerts for the same accident
+      flag_time=millis();
     }
   } else {
     flipDetected = false; // Reset flip detection
   }
 
+  if (millis()- flag_time >= flag_delay)
+  {
+    alertSent = false;
+  }
+  
   // Update GPS data
   while (gpsSerial.available()) {
     gps.encode(gpsSerial.read());
   }
 
   delay(TIME_DELAY); // Wait before the next loop iteration
+
 }
 
 // Initialize MPU6050 accelerometer and gyroscope
@@ -171,7 +181,7 @@ void SendAccidentAlert(void) {
       http.begin(serverUrl);
       http.addHeader("Content-Type", "application/json");
 
-      String payload = "{\"lat\":" + String(lat, 6) + ",\"lng\":" + String(lng, 6) + ",\"status\":\"accident\"}";
+      String payload = "{\"latitude\":" + String(lat, 6) + ",\"longitude\":" + String(lng, 6) + ",\"status\":\"accedint\"}";
 
       // Retry mechanism for sending data
       int httpResponseCode = -1;
@@ -181,7 +191,7 @@ void SendAccidentAlert(void) {
       while (retryCount < maxRetries) {
         httpResponseCode = http.POST(payload);
 
-        if (httpResponseCode == 200) { // Success
+        if (httpResponseCode == 201) { // Success
           Serial.print("HTTP Response code: ");
           Serial.println(httpResponseCode);
           break; // Exit the loop as the request was successful
@@ -195,7 +205,7 @@ void SendAccidentAlert(void) {
         }
       }
 
-      if (httpResponseCode != 200) {
+      if (httpResponseCode != 201) {
         Serial.println("Failed to send data after multiple attempts.");
       }
 

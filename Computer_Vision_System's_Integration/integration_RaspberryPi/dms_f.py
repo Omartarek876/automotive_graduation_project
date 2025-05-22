@@ -1,0 +1,526 @@
+import cv2
+from ultralytics import YOLO
+from picamera2 import Picamera2
+import numpy as np
+from i2c_utils import send_i2c_flag 
+import mediapipe as mp
+import time
+import math
+import pygame 
+from pygame import mixer
+
+
+FLAG_DELAY = 10  
+COMMON_ALERT = 7
+i2c_start_time = {"Looking Left": 0, "Looking Right": 0, "Looking Down": 0, "Looking Up": 0, "Closed Eyes": 0,"no face": 0}
+flag_sent = {"Looking Left": False, "Looking Right": False, "Looking Down": False, "Looking Up": False, "Closed Eyes": False,"no face": False}
+
+
+# Global counters for tracking states
+looking_left_frames = 0
+looking_right_frames = 0
+looking_down_frames = 0
+looking_up_frames = 0
+closed_eyes_frames = 0
+
+# Time-based tracking variables
+start_time_left = 0
+start_time_right = 0
+start_time_down = 0
+start_time_up = 0
+start_time_closed_eyes = 0
+start_time_no = 0
+
+# Time thresholds (in seconds)
+TIME_THRESHOLD_LEFT = 3.0  # 3 seconds looking left
+TIME_THRESHOLD_RIGHT = 3.0  # 3 seconds looking right
+TIME_THRESHOLD_DOWN = 3.0  # 3 seconds looking down
+TIME_THRESHOLD_UP = 3.0  # 3 seconds looking up
+TIME_THRESHOLD_CLOSED_EYES = 3.0  # 3 seconds with eyes closed
+TIME_THRESHOLD_No_Face = 3.0 
+
+# State tracking variables
+current_state = "Forward"
+previous_state = "Forward"
+
+# Define thresholds
+AUDIO_THRESHOLD = 30
+ESCALATION_THRESHOLD = 90
+
+# Audio Initialization
+mixer.init()
+voice_left = mixer.Sound('/home/mahmoud/integration_final/left.wav')
+voice_right = mixer.Sound('/home/mahmoud/integration_final/Right.wav')
+voice_down = mixer.Sound('/home/mahmoud/integration_final/down.wav')
+eyes_blink = mixer.Sound('/home/mahmoud/integration_final/eyes_blink.wav')
+warning_sound = mixer.Sound('/home/mahmoud/integration_final/Warningg.mp3')
+
+# Color Definitions
+BLUE = (255,0,0)
+RED = (0,0,255)
+GREEN = (0,255,0)
+
+# Landmark Indices
+RIGHT_EYE = [ 33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161 , 246 ] 
+LEFT_EYE = [ 362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385,384, 398 ]
+LOWER_LIPS = [61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 308, 324, 318, 402, 317, 14, 87, 178, 88, 95]
+UPPER_LIPS = [ 185, 40, 39, 37,0 ,267 ,269 ,270 ,409, 415, 310, 311, 312, 13, 82, 81, 42, 183, 78] 
+
+# Load models
+DMS_model2 = YOLO("/home/mahmoud/integration_final/best_ncnn_model")  # Glasses detection model
+DMS_model1 = YOLO("/home/mahmoud/integration_final/Mask_ncnn_model")  # Face_Mask detection model
+
+# Initialize MediaPipe Face Mesh
+mp_face_mesh = mp.solutions.face_mesh
+face_mesh = mp_face_mesh.FaceMesh(min_detection_confidence=0.2, min_tracking_confidence=0.2)
+
+
+def send_i2c_flag(flag):
+    try:
+        with SMBus(I2C_BUS) as bus:
+            bus.write_i2c_block_data(I2C_ADDR, 0, [flag])
+            print(f"Sent flag {flag} to ESP32")
+    except Exception as e:
+        print(f"Failed to send I2C flag: {e}")
+
+
+
+# Time-based action tracking
+def track_time_based_actions(current_pose):
+    global start_time_left, start_time_right, start_time_down, start_time_up, start_time_closed_eyes,start_time_no
+    global i2c_start_time, flag_sent, sound_played, current_state, previous_state
+
+    current_time = time.time()
+
+    # Reset timers if state changes
+    if current_state != previous_state:
+        start_time_left = start_time_right = start_time_down = start_time_up = start_time_closed_eyes = start_time_no = current_time
+        i2c_start_time = {key: 0 for key in i2c_start_time}
+        flag_sent = {key: False for key in flag_sent}
+        previous_state = current_state
+
+
+    if current_pose == "Looking Left":
+        if i2c_start_time["Looking Left"] == 0:  
+            i2c_start_time["Looking Left"] = current_time  
+
+        if current_time - start_time_left >= TIME_THRESHOLD_LEFT:
+            print("WARNING: Looking Left for too long!")
+            if pygame.mixer.get_busy()==0:
+             voice_left.play()
+            start_time_left = current_time
+
+        if current_time - i2c_start_time["Looking Left"] >= FLAG_DELAY and not flag_sent["Looking Left"]:
+            send_i2c_flag(COMMON_ALERT)  # Edited: Using I2C to send the common flag
+            flag_sent["Looking Left"] = True  
+
+    elif current_pose == "Looking Right":
+        if i2c_start_time["Looking Right"] == 0:
+            i2c_start_time["Looking Right"] = current_time  
+
+        if current_time - start_time_right >= TIME_THRESHOLD_LEFT:
+            print("WARNING: Looking Right for too long!")
+            if pygame.mixer.get_busy()==0:
+             voice_right.play()
+            start_time_right = current_time
+
+        if current_time - i2c_start_time["Looking Right"] >= FLAG_DELAY and not flag_sent["Looking Right"]:
+            send_i2c_flag(COMMON_ALERT)  # Edited: Using I2C to send the common flag
+            flag_sent["Looking Right"] = True  
+
+    elif current_pose == "Looking Down":
+        if i2c_start_time["Looking Down"] == 0:
+            i2c_start_time["Looking Down"] = current_time  
+
+        if current_time - start_time_down >= TIME_THRESHOLD_LEFT:
+            print("WARNING: Looking Down for too long!")
+            if pygame.mixer.get_busy()==0:
+             voice_down.play()
+            start_time_down = current_time
+
+        if current_time - i2c_start_time["Looking Down"] >= FLAG_DELAY and not flag_sent["Looking Down"]:
+            send_i2c_flag(COMMON_ALERT)  # Edited: Using I2C to send the common flag
+            flag_sent["Looking Down"] = True  
+
+    elif current_pose == "Looking Up":
+        if i2c_start_time["Looking Up"] == 0:
+            i2c_start_time["Looking Up"] = current_time  
+
+        if current_time - start_time_up >= TIME_THRESHOLD_LEFT:
+            print("WARNING: Looking Up for too long!")
+            if pygame.mixer.get_busy()==0:
+             warning_sound.play()
+            start_time_up = current_time
+
+        if current_time - i2c_start_time["Looking Up"] >= FLAG_DELAY and not flag_sent["Looking Up"]:
+            send_i2c_flag(COMMON_ALERT)  # Edited: Using I2C to send the common flag
+            flag_sent["Looking Up"] = True  
+
+    elif current_pose == "Closed Eyes":
+        if i2c_start_time["Closed Eyes"] == 0:
+            i2c_start_time["Closed Eyes"] = current_time  
+
+        if current_time - start_time_closed_eyes >= TIME_THRESHOLD_LEFT:
+            print("WARNING: Eyes Closed for too long!")
+            if pygame.mixer.get_busy()==0:
+             eyes_blink.play()
+            start_time_closed_eyes = current_time
+
+        if current_time - i2c_start_time["Closed Eyes"] >= FLAG_DELAY and not flag_sent["Closed Eyes"]:
+            send_i2c_flag(COMMON_ALERT)  # Edited: Using I2C to send the common flag
+            flag_sent["Closed Eyes"] = True  
+
+    elif current_pose == "No Face Detected":
+        if i2c_start_time["no face"] == 0:
+            i2c_start_time["no face"] = current_time  
+
+        if current_time - start_time_no >= TIME_THRESHOLD_No_Face:
+            print("WARNING!!!")
+            if pygame.mixer.get_busy()==0:
+             warning_sound.play()
+            start_time_no = current_time
+
+        if current_time - i2c_start_time["no face"] >= FLAG_DELAY and not flag_sent["no face"]:
+            send_i2c_flag(COMMON_ALERT)  # Edited: Using I2C to send the common flag
+            flag_sent["no face"] = True 
+
+def check_conditions(results1, results2):
+    classes1 = [int(cls) for cls in results1[0].boxes.cls] if results1[0].boxes else []
+    classes2 = [int(cls) for cls in results2[0].boxes.cls] if results2[0].boxes else []
+
+    face_detected = 0 in classes1
+    mask_detected = 1 in classes1
+    glass_detected = 0 in classes2
+
+    if face_detected and not mask_detected and not glass_detected:
+        case = "Face detected"
+    elif face_detected and not mask_detected and glass_detected:
+        case = "Face with glasses detected"
+    elif not face_detected and mask_detected and not glass_detected:
+        case = "Face with mask detected"
+    elif not face_detected and mask_detected and glass_detected:
+        case = "Face with mask and glasses detected"
+    else:
+        case = "No face detected"
+    
+    print(case)
+    return case
+
+def landmarksDetection(img, results, draw=False):
+    img_height, img_width = img.shape[:2]
+    mesh_coord = [(int(point.x * img_width), int(point.y * img_height)) for point in results.multi_face_landmarks[0].landmark]
+    if draw:
+        [cv2.circle(img, p, 2, (0,255,0), -1) for p in mesh_coord]
+    return mesh_coord
+
+def euclaideanDistance(point, point1):
+    x, y = point
+    x1, y1 = point1
+    distance = math.sqrt((x1 - x)**2 + (y1 - y)**2)
+    return distance
+
+def blinkRatio(img, landmarks, right_indices, left_indices):
+    # Right eyes 
+    rh_right = landmarks[right_indices[0]]
+    rh_left = landmarks[right_indices[8]]
+    rv_top = landmarks[right_indices[12]]
+    rv_bottom = landmarks[right_indices[4]]
+
+    # LEFT_EYE 
+    lh_right = landmarks[left_indices[0]]
+    lh_left = landmarks[left_indices[8]]
+    lv_top = landmarks[left_indices[12]]
+    lv_bottom = landmarks[left_indices[4]]
+
+    rhDistance = euclaideanDistance(rh_right, rh_left)
+    rvDistance = euclaideanDistance(rv_top, rv_bottom)
+
+    lvDistance = euclaideanDistance(lv_top, lv_bottom)
+    lhDistance = euclaideanDistance(lh_right, lh_left)
+    
+    if lvDistance != 0 and lhDistance !=0:
+        reRatio = rhDistance/rvDistance
+        leRatio = lhDistance/lvDistance
+    
+    ratio = (reRatio+leRatio)/2
+    return ratio   
+
+def detect_head_pose(image):
+    global current_state, previous_state
+    
+    start = time.time()
+
+    image = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+    image.flags.writeable = False
+    results = face_mesh.process(image)
+    image.flags.writeable = True
+    image = cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
+
+    img_h, img_w, img_c = image.shape
+    face_2d = []
+    face_3d = []
+
+    if results.multi_face_landmarks:
+        for face_landmarks in results.multi_face_landmarks:
+            for idx, lm in enumerate(face_landmarks.landmark):
+                if idx == 33 or idx == 263 or idx ==1 or idx == 61 or idx == 291 or idx==199 or idx==10:
+                    if idx ==10:
+                        nose_2d = (lm.x * img_w,lm.y * img_h)
+                        nose_3d = (lm.x * img_w,lm.y * img_h,lm.z * 3000)
+                    x,y = int(lm.x * img_w),int(lm.y * img_h)
+
+                    face_2d.append([x,y])
+                    face_3d.append(([x,y,lm.z]))
+
+            face_2d = np.array(face_2d,dtype=np.float64)
+            face_3d = np.array(face_3d,dtype=np.float64)
+
+            focal_length = 1 * img_w
+            cam_matrix = np.array([[focal_length,0,img_h/2],
+                                  [0,focal_length,img_w/2],
+                                  [0,0,1]])
+            distortion_matrix = np.zeros((4,1),dtype=np.float64)
+
+            success,rotation_vec,translation_vec = cv2.solvePnP(face_3d,face_2d,cam_matrix,distortion_matrix)
+
+            rmat,jac = cv2.Rodrigues(rotation_vec)
+            angles,mtxR,mtxQ,Qx,Qy,Qz = cv2.RQDecomp3x3(rmat)
+
+            x = angles[0] * 360
+            y = angles[1] * 360
+            z = angles[2] * 360
+
+            if y < -10:
+                text = "Looking Right"
+                current_state = "Looking Right"
+            elif y > 10:
+                text = "Looking Left"
+                current_state = "Looking Left"
+            elif x < -4:
+                text = "Looking Down"
+                current_state = "Looking Down"
+            elif x > 10:
+                text = "Looking Up"
+                current_state = "Looking Up"
+            else:
+                text = "Forward"
+                current_state = "Forward"
+
+            # Track time-based actions
+            track_time_based_actions(current_state)
+
+            nose_3d_projection,jacobian = cv2.projectPoints(nose_3d,rotation_vec,translation_vec,cam_matrix,distortion_matrix)
+
+            p1 = (int(nose_2d[0]),int(nose_2d[1]))
+            p2 = (int(nose_2d[0] + y*10), int(nose_2d[1] -x *10))
+
+            cv2.line(image,p1,p2,(255,0,0),3)
+
+            cv2.putText(image,text,(20,50),cv2.FONT_HERSHEY_SIMPLEX,2,GREEN,2)
+            cv2.putText(image,"x: " + str(np.round(x,2)),(500,50),cv2.FONT_HERSHEY_SIMPLEX,1,RED,2)
+            cv2.putText(image,"y: "+ str(np.round(y,2)),(500,100),cv2.FONT_HERSHEY_SIMPLEX,1,RED,2)
+            cv2.putText(image,"z: "+ str(np.round(z, 2)), (500, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, RED, 2)
+
+        end = time.time()
+        totalTime = end-start
+        fps = 1/totalTime
+        print("FPS: ",fps)
+
+        #cv2.putText(image,f'FPS: {int(fps)}',(20,450),cv2.FONT_HERSHEY_SIMPLEX,1.5,(0,255,0),2)
+
+        return image
+
+    return image
+
+def Head_Eye_detect(image):
+    global current_state, previous_state
+    
+    image = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+    image.flags.writeable = False
+    results = face_mesh.process(image)
+    image.flags.writeable = True
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+    img_h, img_w, img_c = image.shape
+    face_3d = []
+    face_2d = []
+   
+    if results.multi_face_landmarks:
+        for face_landmarks in results.multi_face_landmarks:
+            for idx, lm in enumerate(face_landmarks.landmark):
+                if idx == 33 or idx == 263 or idx == 1 or idx == 61 or idx == 291 or idx == 199 or idx==10:
+                    if idx == 10:
+                        nose_2d = (lm.x * img_w, lm.y * img_h)
+                        nose_3d = (lm.x * img_w, lm.y * img_h, lm.z * 8000)
+
+                    x, y = int(lm.x * img_w), int(lm.y * img_h)
+
+                    face_2d.append([x, y])
+                    face_3d.append([x, y, lm.z])       
+            
+            face_2d = np.array(face_2d, dtype=np.float64)
+            face_3d = np.array(face_3d, dtype=np.float64)
+
+            focal_length = 1 * img_w
+
+            cam_matrix = np.array([ [focal_length, 0, img_h / 2],
+                                    [0, focal_length, img_w / 2],
+                                    [0, 0, 1]])
+
+            dist_matrix = np.zeros((4, 1), dtype=np.float64)
+
+            success, rot_vec, trans_vec = cv2.solvePnP(face_3d, face_2d, cam_matrix, dist_matrix)
+
+            rmat, jac = cv2.Rodrigues(rot_vec)
+
+            angles, mtxR, mtxQ, Qx, Qy, Qz = cv2.RQDecomp3x3(rmat)
+            x = angles[0] * 360
+            y = angles[1] * 360
+
+            # Detect eye blink
+            mesh_coords = landmarksDetection(image, results, False)
+            ratio = blinkRatio(image, mesh_coords, RIGHT_EYE, LEFT_EYE)
+
+            if y < -10:
+                text = "Looking Right"
+                current_state = "Looking Right"
+            elif y > 10:
+                text = "Looking Left"
+                current_state = "Looking Left"
+            elif x < -4:
+                text = "Looking Down"
+                current_state = "Looking Down"
+            elif x > 10:
+                text = "Looking Up"
+                current_state = "Looking Up"
+            elif ratio > 4.3:
+                text = "Closed Eyes"
+                current_state = "Closed Eyes"
+            else:
+                text = "Forward"
+                current_state = "Forward"
+
+            # Track time-based actions
+            track_time_based_actions(current_state)
+
+            nose_3d_projection, jacobian = cv2.projectPoints(
+                nose_3d, rot_vec, trans_vec, cam_matrix, dist_matrix
+            )
+
+            p1 = (int(nose_2d[0]), int(nose_2d[1]))
+            p2 = (int(nose_2d[0] + y*10), int(nose_2d[1] - x*10))
+
+            cv2.line(image, p1, p2, BLUE, 3)
+            cv2.putText(image, text, (20, 50), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 2, GREEN, 2)
+            
+            # Display additional tracking information
+            print(ratio)
+
+        return image
+
+    return image
+
+def No_Face(image):
+    global current_state, previous_state
+    
+    
+    text = "Warning !!!"
+    current_state = "No Face Detected"
+           
+
+    # Track time-based actions
+    track_time_based_actions(current_state)
+
+            
+
+            
+    cv2.putText(image, text, (20, 50), 
+                cv2.FONT_HERSHEY_SIMPLEX, 2, RED, 2)
+            
+           
+
+    return image
+
+
+def main():
+    # Initialize Picamera2
+    picam2 = Picamera2()
+    picam2.configure(picam2.create_preview_configuration(main={"format": "RGB888", "size": (640, 480)}))
+    picam2.start()
+    
+    prev_time = time.time()
+    fps = 0
+    frame_count = 0
+
+    while True:
+        frame = picam2.capture_array()
+
+        # Calculate FPS
+        current_time = time.time()
+        frame_count += 1
+        if current_time - prev_time >= 1.0:  # Update every second
+            fps = frame_count
+            frame_count = 0
+            prev_time = current_time
+
+        try:
+            # Perform detections
+            results1 = DMS_model1(frame,imgsz=320)  # Mask detection
+            results2 = DMS_model2(frame,imgsz=320)  # Face detection
+            case = str(check_conditions(results1, results2))
+
+            # Draw YOLO detections manually to avoid errors
+            for result in [results1, results2]:
+                for box in result[0].boxes:
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])  # Convert bounding box to int
+                    cls = int(box.cls)
+                    conf = float(box.conf)
+                    label = f"{cls}: {conf:.2f}"
+
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), RED, 2)
+
+            # Ensure frame is in the correct format
+            if frame is None:
+                print("Error: Frame is None")
+                continue
+
+            if len(frame.shape) == 2:  # If grayscale, convert to BGR
+                frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR)
+
+            # Process frame based on detection case
+            if case == "Face detected":
+                frame = Head_Eye_detect(frame)
+            elif case == "Face with glasses detected":
+                frame = detect_head_pose(frame)
+            elif case == "Face with mask detected":
+                frame = detect_head_pose(frame)
+            elif case == "Face with mask and glasses detected":
+                frame = detect_head_pose(frame)
+            elif case == "No face detected":
+                frame = No_Face(frame)
+
+            # Display classification result
+            cv2.putText(frame, case, (20, 300),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, GREEN, 2)
+
+            cv2.imshow("Driver Monitoring System", frame)
+
+            # Exit condition
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        except Exception as e:
+            print(f"Error processing frame: {e}")
+            continue
+
+    # Cleanup
+    cv2.destroyAllWindows()
+    picam2.stop()
+
+# Initialization and Entry Point
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(f"Critical error: {e}")

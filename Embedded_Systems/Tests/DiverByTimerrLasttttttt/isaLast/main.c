@@ -1,0 +1,67 @@
+
+/*
+ *
+ *
+ * Created on: 21/2/2025
+ *      Author: Mariam
+ */
+/**
+ * main.c
+ */
+
+
+#include"Timer0.h"
+#include"ultrasonic.h"
+
+#define NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND 369
+
+void Delay_MS(unsigned long long n)
+{
+    volatile unsigned long long count = 0;
+    while(count++ < (NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND * n) );
+}
+
+/* global variables to store and display distance in cm */
+uint32 time; /*stores pulse on time */
+uint32 distance; /* stores measured distance value */
+
+int main(void)
+{
+    //PWM_Init();
+
+    Port_Init(&Port_Configuration);
+    Dio_Init(&Dio_Configuration);
+    Timer3_Count_Init();
+
+   // Timer2_Count_Init();
+
+    while(1){
+        time = Measure_distance(); /* take pulse duration measurement */
+        distance = (time * 10625)/10000000; /* convert pulse duration into distance */
+
+        //dist1 = ultrasonic_1();
+        // Timer0_Delay(100);
+     //   dist2 = ultrasonic_2();
+       // Timer0_Delay(100);
+        Dio_WriteChannel(DioConf_led1_CHANNEL_ID_INDEX, STD_LOW);
+        Dio_WriteChannel(DioConf_led2_CHANNEL_ID_INDEX, STD_LOW);
+
+        /* Get the measured distance */
+              if (distance >= 0) {  // Ensure the measurement is valid
+                  if (distance < 10) {
+                      Dio_WriteChannel(DioConf_led2_CHANNEL_ID_INDEX, STD_HIGH);  // Turn on Green LED if distance < 10cm
+                  } else {
+                      Dio_WriteChannel( DioConf_led1_CHANNEL_ID_INDEX, STD_HIGH);  // Turn on Red LED if distance > 20cm
+                  }
+
+              }
+              /* Delay before the next measurement */
+              Delay_MS(500);
+
+    }
+
+
+}
+
+
+

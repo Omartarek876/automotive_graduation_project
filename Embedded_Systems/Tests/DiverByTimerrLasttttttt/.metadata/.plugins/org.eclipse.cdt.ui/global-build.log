@@ -1,0 +1,259 @@
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+Building file: "../Ultrasonic.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Ultrasonic.d_raw"  "../Ultrasonic.c"
+"../Ultrasonic.c", line 33: warning #994-D: missing return statement at end of non-void function "ultrasonic_1"
+Finished building: "../Ultrasonic.c"
+ 
+Building file: "../Timer0.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Timer0.d_raw"  "../Timer0.c"
+Finished building: "../Timer0.c"
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 50: warning #188-D: pointless comparison of unsigned integer with zero
+Finished building: "../main.c"
+ 
+Building file: "../tm4c123gh6pm_startup_ccs.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="tm4c123gh6pm_startup_ccs.d_raw"  "../tm4c123gh6pm_startup_ccs.c"
+Finished building: "../tm4c123gh6pm_startup_ccs.c"
+ 
+Building file: "../Critical_Files/Det.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Critical_Files/Det.d_raw" --obj_directory="Critical_Files"  "../Critical_Files/Det.c"
+"../Critical_Files/Det.c", line 22: warning #112-D: statement is unreachable
+Finished building: "../Critical_Files/Det.c"
+ 
+Building file: "../Dio_Driver/Dio_PBcfg.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Dio_Driver/Dio_PBcfg.d_raw" --obj_directory="Dio_Driver"  "../Dio_Driver/Dio_PBcfg.c"
+Finished building: "../Dio_Driver/Dio_PBcfg.c"
+ 
+Building file: "../Dio_Driver/Dio.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Dio_Driver/Dio.d_raw" --obj_directory="Dio_Driver"  "../Dio_Driver/Dio.c"
+Finished building: "../Dio_Driver/Dio.c"
+ 
+Building file: "../Port_Driver/Port_PBcfg.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Port_Driver/Port_PBcfg.d_raw" --obj_directory="Port_Driver"  "../Port_Driver/Port_PBcfg.c"
+Finished building: "../Port_Driver/Port_PBcfg.c"
+ 
+Building file: "../Port_Driver/Port.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Port_Driver/Port.d_raw" --obj_directory="Port_Driver"  "../Port_Driver/Port.c"
+Finished building: "../Port_Driver/Port.c"
+ 
+Building target: "isaLast.out"
+Invoking: Arm Linker
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"isaLast.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="isaLast_linkInfo.xml" --rom_model -o "isaLast.out" "./Timer0.obj" "./Ultrasonic.obj" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./Critical_Files/Det.obj" "./Dio_Driver/Dio.obj" "./Dio_Driver/Dio_PBcfg.obj" "./Port_Driver/Port.obj" "./Port_Driver/Port_PBcfg.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "isaLast.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+Building file: "../Ultrasonic.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Ultrasonic.d_raw"  "../Ultrasonic.c"
+Finished building: "../Ultrasonic.c"
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 50: warning #188-D: pointless comparison of unsigned integer with zero
+Finished building: "../main.c"
+ 
+Building target: "isaLast.out"
+Invoking: Arm Linker
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"isaLast.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="isaLast_linkInfo.xml" --rom_model -o "isaLast.out" "./Timer0.obj" "./Ultrasonic.obj" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./Critical_Files/Det.obj" "./Dio_Driver/Dio.obj" "./Dio_Driver/Dio_PBcfg.obj" "./Port_Driver/Port.obj" "./Port_Driver/Port_PBcfg.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "isaLast.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 50: warning #188-D: pointless comparison of unsigned integer with zero
+Finished building: "../main.c"
+ 
+Building file: "../Ultrasonic.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Ultrasonic.d_raw"  "../Ultrasonic.c"
+Finished building: "../Ultrasonic.c"
+ 
+Building file: "../Port_Driver/Port_PBcfg.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Port_Driver/Port_PBcfg.d_raw" --obj_directory="Port_Driver"  "../Port_Driver/Port_PBcfg.c"
+Finished building: "../Port_Driver/Port_PBcfg.c"
+ 
+Building file: "../Port_Driver/Port.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Port_Driver/Port.d_raw" --obj_directory="Port_Driver"  "../Port_Driver/Port.c"
+Finished building: "../Port_Driver/Port.c"
+ 
+Building target: "isaLast.out"
+Invoking: Arm Linker
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"isaLast.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="isaLast_linkInfo.xml" --rom_model -o "isaLast.out" "./Timer0.obj" "./Ultrasonic.obj" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./Critical_Files/Det.obj" "./Dio_Driver/Dio.obj" "./Dio_Driver/Dio_PBcfg.obj" "./Port_Driver/Port.obj" "./Port_Driver/Port_PBcfg.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "isaLast.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+Building file: "../Ultrasonic.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Ultrasonic.d_raw"  "../Ultrasonic.c"
+Finished building: "../Ultrasonic.c"
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 50: warning #188-D: pointless comparison of unsigned integer with zero
+Finished building: "../main.c"
+ 
+Building target: "isaLast.out"
+Invoking: Arm Linker
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"isaLast.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="isaLast_linkInfo.xml" --rom_model -o "isaLast.out" "./Timer0.obj" "./Ultrasonic.obj" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./Critical_Files/Det.obj" "./Dio_Driver/Dio.obj" "./Dio_Driver/Dio_PBcfg.obj" "./Port_Driver/Port.obj" "./Port_Driver/Port_PBcfg.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "isaLast.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+Building file: "../Ultrasonic.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Ultrasonic.d_raw"  "../Ultrasonic.c"
+Finished building: "../Ultrasonic.c"
+ 
+Building target: "isaLast.out"
+Invoking: Arm Linker
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"isaLast.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="isaLast_linkInfo.xml" --rom_model -o "isaLast.out" "./Timer0.obj" "./Ultrasonic.obj" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./Critical_Files/Det.obj" "./Dio_Driver/Dio.obj" "./Dio_Driver/Dio_PBcfg.obj" "./Port_Driver/Port.obj" "./Port_Driver/Port_PBcfg.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "isaLast.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'isaLast.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project isaLast ****
+
+"C:\\ti\\ccs1260\\ccs\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+Building file: "../Ultrasonic.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="F:/GraduationProject/DiverByTimerrLasttttttt/isaLast" --include_path="C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Ultrasonic.d_raw"  "../Ultrasonic.c"
+Finished building: "../Ultrasonic.c"
+ 
+Building target: "isaLast.out"
+Invoking: Arm Linker
+"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"isaLast.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1260/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="isaLast_linkInfo.xml" --rom_model -o "isaLast.out" "./Timer0.obj" "./Ultrasonic.obj" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./Critical_Files/Det.obj" "./Dio_Driver/Dio.obj" "./Dio_Driver/Dio_PBcfg.obj" "./Port_Driver/Port.obj" "./Port_Driver/Port_PBcfg.obj" "../tm4c123gh6pm.cmd"  -llibc.a 
+<Linking>
+Finished building target: "isaLast.out"
+ 
+
+**** Build Finished ****

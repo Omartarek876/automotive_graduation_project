@@ -31,22 +31,21 @@ uint8  stop_flag = 0;
         switch (Motion_Control_Char)
             {
         case 0 :
-            PWM_SetDuty(PWM_CHANNEL_1, 35);
+            PWM_SetDuty(PWM_CHANNEL_1, 40);
             break ;
         case 1 :
-            PWM_SetDuty(PWM_CHANNEL_1, 40);
+            PWM_SetDuty(PWM_CHANNEL_1, 42);
             break ;
         case 2 :
             PWM_SetDuty(PWM_CHANNEL_1, 45);
             break ;
         case 3 :
-            PWM_SetDuty(PWM_CHANNEL_1, 50);
+            PWM_SetDuty(PWM_CHANNEL_1, 47);
             break ;
 
         case 4 :
             if (!stop_flag)
             {
-                slow_Stopping();
                 stop_flag = 1;
                 UART_SendString(1 , "stopping");
             }
@@ -58,6 +57,7 @@ uint8  stop_flag = 0;
             break;
 
             case 5 :
+                slow_Stopping();
                 PWM_SetDuty(PWM_CHANNEL_1, 10);
                 UART_SendString(1 , "stop command");
                 stop_flag = 0;
@@ -82,6 +82,7 @@ uint8  stop_flag = 0;
                  UART_SendString(1 , "right command");
                  stop_flag = 0;
                  break;
+
             case 9 :
                  car_left ();
                  UART_SendString(1 , "left command");

@@ -1,9 +1,12 @@
-#include <WiFi.h>
-#include <HTTPClient.h>
+#include <Wire.h>  
 #include <Adafruit_Fingerprint.h>
 #include <HardwareSerial.h>
 #include <EEPROM.h>
 #include <ESP32Servo.h>
+
+#define I2C_ADDRESS 0x08
+
+#define Green_LED    13  //led
 
 #define EEPROM_SIZE 100  
 #define fingerRX 16       // Fingerprint sensor RX (ESP TX)
@@ -18,11 +21,12 @@
 #define FRONT_TRIGGER 27
 #define FRONT_ECHO    32
 
-
 #define REAR_TRIGGER   23
-#define REAR_ECHO      22
+#define REAR_ECHO      25
 
-
+//volatile byte i2c_flag = 0;
+//bool new_flag_received = false;
+volatile byte flag = 0;  // To store the incoming flag value
 
 volatile long frontStart = 0 , frontEnd = 0;
 volatile long rearStart  = 0, rearEnd  = 0;
@@ -35,10 +39,6 @@ float prevDistance = 0.0;
 char pre_command = 0; 
 char command;
 
-int speeds[] = {'0' , '1' , '2' , '3' , '4' , '5'};
-int speed_index = 0;
-
-
 //int counter = 0;
 char auth = 0;
 int fingerprintID;
@@ -47,7 +47,6 @@ int fingerprintID;
 HardwareSerial sensorSerial(2);  // UART2 for fingerprint
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&sensorSerial);
 Servo doorServo;
-
 
 int searchFingerprint() {
   Serial.println("Place your finger on the sensor...");
@@ -108,10 +107,21 @@ void triggerSensor(int triggerPin) {
   digitalWrite(triggerPin, LOW);
 }
 
+// This function will be called when data is received from the master
+void receiveEvent(int bytesReceived) {
+  while (Wire.available()) {
+    flag = Wire.read();  // Read the incoming byte
+  }
+}
+
 void setup() {
   Serial.begin(115200);
   sensorSerial.begin(57600, SERIAL_8N1, fingerRX, fingerTX);  // Fingerprint UART2
   Serial1.begin(9600, SERIAL_8N1, UART1_RX, UART1_TX);        // UART1 to Tiva C
+
+Wire.begin(I2C_ADDRESS);       // ESP32 as I2C slave
+Wire.onReceive(receiveEvent); // Register callback
+Serial.println("I2C Ready to receive flags from Raspberry Pi.");
 
   EEPROM.begin(EEPROM_SIZE);
   doorServo.attach(SERVO_PIN);  // Use a non-conflicting pin
@@ -131,11 +141,11 @@ void setup() {
   pinMode(REAR_ECHO, INPUT);
   attachInterrupt(digitalPinToInterrupt(REAR_ECHO), rearEchoISR, CHANGE);  // Attach ISR
   
-  
-  pinMode(RED_LED_PIN, OUTPUT);
-  digitalWrite(RED_LED_PIN, LOW);
 
-/*
+    // Initialize LEDS
+  pinMode(Green_LED, OUTPUT);
+  digitalWrite(Green_LED, LOW);
+/* 
   while (!auth)
   {
    fingerprintID = searchFingerprint();
@@ -143,6 +153,8 @@ void setup() {
     Serial.print("Access Granted! Fingerprint ID: ");
     Serial.println(fingerprintID); 
     openDoor();
+    digitalWrite(Green_LED, HIGH);   // Turn LED on
+
     auth = 1;
    } else {
     Serial.println("Access Denied! No match found.");
@@ -154,6 +166,7 @@ void setup() {
   
 }
 
+
 void loop() {
     // Trigger sensors
   triggerSensor(FRONT_TRIGGER);
@@ -161,12 +174,12 @@ void loop() {
   triggerSensor(REAR_TRIGGER);
   delay(100);  // Wait for echo
 
-
-  command = '6'; // Define the character to send
+  command = '6'; // Define the character to send , it should be the recieved command from backend 
 
   float frontDistance = frontDuration * 0.034 / 2;
   float rearDistance = rearDuration * 0.034 / 2;
 
+ // it should be removed in the final running to reduce the delay 
   Serial.print("Front Distance: ");
   Serial.print(frontDistance);
   Serial.print(" cm\t");
@@ -174,45 +187,45 @@ void loop() {
   Serial.println(rearDistance);
   delay(500);
 
-
+  
  // Emergency stop logic
-  if (command == '6' && frontDistance < 300) {
-    Serial1.print('5');               // Send stop
+
+  if ( ((command == '6' || command == '8' || command == '9') && frontDistance < 200) || (command == '7' && rearDistance < 200) )
+  {
+    
+    Serial1.print('4');               // slow then stop
     Serial.println("Obstacle detected! Sent: STOP");
-   // pre_command = '5';
+  
   }
 
-  if (frontDistance > 300){
-    Serial1.print(command); // Send the character
-    Serial.print("Sent to Tiva C: ");
-    Serial.println(command); // Confirm the sent character in Serial Monitor
+   else
+      {
+        Serial1.print(command);
+        Serial.println("Sent to Tiva C: "); 
+        Serial.print(command);
 
-  }
-
-/*
-  // Adjust speed gradually based on front object movement
-  else if (frontDistance < prevDistance - 20) {
-    speed_index--;
-    if (speed_index < 0) speed_index = 0;
-
-   // itoa(speeds[speed_index], speedStr, 10);
-    Serial1.print(speeds[speed_index]);
-    Serial.println("Decreasing speed...");
-  } 
-
-  else if (frontDistance > prevDistance + 20) {
-    speed_index++;
-    if (speed_index > 5) speed_index = 5;
-
-  //  itoa(speeds[speed_index], speedStr, 10);
-    Serial1.print(speeds[speed_index]);
-    Serial.println("Increasing speed...");
-  } 
-
-  else {
-    Serial.println("Maintaining speed...");
-  }
-*/
+        if (frontDistance < 350)
+        {
+          Serial1.print('0');
+          Serial.println("Speed Sent to Tiva C: 35 "); 
+        }        
+        else if (frontDistance < 550)
+        {
+          Serial1.print('1');
+          Serial.println("Speed Sent to Tiva C: 40 ");
+        }
+        else if (frontDistance < 700)
+        {
+          Serial1.print('2');
+          Serial.println("Speed Sent to Tiva C: 45 ");
+        }
+        else
+        { 
+          Serial1.print('3');
+          Serial.println("Speed Sent to Tiva C: 50 ");
+        }      
+      } 
+     
 
 
 
@@ -227,7 +240,6 @@ void loop() {
 
 //  prevDistance = frontDistance;
 
-
     // Check if data is available from Tiva C
     if (Serial1.available()) {  
     String receivedData = Serial1.readString(); // Read all available data as a String
@@ -236,6 +248,26 @@ void loop() {
     Serial.println(receivedData); // Print the received data for debugging
    
       }
+
+   Serial.println("Flag received from Raspberry Pi: ");
+    Serial.print(flag);
+    
+    switch (flag) {
+      case 7: //Dms
+      Serial1.print('4'); 
+      while(1);
+      break;
+      case 8: //red
+      Serial1.print('4'); 
+      break;
+      case 9: ///green
+      break;
+      case 10: //stop
+      Serial1.print('4'); 
+      break;
+    }
+     flag=0;
     
 
- } 
+
+} 

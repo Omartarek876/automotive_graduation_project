@@ -190,7 +190,7 @@ void loop() {
   
  // Emergency stop logic
 
-  if ( ((command == '6' || command == '8' || command == '9') && frontDistance < 200) || (command == '7' && rearDistance < 200) )
+  if ((command == '6'  && frontDistance < 500) || (command == '7' && rearDistance < 500) )
   {
     
     Serial1.print('4');               // slow then stop
@@ -204,17 +204,17 @@ void loop() {
         Serial.println("Sent to Tiva C: "); 
         Serial.print(command);
 
-        if (frontDistance < 350)
+        if (frontDistance > 500)
         {
           Serial1.print('0');
           Serial.println("Speed Sent to Tiva C: 35 "); 
         }        
-        else if (frontDistance < 550)
+        else if (frontDistance > 650)
         {
           Serial1.print('1');
           Serial.println("Speed Sent to Tiva C: 40 ");
         }
-        else if (frontDistance < 700)
+        else if (frontDistance > 800)
         {
           Serial1.print('2');
           Serial.println("Speed Sent to Tiva C: 45 ");

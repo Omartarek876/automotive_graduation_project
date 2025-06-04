@@ -381,9 +381,8 @@ if (WiFi.status() == WL_CONNECTED) {
             Serial.print(backend_command); 
                       
  
-  
-      // Filter for commands 6 or 7 if distance is too close
-      if (((backend_command == '6' || backend_command == '8' || backend_command == '9') && frontDistance < 200 ) || ( backend_command == '7' && rearDistance < 200)) {
+   // Filter for commands 6 or 7 if distance is too close
+      if ((backend_command == '6' && frontDistance < 500 ) || ( backend_command == '7' && rearDistance < 500)) {
         
         Serial1.print('4');               // slow then stop
         Serial.println("Obstacle detected! Sent: STOP");
@@ -394,30 +393,31 @@ if (WiFi.status() == WL_CONNECTED) {
         Serial1.print(backend_command);
         Serial.println("Sent to Tiva C: "); 
         Serial.print(backend_command);
+        delay(500);
 
-        if (frontDistance < 350)
+
+        if (frontDistance > 500)
         {
           Serial1.print('0');
           Serial.println("Speed Sent to Tiva C: 35 "); 
         }        
-        else if (frontDistance < 550)
+        else if (frontDistance > 650)
         {
           Serial1.print('1');
           Serial.println("Speed Sent to Tiva C: 40 ");
         }
-        else if (frontDistance < 700)
+        else if (frontDistance > 800)
         {
           Serial1.print('2');
           Serial.println("Speed Sent to Tiva C: 45 ");
         }
         else
         { 
-          Serial1.print('3');
-          Serial.println("Speed Sent to Tiva C: 50 ");
+        //  Serial1.print('3');
+        //  Serial.println("Speed Sent to Tiva C: 50 ");
         }      
       } 
     } 
-
     else {
       Serial.print("HTTP Error: "); 
       Serial.println(httpResponseCode);

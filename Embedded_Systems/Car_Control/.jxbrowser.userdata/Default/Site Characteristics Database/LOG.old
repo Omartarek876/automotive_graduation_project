@@ -1,2 +1,5 @@
-2025/02/26-12:25:12.206 b18 Creating DB D:\4th_year\3_Graduation_project\main_project\2-software\automotive_graduation_project\Embedded_Systems\Car_Control\.jxbrowser.userdata\Default\Site Characteristics Database since it was missing.
-2025/02/26-12:25:12.466 b18 Reusing MANIFEST D:\4th_year\3_Graduation_project\main_project\2-software\automotive_graduation_project\Embedded_Systems\Car_Control\.jxbrowser.userdata\Default\Site Characteristics Database/MANIFEST-000001
+2025/05/26-18:17:43.237 30b8 Log #3: 3 ops saved to Table #4 OK
+2025/05/26-18:17:43.238 30b8 Archiving F:\GraduationProject\Codes\automotive_graduation_project\Embedded_Systems\Car_Control\.jxbrowser.userdata\Default\Site Characteristics Database/000003.log: OK
+2025/05/26-18:17:43.238 30b8 Table #4: 3 entries OK
+2025/05/26-18:17:43.239 30b8 Archiving F:\GraduationProject\Codes\automotive_graduation_project\Embedded_Systems\Car_Control\.jxbrowser.userdata\Default\Site Characteristics Database/MANIFEST-000001: OK
+2025/05/26-18:17:43.712 30b8 **** Repaired leveldb F:\GraduationProject\Codes\automotive_graduation_project\Embedded_Systems\Car_Control\.jxbrowser.userdata\Default\Site Characteristics Database; recovered 1 files; 226 bytes. Some data may have been lost. ****

@@ -46,6 +46,7 @@ uint8  stop_flag = 0;
         case 4 :
             if (!stop_flag)
             {
+                slow_Stopping();
                 stop_flag = 1;
                 UART_SendString(1 , "stopping");
             }
@@ -57,8 +58,9 @@ uint8  stop_flag = 0;
             break;
 
             case 5 :
-                slow_Stopping();
+           //     slow_Stopping();
                 PWM_SetDuty(PWM_CHANNEL_1, 10);
+                car_stop();
                 UART_SendString(1 , "stop command");
                 stop_flag = 0;
                 break;
@@ -73,7 +75,7 @@ uint8  stop_flag = 0;
             case 7 :
                  car_backword();
                  UART_SendString(1 , "backword command");
-            //     PWM_SetDuty(PWM_CHANNEL_1, 40);
+                 PWM_SetDuty(PWM_CHANNEL_1, 60);
                  stop_flag = 0;
                  break;
 

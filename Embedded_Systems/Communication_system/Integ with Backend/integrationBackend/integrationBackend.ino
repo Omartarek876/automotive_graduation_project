@@ -18,7 +18,7 @@
 #define FRONT_TRIGGER 27
 #define FRONT_ECHO    32
 #define REAR_TRIGGER   23
-#define REAR_ECHO      25 
+#define REAR_ECHO      18
 
 //#define REAR_ECHO      25 // aw 33, 18 , 26
 
@@ -29,8 +29,8 @@
 
 //#define Red_LED    14  // Built-in LED
 
-const char* ssid = "Mariam Emad";
-const char* password =  "MariamEmad4322";
+const char* ssid = "OMARTAREK";
+const char* password =  "123456789";
 
 // Server URLs
 const char* serverUrl = "https://178.32.101.106:3000/api/car-control"; // Server URL or IP address and port
@@ -163,12 +163,12 @@ Serial.println("I2C Ready to receive flags from Raspberry Pi.");
 
   EEPROM.begin(EEPROM_SIZE);
 
-
+/*
   if (!finger.verifyPassword()) {
     Serial.println("Fingerprint sensor not found!");
     while (1);
   }
-
+*/
   pinMode(FRONT_TRIGGER, OUTPUT);
   pinMode(FRONT_ECHO, INPUT);
   attachInterrupt(digitalPinToInterrupt(FRONT_ECHO), frontEchoISR, CHANGE);
@@ -181,7 +181,6 @@ Serial.println("I2C Ready to receive flags from Raspberry Pi.");
   digitalWrite(Green_LED, LOW);
 
   
-/*
   while (!auth)
   {
    fingerprintID = searchFingerprint();
@@ -202,7 +201,7 @@ Serial.println("I2C Ready to receive flags from Raspberry Pi.");
    }
    delay(3000);
   } // end of user auth process
-  */
+
   
 
 }
@@ -211,6 +210,7 @@ void loop() {
   triggerSensor(FRONT_TRIGGER);
   delayMicroseconds(50);
   triggerSensor(REAR_TRIGGER);
+
   delay(100);
 
   float frontDistance = frontDuration * 0.034 / 2;
@@ -230,9 +230,9 @@ if (WiFi.status() == WL_CONNECTED) {
 
     if (httpResponseCode == HTTP_CODE_OK) {
       String payload = http.getString();
-      backend_command = payload[34]; //da bs l hytshal
+     backend_command = payload[35]; //da bs l hytshal
       Serial.print("payload=");   
-            Serial.print(payload);  
+      Serial.print(payload);  
              /*
     StaticJsonDocument<512> doc;
     DeserializationError error = deserializeJson(doc, payload);
@@ -252,13 +252,13 @@ if (WiFi.status() == WL_CONNECTED) {
 
 
 */                      
-            Serial.println("backend_command=");  
+            Serial.print("backend_command=");  
             Serial.print(backend_command); 
                       
  
   
       // Filter for commands 6 or 7 if distance is too close
-      if (((backend_command == '6' || backend_command == '8' || backend_command == '9') && frontDistance < 200 ) || ( backend_command == '7' && rearDistance < 200)) {
+      if ((backend_command == '6' && frontDistance < 500 ) || ( backend_command == '7' && rearDistance < 500)) {
         
         Serial1.print('4');               // slow then stop
         Serial.println("Obstacle detected! Sent: STOP");
@@ -269,26 +269,28 @@ if (WiFi.status() == WL_CONNECTED) {
         Serial1.print(backend_command);
         Serial.println("Sent to Tiva C: "); 
         Serial.print(backend_command);
+        delay(500);
 
-        if (frontDistance < 350)
+
+        if (frontDistance > 500)
         {
           Serial1.print('0');
           Serial.println("Speed Sent to Tiva C: 35 "); 
         }        
-        else if (frontDistance < 550)
+        else if (frontDistance > 650)
         {
           Serial1.print('1');
           Serial.println("Speed Sent to Tiva C: 40 ");
         }
-        else if (frontDistance < 700)
+        else if (frontDistance > 800)
         {
           Serial1.print('2');
           Serial.println("Speed Sent to Tiva C: 45 ");
         }
         else
         { 
-          Serial1.print('3');
-          Serial.println("Speed Sent to Tiva C: 50 ");
+        //  Serial1.print('3');
+        //  Serial.println("Speed Sent to Tiva C: 50 ");
         }      
       } 
     } 
@@ -309,9 +311,9 @@ if (WiFi.status() == WL_CONNECTED) {
     Serial.println(receivedData);
   }
 
- 
-    Serial.println("Flag received from Raspberry Pi: ");
-    Serial.print(i2c_flag);
+
+    Serial.print("Flag received from Raspberry Pi: ");
+    Serial.print(i2c_flag);  
     
     switch (i2c_flag) {
       case 7: //Dms
@@ -320,14 +322,21 @@ if (WiFi.status() == WL_CONNECTED) {
       break;
       case 8: //red
       Serial1.print('4'); 
+      delay(3000);
       break;
-      case 9: ///green
+      case 9: ///green   
+      Serial1.print('6'); 
+
       break;
       case 10: //stop
+
       Serial1.print('4'); 
+              delay(3000);
+
       break;
     }
      i2c_flag=0;
+
     }
 
  /*

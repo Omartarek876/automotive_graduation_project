@@ -1,5 +1,25 @@
 # Advanced Automotive Safety Mechanisms Connected with Mobile App
 
+## Team and Supervisors
+
+This project is developed by a dedicated team of students under the supervision of experienced professors.
+
+### Project Team Members
+
+- Omar Tarek Ibrahim  
+- Esraa Ashraf Fouad  
+- Mariam Emad Fawzy  
+- Mahmoud Samir Mohamed  
+- Mahmoud Ahmed Enany  
+- Ahmed Tohamy Elsayed
+
+### Supervisors
+
+- Prof. Lamiaa Elrefaiee  
+- Prof. Assistant Mohamed Hussien
+
+---
+
 ## Introduction
 
 Road safety remains one of the most critical challenges in modern transportation.  
@@ -110,15 +130,6 @@ These modules implement the user authentication system and car movement control 
 
 ---
 
-## Team Members
-
-- Mariam Emad Fawzy  
-- Mahmoud Ahmed Enany  
-- Esraa Ashraf Fouad  
-- Mahmoud Samir Mohamed
-
----
-
 ## Conclusion
 
 This project presents a comprehensive approach to enhancing automotive safety through the integration of user authentication, advanced driver assistance systems, real-time accident detection, night vision, and seamless mobile app connectivity. The modular AUTOSAR architecture ensures maintainability and scalability, allowing future expansions and improvements.
@@ -129,7 +140,7 @@ We believe this system can significantly contribute to safer roads and more secu
 
 ## Acknowledgments
 
-We would like to thank our supervisor, Dr. Lamiaa Elrefaiee, for her invaluable guidance and support throughout this project. Thanks also to all team members for their dedication and hard work.
+We would like to thank our supervisors, Prof. Lamiaa Elrefaiee and Prof. Assistant Mohamed Hussien, for their invaluable guidance and support throughout this project. Thanks also to all team members for their dedication and hard work.
 
 ---
 
@@ -141,7 +152,8 @@ For questions, collaborations, or further information, please contact:
 - Esraa Ashraf Fouad  
 - Mariam Emad Fawzy  
 - Mahmoud Samir Mohamed  
-- Mahmoud Ahmed Enany
+- Mahmoud Ahmed Enany  
+- Ahmed Tohamy Elsayed
 
 ---
 

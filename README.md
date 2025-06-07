@@ -3,7 +3,7 @@
 ## Introduction
 
 Road safety remains one of the most critical challenges in modern transportation.  
-This project aims to significantly enhance automotive safety by integrating cutting-edge technologies such as Vehicle-to-Everything (V2X) communication, Advanced Driver Assistance Systems (ADAS), and autonomous vehicle capabilities.
+This project aims to significantly enhance automotive safety by integrating cutting-edge technologies such as Advanced Driver Assistance Systems (ADAS), and autonomous vehicle capabilities.
 
 Our system focuses on addressing key safety concerns including delayed emergency responses after accidents, driver fatigue and authentication, vehicle theft prevention, and limited visibility during nighttime driving.  
 By combining intelligent hardware modules and seamless communication with a mobile application, this project strives to create a safer driving environment.
